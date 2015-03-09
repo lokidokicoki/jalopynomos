@@ -3,5 +3,10 @@ Purchase date: {{vehicle.purchase.date}}
 
 <p> Fuel records:</p>
 {{#each vehicle.fuelIDs}}
-<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/fuel/{{this}}">{{this}}</a><br/>
+<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/fuel/{{this}}">{{this}}</a><br/>
+{{/each}}
+
+<p> Service records:</p>
+{{#each vehicle.serviceIDs}}
+<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{this}}</a><br/>
 {{/each}}

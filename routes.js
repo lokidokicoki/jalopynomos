@@ -23,10 +23,21 @@ module.exports = function(app, api) {
             vehicle: vehicle
         });
     });
-    app.get('/fuel/:id', function(req, res) {
+    app.get('/vehicle/:vid/fuel/:id', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
         var fuel = api.getFillUp(req.params.id);
         res.render('fuel', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel
+        });
+    });
+
+    app.get('/vehicle/:vid/service/:id', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+        var service = api.getService(req.params.id);
+        res.render('service', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            service: service
         });
     });
 
