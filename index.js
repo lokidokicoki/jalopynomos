@@ -11,6 +11,10 @@ var oneDay = 86400000;
 
 api.load(data);
 
+hbs.registerHelper('parseDate', function(dateString) {
+	return new Date(parseInt(dateString)).toString();
+});
+
 app.set( 'views', path.join( __dirname, 'views' ));
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
