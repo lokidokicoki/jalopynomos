@@ -1,0 +1,7 @@
+<h1>{{vehicle.title}}</h1>
+Purchase date: {{vehicle.purchase.date}}
+
+<p> Fuel records:</p>
+{{#each vehicle.fuelIDs}}
+<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/fuel/{{this}}">{{this}}</a><br/>
+{{/each}}
