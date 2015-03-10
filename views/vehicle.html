@@ -1,5 +1,5 @@
-<h1>{{vehicle.title}}</h1>
-Purchase date: {{vehicle.purchase.date}}
+<h1>{{title}}</h1>
+Purchase date: {{parseDate vehicle.purchase.date}}
 
 <p> Fuel records:</p>
 {{#each vehicle.fuelIDs}}

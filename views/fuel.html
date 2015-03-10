@@ -1,13 +1,13 @@
-<h1>{{vehicle.title}} | {{fuel.id}}</h1>
+<h1>{{vehicle.title}} | Fill up {{fuel.id}}</h1>
 
 Purchase date : {{parseDate fuel.date}}<br/>
 Litres: {{fuel.litres}}<br/>
-Price/litre: {{fuel.ppl}}<br/>
+Price/litre: {{formatCost fuel.ppl dp=3}}<br/>
 Trip: {{fuel.trip}}<br/>
 Odometer: {{fuel.odo}}<br/>
-Cost: {{fuel.cost}}<br/>
-MPG: {{fuel.mpg}}<br/>
-Notes: {{fuel.notes}}<br/>
+Cost: {{formatCost fuel.cost}}<br/>
 Fuel type: {{fuel.type}}<br/>
+MPG: {{formatMPG fuel.mpg}}<br/>
+Notes: {{fuel.notes}}<br/>
 
 Back to <a href="/vehicle/{{vehicle.id}}">{{vehicle.title}}</a><br/>

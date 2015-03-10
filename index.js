@@ -7,12 +7,24 @@ var api = require('./server/api');
 var data = require('./data/records.json');
 var app = express();
 var hbs = require('hbs');
+var moment = require('moment');
 var oneDay = 86400000;
 
 api.load(data);
 
 hbs.registerHelper('parseDate', function(dateString) {
-	return new Date(parseInt(dateString)).toString();
+	return moment(dateString).format('YYYY/MM/DD');
+});
+
+hbs.registerHelper('formatCost', function(cost, options) {
+	options = (options === undefined) ? {dp:2} : options.hash;
+	options.dp = (options.dp === undefined) ? 2 : options.dp;
+	
+	return '£'+cost.toFixed(options.dp);
+});
+
+hbs.registerHelper('formatMPG', function(mpg) {
+	return mpg.toFixed(2);
 });
 
 app.set( 'views', path.join( __dirname, 'views' ));
