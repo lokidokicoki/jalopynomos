@@ -47,4 +47,7 @@ module.exports = function(app, api) {
 	app.get('/contact', function(req, res) {
 		res.render('contact');
 	});
+	app.get('/history', function(req, res) {
+		res.render('history');
+	});
 };
