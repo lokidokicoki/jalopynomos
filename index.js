@@ -12,6 +12,9 @@ var oneDay = 86400000;
 
 api.load(data);
 
+hbs.registerHelper('getFuelType', function(type){
+	return api.getFuelType(type);
+});
 hbs.registerHelper('parseDate', function(dateString) {
 	return moment(dateString).format('YYYY/MM/DD');
 });

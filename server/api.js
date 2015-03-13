@@ -7,11 +7,17 @@
 var vehicles = {};
 var fillUps = {};
 var services = {};
+var fuelTypes = {
+	'U':'Unleaded',
+	'D':'Diesel',
+	'S':'Super unleaded'
+};
 
 /**
  * @constructor
  */
 function Vehicle(values) {
+	'use strict';
     this.id = null;
     this.regNo = '';
     this.make = '';
@@ -52,10 +58,19 @@ function Vehicle(values) {
 	};
 }
 
+function Summary(){
+	this.mpg={min:0,max:0,avg:0};
+
+	this.summarise = function () {
+		
+	};
+}
+
 /**
  * @constructor
  */
 function Fuel(values) {
+	'use strict';
     this.id = null;
     this.date = '';
     this.litres = 0;
@@ -76,6 +91,7 @@ function Fuel(values) {
  * @constructor
  */
 function Service(values) {
+	'use strict';
     this.id = null;
     this.date = '';
     this.cost = 0;
@@ -92,6 +108,7 @@ function Service(values) {
  * Load data from object in collections.
  */
 function load(data){
+	'use strict';
 	var k,len, record;	
 	for(k in data.vehicles){
 		record = new Vehicle(data.vehicles[k]);
@@ -113,6 +130,7 @@ function load(data){
  * Massage collections into portable format.
  */
 function get(){
+	'use strict';
 	var data = {
 		vehicles:vehicles,
 		fillUps:fillUps,
@@ -123,9 +141,11 @@ function get(){
 }
 
 function getVehicles(){
+	'use strict';
 	return vehicles;
 }
 function getVehicleArray(){
+	'use strict';
 	var a = [];
 	for (var k in vehicles){
 		a.push(vehicles[k]);
@@ -133,13 +153,20 @@ function getVehicleArray(){
 	return a;
 }
 function getVehicle(id){
+	'use strict';
 	return vehicles[id];
 }
 function getFillUp(id){
+	'use strict';
 	return fillUps[id];
 }
 function getService(id){
+	'use strict';
 	return services[id];
+}
+
+function getFuelType(type){
+	return fuelTypes[type];
 }
 
 module.exports = {
@@ -152,5 +179,6 @@ module.exports = {
 	getVehicleArray:getVehicleArray,
 	getVehicle:getVehicle,
 	getFillUp:getFillUp,
-	getService:getService
+	getService:getService,
+	getFuelType:getFuelType
 };
