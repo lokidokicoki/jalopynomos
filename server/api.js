@@ -4,6 +4,8 @@
  * @module jalopynomos/lib/api
  */
 
+var utils = require('./utils');
+
 var vehicles = {};
 var fillUps = {};
 var services = {};
@@ -85,6 +87,17 @@ function Fuel(values) {
 	for (var k in values){
 		this[k] = values[k];
 	}
+
+	this.toString = function(){
+		// date | cost | litres | trip | odo | mpg
+		var data = utils.parseDate(this.date) + ' | ' + 
+			utils.formatCost(this.cost) + ' | ' + 
+			this.litres + ' | ' + 
+			this.trip + ' | ' + 
+			utils.formatMPG(this.mpg);
+		
+		return data;
+	};
 }
 
 /**

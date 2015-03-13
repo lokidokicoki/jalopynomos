@@ -4,10 +4,10 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var path = require('path');
 var api = require('./server/api');
+var utils = require('./server/utils');
 var data = require('./data/records.json');
 var app = express();
 var hbs = require('hbs');
-var moment = require('moment');
 var oneDay = 86400000;
 
 api.load(data);
@@ -16,18 +16,19 @@ hbs.registerHelper('getFuelType', function(type){
 	return api.getFuelType(type);
 });
 hbs.registerHelper('parseDate', function(dateString) {
-	return moment(dateString).format('YYYY/MM/DD');
+	return utils.parseDate(dateString);
 });
 
 hbs.registerHelper('formatCost', function(cost, options) {
-	options = (options === undefined) ? {dp:2} : options.hash;
-	options.dp = (options.dp === undefined) ? 2 : options.dp;
-	
-	return '£'+cost.toFixed(options.dp);
+	return utils.formatCost(cost, options);
 });
 
 hbs.registerHelper('formatMPG', function(mpg) {
 	return mpg.toFixed(2);
+});
+
+hbs.registerHelper('fuelSummary', function(id){
+	return api.getFillUp(id).toString();
 });
 
 app.set( 'views', path.join( __dirname, 'views' ));
