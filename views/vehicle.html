@@ -1,8 +1,13 @@
 <h1>{{title}}</h1>
 
+<div class="btn-group">
+    <button type="button" class="btn btn-default">Edit</button>
+    <button type="button" class="btn btn-default">Remove</button>
+</div>
+
 <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
-        <div class="panel-heading" id="details">
+        <div class="panel-heading" id="headingOne">
             <h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 					Details
@@ -40,7 +45,7 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" id="details">
+        <div class="panel-heading" id="headingTwo">
             <h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 					Summary
@@ -53,20 +58,36 @@
             </ul>
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingThree">
+            <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+					Fuel Records {{vehicle.fuelIDs.length}}
+				</a>
+			</h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <ul class="list-group">
+				{{#each vehicle.fuelIDs}}
+				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/fuel/{{this}}">{{fuelSummary this}}</a></li>
+				{{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingFour">
+            <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+					Service Records {{vehicle.serviceIDs.length}}
+				</a>
+			</h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+            <ul class="list-group">
+				{{#each vehicle.serviceIDs}}
+				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{this}}</a></li>
+				{{/each}}
+            </ul>
+        </div>
+    </div>
 </div>
-
-
-<div class="btn-group">
-    <button type="button" class="btn btn-default">Edit</button>
-    <button type="button" class="btn btn-default">Remove</button>
-</div>
-
-<p> Fuel records:</p>
-{{#each vehicle.fuelIDs}}
-<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/fuel/{{this}}">{{this}}</a>
-<br/> {{/each}}
-
-<p> Service records:</p>
-{{#each vehicle.serviceIDs}}
-<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{this}}</a>
-<br/> {{/each}}
