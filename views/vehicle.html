@@ -1,12 +1,72 @@
 <h1>{{title}}</h1>
-Purchase date: {{parseDate vehicle.purchase.date}}
+
+<div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" id="details">
+            <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					Details
+				</a>
+			</h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <ul class="list-group">
+                <li class="list-group-item">Purchase date: {{parseDate vehicle.purchase.date}}</li>
+                <li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
+                <li class="list-group-item">Fuel capacity: {{vehicle.fuel.capacity}}</li>
+                <li class="list-group-item">Oil type: {{vehicle.oil.type}}</li>
+                <li class="list-group-item">Oil capacity: {{vehicle.oil.capacity}}</li>
+                <li class="list-group-item">Tyres:
+                    <table class="table">
+                        <tr>
+                            <th>Position</th>
+                            <th>Pressure</th>
+                            <th>Size</th>
+                        </tr>
+                        <tr>
+                            <td>Front</td>
+                            <td>{{vehicle.tyres.front.capacity}}</td>
+                            <td>{{vehicle.tyres.front.type}}</td>
+                        </tr>
+                        <tr>
+                            <td>Rear</td>
+                            <td>{{vehicle.tyres.rear.capacity}}</td>
+                            <td>{{vehicle.tyres.rear.type}}</td>
+                        </tr>
+                    </table>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="details">
+            <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					Summary
+				</a>
+			</h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <ul class="list-group">
+                <li class="list-group-item">Purchase date: {{parseDate vehicle.purchase.date}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default">Edit</button>
+    <button type="button" class="btn btn-default">Remove</button>
+</div>
 
 <p> Fuel records:</p>
 {{#each vehicle.fuelIDs}}
-<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/fuel/{{this}}">{{this}}</a><br/>
-{{/each}}
+<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/fuel/{{this}}">{{this}}</a>
+<br/> {{/each}}
 
 <p> Service records:</p>
 {{#each vehicle.serviceIDs}}
-<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{this}}</a><br/>
-{{/each}}
+<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{this}}</a>
+<br/> {{/each}}
