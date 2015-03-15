@@ -32,6 +32,13 @@ module.exports = function(app, api) {
         });
     });
 
+    app.get('/vehicle/:vid/addFillup', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+        res.render('addFillup', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+        });
+    });
+
     app.get('/vehicle/:vid/service/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var service = api.getService(req.params.id);
