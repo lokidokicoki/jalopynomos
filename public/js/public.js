@@ -1,9 +1,8 @@
 $(function(){
-	console.log('loaded public.js');
-
-	$('#ajaxTest').on('click', function (e){
+	$('#saveFillup').on('click', function (e){
+		console.log('get form data');
 		$.ajax({
-			url: '/ajaxTest',
+			url: '/saveFillup',
 			type: 'POST',
 			data: {name:'bobo'},
 			success: function(res){
