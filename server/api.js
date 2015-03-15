@@ -14,6 +14,8 @@ var fuelTypes = {
 	'D':'Diesel',
 	'S':'Super unleaded'
 };
+var LITRES_IN_GALLON = 4.54609;
+var GALLONS_IN_LITRE = 0.219969;
 
 /**
  * @constructor
@@ -88,6 +90,10 @@ function Fuel(values) {
 		this[k] = values[k];
 	}
 
+	if (this.id === null || this.id === undefined){
+		this.id = this.fillUps.length;
+	}
+
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
 		var data = utils.parseDate(this.date) + ' | ' + 
@@ -97,6 +103,10 @@ function Fuel(values) {
 			utils.formatMPG(this.mpg);
 		
 		return data;
+	};
+
+	this.calculateMPG = function(){
+		this.mpg = this.trip / (this.litres / LITRES_IN_GALLON);
 	};
 }
 
@@ -191,6 +201,10 @@ function getService(id){
 
 function getFuelType(type){
 	return fuelTypes[type];
+}
+
+function addFillUp(vehicle, fillUp){
+	
 }
 
 module.exports = {
