@@ -31,6 +31,10 @@ hbs.registerHelper('fuelSummary', function(id){
 	return api.getFillUp(id).toString();
 });
 
+hbs.registerHelper('serviceSummary', function(id){
+	return api.getService(id).toString();
+});
+
 app.set( 'views', path.join( __dirname, 'views' ));
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);

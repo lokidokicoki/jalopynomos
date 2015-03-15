@@ -115,6 +115,17 @@ function Service(values) {
 	for (var k in values){
 		this[k] = values[k];
 	}
+
+	this.toString = function(){
+		// date | cost | litres | trip | odo | mpg
+		var data = utils.parseDate(this.date) + ' | ' + 
+			utils.formatCost(this.cost) + ' | ' + 
+			this.odo + ' | ' + 
+			this.item;
+		
+		return data;
+	};
+
 }
 
 /**

@@ -85,7 +85,7 @@
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
             <ul class="list-group">
 				{{#each vehicle.serviceIDs}}
-				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{this}}</a></li>
+				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{serviceSummary this}}</a></li>
 				{{/each}}
             </ul>
         </div>
