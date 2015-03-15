@@ -59,12 +59,13 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" id="headingThree">
-            <h4 class="panel-title">
+        <div class="panel-heading clearfix" id="headingThree">
+            <h4 class="panel-title pull-left">
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-					Fuel Records {{vehicle.fuelIDs.length}}
+					Fuel Records {{vehicle.fuelIDs.length}} 
 				</a>
 			</h4>
+			<a class="btn-primary btn-xs pull-right" role="button" href="/vehicle/{{vehicle.id}}/addFillup">Add</a>
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <ul class="list-group">
@@ -75,12 +76,13 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" id="headingFour">
-            <h4 class="panel-title">
+        <div class="panel-heading clearfix" id="headingFour">
+            <h4 class="panel-title pull-left">
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
 					Service Records {{vehicle.serviceIDs.length}}
 				</a>
 			</h4>
+			<a class="btn-primary btn-xs pull-right" href="/vehicle/{{vehicle.id}}/addService">Add</a>
         </div>
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
             <ul class="list-group">
