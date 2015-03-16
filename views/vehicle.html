@@ -16,7 +16,7 @@
         </div>
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <ul class="list-group">
-                <li class="list-group-item">Purchase date: {{parseDate vehicle.purchase.date}}</li>
+                <li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
                 <li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
                 <li class="list-group-item">Fuel capacity: {{vehicle.fuel.capacity}}</li>
                 <li class="list-group-item">Oil type: {{vehicle.oil.type}}</li>
@@ -54,7 +54,7 @@
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <ul class="list-group">
-                <li class="list-group-item">Purchase date: {{parseDate vehicle.purchase.date}}</li>
+                <li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
             </ul>
         </div>
     </div>
