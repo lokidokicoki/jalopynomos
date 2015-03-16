@@ -47,7 +47,8 @@ module.exports = function(app, api) {
 		var fuel = api.addFillUp(vehicle, req.body);
 		res.render('fuel', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
-            fuel: fuel
+            fuel: fuel,
+			canAdd:true
 		});
 	});
 
