@@ -35,13 +35,20 @@ module.exports = function(app, api) {
     app.get('/vehicle/:vid/addFillup', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         res.render('addFillup', {
-            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            vehicle: {title:vehicle.toString(), id:vehicle.id, fuelType:vehicle.fuel.type},
+			fuelTypes:api.getFuelTypes()
         });
     });
 
 	app.post('/vehicle/:vid/saveFillup', function(req, res){
-		console.log('routes.saveFillup: ',req.body.litres);	
-		res.render('index', {vehicles:api.getVehicleArray()});
+		console.log('routes.saveFillup: ',req.params.vid, req.body);	
+        var vehicle = api.getVehicle(req.params.vid);
+		req.body.date = utils.parseDate(req.body.date);
+		var fuel = api.addFillup(req.params.vid, req.body);
+		res.render('fuel', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            fuel: fuel
+		});
 	});
 
 	// service routes
