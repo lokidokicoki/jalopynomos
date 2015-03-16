@@ -1,3 +1,4 @@
+var utils = require('./server/utils');
 module.exports = function(app, api) {
 	// menu bar routes
 	app.get('/', function (req, res){
@@ -41,10 +42,9 @@ module.exports = function(app, api) {
     });
 
 	app.post('/vehicle/:vid/saveFillup', function(req, res){
-		console.log('routes.saveFillup: ',req.params.vid, req.body);	
         var vehicle = api.getVehicle(req.params.vid);
 		req.body.date = utils.parseDate(req.body.date);
-		var fuel = api.addFillup(req.params.vid, req.body);
+		var fuel = api.addFillUp(vehicle, req.body);
 		res.render('fuel', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel
