@@ -1,21 +1,19 @@
 module.exports = function(app, api) {
-    app.post('/postTest', function(req, res) {
-        console.log('req postTest:', req.body.name);
-
-        res.send(req.body.name);
-    });
-
-    app.post('/ajaxTest', function(req, res) {
-        console.log('req ajaxTest:', req.body.name);
-        res.send({
-            data: req.body.name
-        });
-    });
-
+	// menu bar routes
 	app.get('/', function (req, res){
 		res.render('index', {vehicles:api.getVehicleArray()});
 	});
+	app.get('/about', function(req, res) {
+		res.render('about');
+	});
+	app.get('/contact', function(req, res) {
+		res.render('contact');
+	});
+	app.get('/history', function(req, res) {
+		res.render('history');
+	});
 
+	// top level vehicle route
     app.get('/vehicle/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.id);
         res.render('vehicle', {
@@ -23,6 +21,8 @@ module.exports = function(app, api) {
             vehicle: vehicle
         });
     });
+
+	// fillup routes - view/add/save
     app.get('/vehicle/:vid/fuel/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var fuel = api.getFillUp(req.params.id);
@@ -39,6 +39,12 @@ module.exports = function(app, api) {
         });
     });
 
+	app.post('/vehicle/:vid/saveFillup', function(req, res){
+		console.log('routes.saveFillup: ',req.body.litres);	
+		res.render('index', {vehicles:api.getVehicleArray()});
+	});
+
+	// service routes
     app.get('/vehicle/:vid/service/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var service = api.getService(req.params.id);
@@ -48,13 +54,4 @@ module.exports = function(app, api) {
         });
     });
 
-	app.get('/about', function(req, res) {
-		res.render('about');
-	});
-	app.get('/contact', function(req, res) {
-		res.render('contact');
-	});
-	app.get('/history', function(req, res) {
-		res.render('history');
-	});
 };
