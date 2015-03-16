@@ -200,11 +200,20 @@ function getService(id){
 }
 
 function getFuelType(type){
+	'use strict';
 	return fuelTypes[type];
 }
 
 function addFillUp(vehicle, fillUp){
 	
+}
+
+function getFuelTypes(){
+	var fts = [];
+	for (var k in fuelTypes){
+		fts.push([k, fuelTypes[k]]);
+	}
+	return fts;
 }
 
 module.exports = {
@@ -218,5 +227,6 @@ module.exports = {
 	getVehicle:getVehicle,
 	getFillUp:getFillUp,
 	getService:getService,
-	getFuelType:getFuelType
+	getFuelType:getFuelType,
+	getFuelTypes:getFuelTypes,
 };
