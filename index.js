@@ -5,12 +5,11 @@ var fs = require('fs');
 var path = require('path');
 var api = require('./server/api');
 var utils = require('./server/utils');
-var data = require('./data/records.json');
 var app = express();
 var hbs = require('hbs');
 var oneDay = 86400000;
 
-api.load(data);
+api.load('data/records.json');
 
 hbs.registerHelper('getFuelType', function(type) {
     return api.getFuelType(type);

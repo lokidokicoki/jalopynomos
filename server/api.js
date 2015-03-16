@@ -6,6 +6,8 @@
 
 var _ = require('lodash');
 var utils = require('./utils');
+var fs = require('fs-extra');
+var path = require('path');
 
 var vehicles = {};
 var fillUps = {};
@@ -17,6 +19,7 @@ var fuelTypes = {
 };
 var LITRES_IN_GALLON = 4.54609;
 var GALLONS_IN_LITRE = 0.219969;
+var dataFile = '';
 
 /**
  * @constructor
@@ -92,7 +95,7 @@ function Fuel(values) {
 	}
 
 	if (this.id === null || this.id === undefined){
-		this.id = _.size(fillUps);
+		this.id = _.size(fillUps) + 1;
 	}
 
 	this.toString = function(){
@@ -131,7 +134,7 @@ function Service(values) {
 		this[k] = values[k];
 	}
 	if (this.id === null || this.id === undefined){
-		this.id = _.size(services);
+		this.id = _.size(services) + 1;
 	}
 
 
@@ -150,9 +153,13 @@ function Service(values) {
 /**
  * Load data from object in collections.
  */
-function load(data){
+function load(fileName){
 	'use strict';
-	var k,len, record;	
+
+	var data, k,len, record;
+	dataFile = path.join(__dirname + '/../' + fileName);
+	console.log(dataFile)
+	data = fs.readJSONSync(dataFile);
 	for(k in data.vehicles){
 		record = new Vehicle(data.vehicles[k]);
 		vehicles[record.id] = record;
@@ -167,6 +174,12 @@ function load(data){
 		record = new Service(data.services[k]);
 		services[record.id] = record;
 	}
+}
+
+function save(){
+	var data = get();
+
+	fs.writeJSONSync(dataFile, data);
 }
 
 /**
@@ -201,6 +214,8 @@ function getVehicle(id){
 }
 function getFillUp(id){
 	'use strict';
+	
+
 	return fillUps[id];
 }
 function getService(id){
@@ -231,6 +246,7 @@ function addFillUp(vehicle, data){
 	fillUps[fillUp.id] = fillUp;
 	vehicle.fuelIDs.push(fillUp.id);
 
+	save();
 	return fillUp;
 }
 
@@ -247,6 +263,7 @@ module.exports = {
 	Fuel:Fuel,
 	Service:Service,
 	load:load,
+	save:save,
 	get:get,
 	getVehicles:getVehicles,
 	getVehicleArray:getVehicleArray,
