@@ -15,6 +15,7 @@
     "express-partials": "^0.3.0",
     "fs-extra": "^0.16.5",
     "hbs": "^2.9.0",
+    "lodash": "^3.5.0",
     "moment": "^2.9.0"
   }
 }
