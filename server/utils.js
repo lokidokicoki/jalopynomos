@@ -2,6 +2,10 @@ var moment = require('moment');
 
 module.exports = {
 	parseDate : function(dateString){	
+		return moment(dateString, 'YYYY-MM-DD').valueOf();
+	},
+
+	formatDate : function(dateString){	
 		return moment(dateString).format('YYYY/MM/DD');
 	},
 
