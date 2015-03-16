@@ -4,6 +4,7 @@
  * @module jalopynomos/lib/api
  */
 
+var _ = require('lodash');
 var utils = require('./utils');
 
 var vehicles = {};
@@ -91,7 +92,7 @@ function Fuel(values) {
 	}
 
 	if (this.id === null || this.id === undefined){
-		this.id = this.fillUps.length;
+		this.id = _.size(fillUps);
 	}
 
 	this.toString = function(){
@@ -107,6 +108,10 @@ function Fuel(values) {
 
 	this.calculateMPG = function(){
 		this.mpg = this.trip / (this.litres / LITRES_IN_GALLON);
+	};
+
+	this.calculatePPL = function(){
+		this.ppl = parseFloat((this.cost / this.litres).toFixed(3));
 	};
 }
 
@@ -125,6 +130,10 @@ function Service(values) {
 	for (var k in values){
 		this[k] = values[k];
 	}
+	if (this.id === null || this.id === undefined){
+		this.id = _.size(services);
+	}
+
 
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
@@ -204,8 +213,25 @@ function getFuelType(type){
 	return fuelTypes[type];
 }
 
-function addFillUp(vehicle, fillUp){
-	
+function addFillUp(vehicle, data){
+	'use strict';
+	var fillUp;
+
+	data.odo = parseInt(data.odo);
+	data.litres = parseFloat(data.litres);
+	data.trip = parseFloat(data.trip);
+	data.ppl = parseFloat(data.ppl);
+	data.cost = parseFloat(data.cost);
+	data.date = parseInt(data.date);
+
+	//TODO: need some validation!
+	fillUp = new Fuel(data);
+	fillUp.calculateMPG();
+	fillUp.calculatePPL();
+	fillUps[fillUp.id] = fillUp;
+	vehicle.fuelIDs.push(fillUp.id);
+
+	return fillUp;
 }
 
 function getFuelTypes(){
@@ -229,4 +255,5 @@ module.exports = {
 	getService:getService,
 	getFuelType:getFuelType,
 	getFuelTypes:getFuelTypes,
+	addFillUp:addFillUp
 };
