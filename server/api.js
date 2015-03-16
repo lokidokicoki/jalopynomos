@@ -96,7 +96,7 @@ function Fuel(values) {
 
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
-		var data = utils.parseDate(this.date) + ' | ' + 
+		var data = utils.formatDate(this.date) + ' | ' + 
 			utils.formatCost(this.cost) + ' | ' + 
 			this.litres + ' | ' + 
 			this.trip + ' | ' + 
@@ -128,7 +128,7 @@ function Service(values) {
 
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
-		var data = utils.parseDate(this.date) + ' | ' + 
+		var data = utils.formatDate(this.date) + ' | ' + 
 			utils.formatCost(this.cost) + ' | ' + 
 			this.odo + ' | ' + 
 			this.item;
