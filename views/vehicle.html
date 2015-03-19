@@ -69,8 +69,8 @@
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <ul class="list-group">
-				{{#each vehicle.fuelIDs}}
-				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/fuel/{{this}}">{{fuelSummary this}}</a></li>
+				{{#each vehicle.fuelRecs}}
+				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/fuel/{{this.id}}">{{this.toString}}</a></li>
 				{{/each}}
             </ul>
         </div>
@@ -86,8 +86,8 @@
         </div>
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
             <ul class="list-group">
-				{{#each vehicle.serviceIDs}}
-				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/service/{{this}}">{{serviceSummary this}}</a></li>
+				{{#each vehicle.serviceRecs}}
+				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/service/{{this.id}}">{{this.toString}}</a></li>
 				{{/each}}
             </ul>
         </div>

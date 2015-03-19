@@ -56,6 +56,8 @@ function Vehicle(values) {
     this.notes = '';
 	this.fuelIDs=[];
 	this.serviceIDs=[];
+	this.fuelRecs=[];
+	this.serviceRecs=[];
 
 	for (var k in values){
 		this[k] = values[k];
@@ -63,6 +65,22 @@ function Vehicle(values) {
 
 	this.toString = function (){
 		return this.make + ' ' +this.type +' '+this.regNo;
+	};
+
+	this.getFuelRecs = function (){
+		for (var i = 0, len = this.fuelIDs.length; i < len; i++){
+			this.fuelRecs.push(getFillUp(this.fuelIDs[i]));
+		}
+
+		utils.sortRecs(this.fuelRecs, 'date', false);
+	};
+
+	this.getServiceRecs = function (){
+		for (var i = 0, len = this.serviceIDs.length; i < len; i++){
+			this.serviceRecs.push(getService(this.serviceIDs[i]));
+		}
+
+		utils.sortRecs(this.serviceRecs, 'date', false);
 	};
 }
 
@@ -158,13 +176,8 @@ function load(fileName){
 
 	var data, k,len, record;
 	dataFile = path.join(__dirname + '/../' + fileName);
-	console.log(dataFile)
+	console.log(dataFile);
 	data = fs.readJSONSync(dataFile);
-	for(k in data.vehicles){
-		record = new Vehicle(data.vehicles[k]);
-		vehicles[record.id] = record;
-	}
-
 	for(k in data.fillUps){
 		record = new Fuel(data.fillUps[k]);
 		fillUps[record.id] = record;
@@ -174,6 +187,13 @@ function load(fileName){
 		record = new Service(data.services[k]);
 		services[record.id] = record;
 	}
+	for(k in data.vehicles){
+		record = new Vehicle(data.vehicles[k]);
+		record.getFuelRecs();
+		record.getServiceRecs();
+		vehicles[record.id] = record;
+	}
+
 }
 
 function save(){
