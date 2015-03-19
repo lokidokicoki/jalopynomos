@@ -62,4 +62,14 @@ module.exports = function(app, api) {
         });
     });
 
+	// mpg route
+    app.get('/vehicle/:vid/mpgChart', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+		
+        res.render('mpgChart', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id, data:(vehicle.getChartData())},
+        });
+    });
+
+
 };

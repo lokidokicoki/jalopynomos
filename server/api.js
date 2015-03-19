@@ -82,6 +82,16 @@ function Vehicle(values) {
 
 		utils.sortRecs(this.serviceRecs, 'date', false);
 	};
+
+	this.getChartData = function (type){
+		var data = [], rec;
+		for (var i = 0, len = this.fuelRecs.length; i < len; i++){
+			rec = this.fuelRecs[i];
+			data.push({mpg:rec.mpg, date:rec.date});
+		}
+
+		return data;	
+	};
 }
 
 function Summary(){
