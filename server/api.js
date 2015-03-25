@@ -58,6 +58,7 @@ function Vehicle(values) {
 	this.serviceIDs=[];
 	this.fuelRecs=[];
 	this.serviceRecs=[];
+	this.avgRecs=[];
 
 	for (var k in values){
 		this[k] = values[k];
@@ -68,12 +69,21 @@ function Vehicle(values) {
 	};
 
 	this.getFuelRecs = function (){
+		var i,len;
 		this.fuelRecs.length = 0;
-		for (var i = 0, len = this.fuelIDs.length; i < len; i++){
+		this.avgRecs.length = 0;
+		for (i = 0, len = this.fuelIDs.length; i < len; i++){
 			this.fuelRecs.push(getFillUp(this.fuelIDs[i]));
 		}
 
 		utils.sortRecs(this.fuelRecs, 'date', false);
+
+		var tmpg = 0;
+		for (i = 0, len = this.fuelRecs.length; i < len; i++){
+			tmpg += this.fuelRecs[i].mpg;
+			this.avgRecs.push(parseFloat((tmpg/(i+1)).toFixed(2)));
+		}
+		
 	};
 
 	this.getServiceRecs = function (){
