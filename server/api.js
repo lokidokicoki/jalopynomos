@@ -68,6 +68,7 @@ function Vehicle(values) {
 	};
 
 	this.getFuelRecs = function (){
+		this.fuelRecs.length = 0;
 		for (var i = 0, len = this.fuelIDs.length; i < len; i++){
 			this.fuelRecs.push(getFillUp(this.fuelIDs[i]));
 		}
@@ -76,6 +77,7 @@ function Vehicle(values) {
 	};
 
 	this.getServiceRecs = function (){
+		this.serviceRecs.length = 0;
 		for (var i = 0, len = this.serviceIDs.length; i < len; i++){
 			this.serviceRecs.push(getService(this.serviceIDs[i]));
 		}
