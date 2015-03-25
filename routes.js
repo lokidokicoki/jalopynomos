@@ -73,11 +73,12 @@ module.exports = function(app, api) {
 
 	app.post('/mpg', function(req, res){
         var vehicle = api.getVehicle(req.body.vid);
-		var data = vehicle.getChartData().reverse();
+		var data  = vehicle.getChartData().reverse();
 		for(var i = 0, len = data.length; i< len; i++){
 			data[i].date = utils.formatDate(data[i].date);
 			data[i].mpg = parseFloat(data[i].mpg.toFixed(2));
 		}
-		res.send({vehicle:{title:vehicle.toString()}, data:data});
+
+		res.send({vehicle:{title:vehicle.toString()}, data:{mpg:data, avg:vehicle.avgRecs}});
 	});
 };
