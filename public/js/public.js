@@ -20,7 +20,6 @@ $(function() {
 
 
 function buildChart(vehicleID) {
-	//console.log('buildChart:',vehicleID);
     $.ajax({
         url: '/mpg',
         method: 'POST',
@@ -117,4 +116,74 @@ function doMpgChart(vehicle, data) {
         }
         return trend_line_data;
       }
+}
+function buildPPLChart() {
+    $.ajax({
+        url: '/ppl',
+        method: 'POST',
+        //async: false,
+        dataType: 'json',
+        success: function(res) {
+            doPplChart(res.data);
+        },
+        error: function(e) {
+            return console.error(e);
+        }
+    });
+}
+
+function newPplSeries(name, data){
+	var series = {name:name, data:[]};
+
+	for (var i = 0, len = data.length; i<len; i++){
+		series.data.push([data[i].date, data[i].ppl]);
+	}
+	return series;
+}
+
+function doPplChart(data) {
+	var xaxis = [];
+	var ySeries = [];
+	var i=0,len=0, mpg=null;
+
+	for(i in data.data){
+		ySeries.push(newPplSeries(i, data.data[i]));
+	}
+
+    var chart_linear = new Highcharts.Chart({
+		chart:{
+			zoomType:'x',
+			type:'spline',
+			renderTo: 'container'
+		},
+        title: {
+            text: 'Historic Fuel Price',
+            x: -20 //center
+        },
+        xAxis: {
+			type: 'datetime',
+        },
+        yAxis: {
+            title: {
+                text: 'Price per litre (£)'
+            },
+			labels:{format:'{value}'},
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+			headerFormat:'<b>{series.name}</b><br/>',
+            pointFormat:'{point.x:%e %b}: £{point.y:.3f}'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series:ySeries
+	});
 }

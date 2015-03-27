@@ -81,4 +81,9 @@ module.exports = function(app, api) {
 
 		res.send({vehicle:{title:vehicle.toString()}, data:{mpg:data, avg:vehicle.avgRecs}});
 	});
+
+	app.post('/ppl', function(req, res){
+		var data  = api.getHistoricFuelPrices();
+		res.send({data:data});
+	});
 };

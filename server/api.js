@@ -300,6 +300,34 @@ function getFuelTypes(){
 	return fts;
 }
 
+function getHistoricFuelPrices(){
+	'use strict';
+	var data = {}, i=0,len=0, rec, min=9007199254740992, max=0, dates=[];
+
+	for(i in fillUps){
+		rec = fillUps[i];
+		if (data[fuelTypes[rec.type]] === undefined){
+			data[fuelTypes[rec.type]] = [];
+		}
+		
+		data[fuelTypes[rec.type]].push({date:rec.date, ppl:rec.ppl});
+		dates.push(rec.date);
+		if (min> rec.date){
+			min= rec.date;
+		}
+		if (max< rec.date){
+			max= rec.date;
+		}
+	}
+
+	for(i in data){
+		data[i] = utils.sortRecs(data[i], 'date');
+	}
+
+	dates = _.uniq(dates).sort();
+	return {data:data, min:min, max:max, dates:dates};
+}
+
 module.exports = {
 	Vehicle:Vehicle,
 	Fuel:Fuel,
@@ -314,5 +342,6 @@ module.exports = {
 	getService:getService,
 	getFuelType:getFuelType,
 	getFuelTypes:getFuelTypes,
+	getHistoricFuelPrices:getHistoricFuelPrices,
 	addFillUp:addFillUp
 };
