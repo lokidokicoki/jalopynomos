@@ -14,6 +14,13 @@ module.exports = function(app, api) {
 		res.render('history');
 	});
 
+	app.get('/addVehicle', function(req, res){
+		res.render('addVehicle', {
+			fuelTypes:api.getFuelTypes()
+		});
+	});
+
+
 	// top level vehicle route
     app.get('/vehicle/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.id);
