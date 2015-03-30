@@ -1,0 +1,87 @@
+<h1>Add Vehicle</h1>
+
+
+<form class="form-horizontal" action="saveVehicle" method="POST">
+    <div class="form-group">
+        <label for="date" class="col-sm-3 control-label">Purchase date</label>
+        <div class="col-sm-9">
+            <input type="date" class="form-control" name="date" id="date" placeholder="date">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="cost" class="col-sm-3 control-label">Purchase price</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="cost" id="cost" placeholder="cost">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="litres" class="col-sm-3 control-label">Fuel type</label>
+        <div class="col-sm-9">
+            <select name="fuelType" class="form-control">
+				{{#each fuelTypes}}
+                <option value="{{this.[0]}}">{{this.[1]}}</option>
+                {{/each}}
+            </select>
+        </div>
+	</div>
+    <div class="form-group">
+        <label for="fuelCapacity" class="col-sm-3 control-label">Fuel capacity</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="fuelCapacity" id="fuelCapacity" placeholder="litres">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="oilCapacity" class="col-sm-3 control-label">Oil capacity</label>
+        <div class="col-sm-9">
+            <input type="number" step="0.1" class="form-control" name="oilCapacity" id="oilCapacity" placeholder="litres">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="oilType" class="col-sm-3 control-label">Oil type</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="oilType" id="oilType" placeholder="i.e 10w40">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tyreFrontType" class="col-sm-3 control-label">Front tyre size</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="tyreFrontType" id="tyreFrontType" placeholder="i.e. 195/55 R15">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tyreFrontCapacity" class="col-sm-3 control-label">Front Tyre capacity</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="tyreFrontCapacity" id="tyreFrontCapacity" placeholder="p.s.i">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tyreRearType" class="col-sm-3 control-label">Rear tyre size</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="tyreRearType" id="tyreRearType" placeholder="i.e. 195/55 R15">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tyreRearCapacity" class="col-sm-3 control-label">Rear Tyre capacity</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="tyreRearCapacity" id="tyreRearCapacity" placeholder="p.s.i">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="odo" class="col-sm-3 control-label">odometer</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="notes" class="col-sm-3 control-label">notes</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="notes" id="notes" placeholder="notes">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+			<a class="btn btn-warning" href="/">Cancel</a>
+        </div>
+    </div>
+</form>
