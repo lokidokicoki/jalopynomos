@@ -1,4 +1,5 @@
 var moment = require('moment');
+var _ = require('lodash');
 
 module.exports = {
     parseDate: function(dateString) {
@@ -20,6 +21,11 @@ module.exports = {
     formatMPG: function(mpg) {
         return mpg.toFixed(2);
     },
+
+	ensureNumber: function(value, _default){
+		value = parseFloat(value);
+		return _.isNumber(value) ? value : _default;
+	},
 
     sortRecs: function(objects, key, order) {
         order = (order === undefined) ? true : order;
