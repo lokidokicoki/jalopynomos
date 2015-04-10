@@ -1,17 +1,41 @@
 <h1>Add Vehicle</h1>
 
-
 <form class="form-horizontal" action="saveVehicle" method="POST">
     <div class="form-group">
-        <label for="date" class="col-sm-3 control-label">Purchase date</label>
+        <label for="make" class="col-sm-3 control-label">Make</label>
         <div class="col-sm-9">
-            <input type="date" class="form-control" name="date" id="date" placeholder="date">
+            <input type="text" class="form-control" required name="make" id="make" placeholder="Ford">
         </div>
     </div>
     <div class="form-group">
-        <label for="cost" class="col-sm-3 control-label">Purchase price</label>
+        <label for="type" class="col-sm-3 control-label">Model</label>
         <div class="col-sm-9">
-            <input type="number" step="1" class="form-control" name="price" id="price" placeholder="price">
+            <input type="text" class="form-control" required name="type" id="type" placeholder="Capri">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="regNo" class="col-sm-3 control-label">Registration</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control text-uppercase" required name="regNo" id="regNo" placeholder="ULH495X">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="year" class="col-sm-3 control-label">Year</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" required name="year" id="year" placeholder="1981">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="purchaseDate" class="col-sm-3 control-label">Purchase date</label>
+        <div class="col-sm-9">
+            <input type="date" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="date">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="purchasePrice" class="col-sm-3 control-label">Purchase price</label>
+        <div class="col-sm-9">
+            <input type="number" step="1" class="form-control" name="purchasePrice" id="purchasePrice" placeholder="price">
         </div>
     </div>
     <div class="form-group">
@@ -39,13 +63,13 @@
     <div class="form-group">
         <label for="oilType" class="col-sm-3 control-label">Oil type</label>
         <div class="col-sm-9">
-            <input type="number" step="1" class="form-control" name="oilType" id="oilType" placeholder="i.e 10w40">
+            <input type="text" class="form-control" name="oilType" id="oilType" placeholder="i.e 10w40">
         </div>
     </div>
     <div class="form-group">
         <label for="tyreFrontType" class="col-sm-3 control-label">Front tyre size</label>
         <div class="col-sm-9">
-            <input type="number" step="1" class="form-control" name="tyreFrontType" id="tyreFrontType" placeholder="i.e. 195/55 R15">
+            <input type="text" class="form-control text-uppercase" name="tyreFrontType" id="tyreFrontType" placeholder="i.e. 195/55 R15">
         </div>
     </div>
     <div class="form-group">
@@ -57,7 +81,7 @@
     <div class="form-group">
         <label for="tyreRearType" class="col-sm-3 control-label">Rear tyre size</label>
         <div class="col-sm-9">
-            <input type="number" step="1" class="form-control" name="tyreRearType" id="tyreRearType" placeholder="i.e. 195/55 R15">
+            <input type="text" class="form-control text-uppercase" name="tyreRearType" id="tyreRearType" placeholder="i.e. 195/55 R15">
         </div>
     </div>
     <div class="form-group">

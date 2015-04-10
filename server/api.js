@@ -5,7 +5,7 @@
  */
 
 var _ = require('lodash');
-var utils = require('./utils');
+var U = require('./utils');
 var fs = require('fs-extra');
 var path = require('path');
 
@@ -20,6 +20,7 @@ var fuelTypes = {
 var LITRES_IN_GALLON = 4.54609;
 var GALLONS_IN_LITRE = 0.219969;
 var dataFile = '';
+var _maxVehicleId = 0;
 
 /**
  * @constructor
@@ -76,7 +77,7 @@ function Vehicle(values) {
 			this.fuelRecs.push(getFillUp(this.fuelIDs[i]));
 		}
 
-		utils.sortRecs(this.fuelRecs, 'date', false);
+		U.sortRecs(this.fuelRecs, 'date', false);
 
 		var tmpg = 0;
 		for (i = 0, len = this.fuelRecs.length; i < len; i++){
@@ -92,7 +93,7 @@ function Vehicle(values) {
 			this.serviceRecs.push(getService(this.serviceIDs[i]));
 		}
 
-		utils.sortRecs(this.serviceRecs, 'date', false);
+		U.sortRecs(this.serviceRecs, 'date', false);
 	};
 
 	this.getChartData = function (type){
@@ -140,11 +141,11 @@ function Fuel(values) {
 
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
-		var data = utils.formatDate(this.date) + ' | ' + 
-			utils.formatCost(this.cost) + ' | ' + 
+		var data = U.formatDate(this.date) + ' | ' + 
+			U.formatCost(this.cost) + ' | ' + 
 			this.litres + ' | ' + 
 			this.trip + ' | ' + 
-			utils.formatMPG(this.mpg);
+			U.formatMPG(this.mpg);
 		
 		return data;
 	};
@@ -180,8 +181,8 @@ function Service(values) {
 
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
-		var data = utils.formatDate(this.date) + ' | ' + 
-			utils.formatCost(this.cost) + ' | ' + 
+		var data = U.formatDate(this.date) + ' | ' + 
+			U.formatCost(this.cost) + ' | ' + 
 			this.odo + ' | ' + 
 			this.item;
 		
@@ -214,6 +215,9 @@ function load(fileName){
 		record.getFuelRecs();
 		record.getServiceRecs();
 		vehicles[record.id] = record;
+		if (record.id > _maxVehicleId){
+			_maxVehicleId = record.id;
+		}
 	}
 
 }
@@ -292,6 +296,55 @@ function addFillUp(vehicle, data){
 	return fillUp;
 }
 
+function addVehicle(data){
+	'use strict';
+	var vehicle = {};
+
+	console.log(data);
+
+	// massage incoming data to match expected, then create 'new' Vehicle.
+	data.purchase={price:parseFloat(data.purchasePrice), date:U.parseDate(data.purchaseDate)}; 
+	delete data.purchasePrice;
+	delete data.purchaseDate;
+
+	data.fuel={capacity:U.ensureNumber(data.fuelCapacity, 0), type:data.fuelType}; 
+	delete data.fuelCapacity;
+	delete data.fuelType;
+
+	data.oil={capacity:U.ensureNumber(data.oilCapacity, 0), type:data.oilType}; 
+	delete data.oilCapacity;
+	delete data.oilType;
+
+	data.tyres={
+		front:{
+			capacity:U.ensureNumber(data.tyreFrontCapacity, 0),
+			type: data.tyreFrontType.toUpperCase()
+		},
+		rear:{
+			capacity:U.ensureNumber(data.tyreRearCapacity, 0),
+			type: data.tyreRearType.toUpperCase()
+		}
+	};
+	delete data.tyreFrontType;
+	delete data.tyreFrontCapacity;
+	delete data.tyreRearType;
+	delete data.tyreRearCapacity;
+
+	data.regNo = data.regNo.toUpperCase();
+	data.year = U.ensureNumber(data.year, 0);
+	data.odo = U.ensureNumber(data.odo, 0);
+
+	data.id = ++_maxVehicleId;
+
+	vehicle = new Vehicle(data);
+	console.log(vehicle);
+
+	vehicles[vehicle.id] = vehicle;
+
+	save();
+	return vehicle;
+}
+
 function getFuelTypes(){
 	var fts = [];
 	for (var k in fuelTypes){
@@ -321,7 +374,7 @@ function getHistoricFuelPrices(){
 	}
 
 	for(i in data){
-		data[i] = utils.sortRecs(data[i], 'date');
+		data[i] = U.sortRecs(data[i], 'date');
 	}
 
 	dates = _.uniq(dates).sort();
@@ -343,5 +396,6 @@ module.exports = {
 	getFuelType:getFuelType,
 	getFuelTypes:getFuelTypes,
 	getHistoricFuelPrices:getHistoricFuelPrices,
-	addFillUp:addFillUp
+	addFillUp:addFillUp,
+	addVehicle:addVehicle
 };

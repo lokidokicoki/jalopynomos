@@ -20,6 +20,13 @@ module.exports = function(app, api) {
 		});
 	});
 
+	app.post('/saveVehicle', function(req, res){
+		var vehicle = api.addVehicle(req.body);
+		res.render('index', {
+			vehicles:api.getVehicleArray()
+		});
+	});
+
 
 	// top level vehicle route
     app.get('/vehicle/:id', function(req, res) {
