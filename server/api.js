@@ -84,6 +84,7 @@ function Vehicle(values) {
 			tmpg += this.fuelRecs[i].mpg;
 			this.avgRecs.push(parseFloat((tmpg/(i+1)).toFixed(2)));
 		}
+		return this.fuelRecs;
 		
 	};
 
@@ -312,11 +313,18 @@ function addFillUp(vehicle, data){
 	return fillUp;
 }
 
+/**
+ * Add new vehicle to collection.
+ *
+ * Saves to data store.
+ * @param {object} data form data for new vehicle
+ * @return {Vehicle} new vehicle record
+ */
 function addVehicle(data){
 	'use strict';
 	var vehicle = {};
 
-	console.log(data);
+	//console.log(data);
 
 	// massage incoming data to match expected, then create 'new' Vehicle.
 	data.purchase={price:parseFloat(data.purchasePrice), date:U.parseDate(data.purchaseDate)}; 

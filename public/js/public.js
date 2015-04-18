@@ -187,3 +187,11 @@ function doPplChart(data) {
         series:ySeries
 	});
 }
+
+function calcTrip(oldOdo, newOdo){
+	$('#trip').val(parseInt(newOdo) - oldOdo);
+}
+
+function calcPPL(){
+	$('#ppl').val(parseFloat($('#cost').val())/parseFloat($('#litres').val()));
+}

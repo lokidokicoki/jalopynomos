@@ -49,9 +49,11 @@ module.exports = function(app, api) {
 
     app.get('/vehicle/:vid/addFillup', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
+		var fillUp = vehicle.fuelRecs[0];
         res.render('addFillup', {
             vehicle: {title:vehicle.toString(), id:vehicle.id, fuelType:vehicle.fuel.type},
-			fuelTypes:api.getFuelTypes()
+			fuelTypes:api.getFuelTypes(),
+			fillUp:fillUp
         });
     });
 
