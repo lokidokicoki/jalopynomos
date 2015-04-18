@@ -233,8 +233,23 @@ function save(){
  */
 function get(){
 	'use strict';
+
+	var v = _.cloneDeep(vehicles);
+
+	// clean out calculated stuff.
+	for(var k in v){
+		var obj = v[k];
+		delete obj.fuelRecs;
+		delete obj.serviceRecs;
+		delete obj.avgRecs;
+		delete obj.getFuelRecs;
+		delete obj.getServiceRecs;
+		delete obj.getChartData;
+		delete obj.toString;
+	}
+
 	var data = {
-		vehicles:vehicles,
+		vehicles:v,
 		fillUps:fillUps,
 		services:services
 	};
@@ -291,6 +306,7 @@ function addFillUp(vehicle, data){
 	fillUp.calculatePPL();
 	fillUps[fillUp.id] = fillUp;
 	vehicle.fuelIDs.push(fillUp.id);
+	vehicle.getFuelRecs();
 
 	save();
 	return fillUp;
