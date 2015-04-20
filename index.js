@@ -14,8 +14,8 @@ api.load('data/records.json');
 hbs.registerHelper('getFuelType', function(type) {
     return api.getFuelType(type);
 });
-hbs.registerHelper('formatDate', function(dateString) {
-    return utils.formatDate(dateString);
+hbs.registerHelper('formatDate', function(dateString, isInput) {
+    return utils.formatDate(dateString, isInput);
 });
 
 hbs.registerHelper('formatCost', function(cost, options) {
@@ -32,6 +32,10 @@ hbs.registerHelper('fuelSummary', function(id) {
 
 hbs.registerHelper('serviceSummary', function(id) {
     return api.getService(id).toString();
+});
+
+hbs.registerHelper('log', function(obj) {
+    console.log(obj);
 });
 
 hbs.registerHelper('ifeq', function(a, b, options) {

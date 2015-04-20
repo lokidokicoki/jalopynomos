@@ -5,17 +5,17 @@ module.exports = function(app, api) {
 		res.render('index', {vehicles:api.getVehicleArray()});
 	});
 	app.get('/about', function(req, res) {
-		res.render('about');
+		res.render('misc/about');
 	});
 	app.get('/contact', function(req, res) {
-		res.render('contact');
+		res.render('misc/contact');
 	});
 	app.get('/history', function(req, res) {
-		res.render('history');
+		res.render('misc/history');
 	});
 
 	app.get('/addVehicle', function(req, res){
-		res.render('addVehicle', {
+		res.render('vehicle/add', {
 			fuelTypes:api.getFuelTypes()
 		});
 	});
@@ -31,17 +31,34 @@ module.exports = function(app, api) {
 	// top level vehicle route
     app.get('/vehicle/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.id);
-        res.render('vehicle', {
+        res.render('vehicle/details', {
             title: vehicle.toString(),
             vehicle: vehicle
         });
     });
 
+    app.get('/vehicle/:id/edit', function(req, res) {
+        var vehicle = api.getVehicle(req.params.id);
+        res.render('vehicle/edit', {
+            title: vehicle.toString(),
+            vehicle: vehicle,
+			fuelTypes:api.getFuelTypes()
+        });
+    });
+
+	app.post('/vehicle/:id/update', function(req, res){
+		var vehicle = api.updateVehicle(req.body);
+        res.render('vehicle/details', {
+            title: vehicle.toString(),
+            vehicle: vehicle
+        });
+	});
+
 	// fillup routes - view/add/save
     app.get('/vehicle/:vid/fuel/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var fuel = api.getFillUp(req.params.id);
-        res.render('fuel', {
+        res.render('fuel/details', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel
         });
@@ -50,7 +67,7 @@ module.exports = function(app, api) {
     app.get('/vehicle/:vid/addFillup', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
 		var fillUp = vehicle.fuelRecs[0];
-        res.render('addFillup', {
+        res.render('fuel/add', {
             vehicle: {title:vehicle.toString(), id:vehicle.id, fuelType:vehicle.fuel.type},
 			fuelTypes:api.getFuelTypes(),
 			fillUp:fillUp
@@ -61,7 +78,7 @@ module.exports = function(app, api) {
         var vehicle = api.getVehicle(req.params.vid);
 		req.body.date = utils.parseDate(req.body.date);
 		var fuel = api.addFillUp(vehicle, req.body);
-		res.render('fuel', {
+		res.render('fuel/details', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel,
 			canAdd:true
@@ -72,7 +89,7 @@ module.exports = function(app, api) {
     app.get('/vehicle/:vid/service/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var service = api.getService(req.params.id);
-        res.render('service', {
+        res.render('service/details', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             service: service
         });
@@ -82,7 +99,7 @@ module.exports = function(app, api) {
     app.get('/vehicle/:vid/mpgChart', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
 		
-        res.render('mpgChart', {
+        res.render('misc/mpgChart', {
             vehicle: {title:vehicle.toString(), id:vehicle.id}
         });
     });

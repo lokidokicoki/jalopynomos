@@ -369,6 +369,35 @@ function addVehicle(data){
 	return vehicle;
 }
 
+function updateVehicle(data){
+	'use strict';
+	console.log(data);
+	var vehicle = vehicles[data.id];
+
+	// massage incoming data to match expected, then create 'new' Vehicle.
+	vehicle.purchase={price:parseFloat(data.purchasePrice), date:U.parseDate(data.purchaseDate)}; 
+	vehicle.fuel={capacity:U.ensureNumber(data.fuelCapacity, 0), type:data.fuelType}; 
+	vehicle.oil={capacity:U.ensureNumber(data.oilCapacity, 0), type:data.oilType}; 
+
+	vehicle.tyres={
+		front:{
+			capacity:U.ensureNumber(data.tyreFrontCapacity, 0),
+			type: data.tyreFrontType.toUpperCase()
+		},
+		rear:{
+			capacity:U.ensureNumber(data.tyreRearCapacity, 0),
+			type: data.tyreRearType.toUpperCase()
+		}
+	};
+
+	vehicle.regNo = data.regNo.toUpperCase();
+	vehicle.year = U.ensureNumber(data.year, 0);
+	vehicle.odo = U.ensureNumber(data.odo, 0);
+
+	save();
+	return vehicle;
+}
+
 function getFuelTypes(){
 	var fts = [];
 	for (var k in fuelTypes){
@@ -421,5 +450,6 @@ module.exports = {
 	getFuelTypes:getFuelTypes,
 	getHistoricFuelPrices:getHistoricFuelPrices,
 	addFillUp:addFillUp,
-	addVehicle:addVehicle
+	addVehicle:addVehicle,
+	updateVehicle:updateVehicle
 };

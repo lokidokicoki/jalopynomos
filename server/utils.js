@@ -6,8 +6,12 @@ module.exports = {
         return moment(dateString, 'YYYY-MM-DD').valueOf();
     },
 
-    formatDate: function(dateString) {
-        return moment(dateString).format('YYYY/MM/DD');
+    formatDate: function(dateString, isInput) {
+        if (isInput && isInput !== undefined) {
+            return moment(dateString).format('YYYY-MM-DD');
+        } else {
+            return moment(dateString).format('YYYY/MM/DD');
+        }
     },
 
     formatCost: function(cost, options) {
@@ -22,10 +26,10 @@ module.exports = {
         return mpg.toFixed(2);
     },
 
-	ensureNumber: function(value, _default){
-		value = parseFloat(value);
-		return _.isNumber(value) ? value : _default;
-	},
+    ensureNumber: function(value, _default) {
+        value = parseFloat(value);
+        return _.isNumber(value) ? value : _default;
+    },
 
     sortRecs: function(objects, key, order) {
         order = (order === undefined) ? true : order;
