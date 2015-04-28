@@ -193,5 +193,6 @@ function calcTrip(oldOdo, newOdo){
 }
 
 function calcPPL(){
-	$('#ppl').val(parseFloat($('#cost').val())/parseFloat($('#litres').val()));
+	var ppl = parseFloat($('#cost').val())/parseFloat($('#litres').val());
+	$('#ppl').val(ppl.toFixed(3));
 }
