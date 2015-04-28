@@ -361,7 +361,6 @@ function addVehicle(data){
 	data.id = ++_maxVehicleId;
 
 	vehicle = new Vehicle(data);
-	console.log(vehicle);
 
 	vehicles[vehicle.id] = vehicle;
 
@@ -371,7 +370,6 @@ function addVehicle(data){
 
 function updateVehicle(data){
 	'use strict';
-	console.log(data);
 	var vehicle = vehicles[data.id];
 
 	// massage incoming data to match expected, then create 'new' Vehicle.
@@ -397,6 +395,27 @@ function updateVehicle(data){
 	save();
 	return vehicle;
 }
+
+function updateFillUp(vehicle, data){
+	'use strict';
+	var fillUp = fillUps[data.id];
+
+	fillUp.odo = parseInt(data.odo);
+	fillUp.litres = parseFloat(data.litres);
+	fillUp.trip = parseFloat(data.trip);
+	fillUp.ppl = parseFloat(data.ppl);
+	fillUp.cost = parseFloat(data.cost);
+	fillUp.date = parseInt(data.date);
+
+	//TODO: need some validation!
+	fillUp.calculateMPG();
+	fillUp.calculatePPL();
+	vehicle.getFuelRecs();
+
+	save();
+	return fillUp;
+}
+
 
 function getFuelTypes(){
 	var fts = [];
@@ -450,6 +469,7 @@ module.exports = {
 	getFuelTypes:getFuelTypes,
 	getHistoricFuelPrices:getHistoricFuelPrices,
 	addFillUp:addFillUp,
+	updateFillUp:updateFillUp,
 	addVehicle:addVehicle,
 	updateVehicle:updateVehicle
 };

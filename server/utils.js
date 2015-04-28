@@ -7,11 +7,7 @@ module.exports = {
     },
 
     formatDate: function(dateString, isInput) {
-        if (isInput && isInput !== undefined) {
-            return moment(dateString).format('YYYY-MM-DD');
-        } else {
-            return moment(dateString).format('YYYY/MM/DD');
-        }
+        return moment(dateString).format('YYYY-MM-DD');
     },
 
     formatCost: function(cost, options) {
