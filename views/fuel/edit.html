@@ -1,18 +1,19 @@
-<h1>{{vehicle.title}} | Add Fill up</h1>
+<h1>{{vehicle.title}} | Edit Fill up</h1>
 
 
-<form class="form-horizontal" action="saveFillup" method="POST">
+<form class="form-horizontal" action="update" method="POST">
+	<input type="hidden" name="id" id="id" value="{{fuel.id}}">
     <div class="form-group">
         <label for="date" class="col-sm-2 control-label">Date</label>
         <div class="col-sm-10">
-            <input type="date" class="form-control" name="date" id="date" placeholder="Email">
+            <input type="date" class="form-control" name="date" id="date" placeholder="date" value="{{formatDate fuel.date true}}">
         </div>
     </div>
     <div class="form-group">
         <label for="litres" class="col-sm-2 control-label">Fuel type</label>
         <div class="col-sm-10">
             <select name="type" class="form-control">
-                {{#each fuelTypes}} {{#ifeq ../vehicle.fuelType this.[0]}}
+                {{#each fuelTypes}} {{#ifeq ../fuel.type this.[0]}}
                 <option value="{{this.[0]}}" selected>{{this.[1]}}</option>
                 {{else}}
                 <option value="{{this.[0]}}">{{this.[1]}}</option>
@@ -23,37 +24,37 @@
     <div class="form-group">
         <label for="litres" class="col-sm-2 control-label">Litres</label>
         <div class="col-sm-10">
-            <input type="number" step="0.01" required class="form-control" name="litres" id="litres" placeholder="litres">
+			<input type="number" step="0.01" required class="form-control" name="litres" id="litres" placeholder="litres" value="{{fuel.litres}}">
         </div>
     </div>
     <div class="form-group">
         <label for="odo" class="col-sm-2 control-label">odometer</label>
         <div class="col-sm-10">
-			<input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer" onchange="calcTrip({{fillUp.odo}}, this.value);">
+			<input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer" value="{{fuel.odo}}" onchange="calcTrip({{fuel.odo}}, this.value);">
         </div>
     </div>
     <div class="form-group">
         <label for="trip" class="col-sm-2 control-label">trip</label>
         <div class="col-sm-10">
-            <input type="number" step="0.1" class="form-control" name="trip" id="trip" placeholder="trip">
+			<input type="number" step="0.1" class="form-control" name="trip" id="trip" placeholder="trip" value="{{fuel.trip}}">
         </div>
     </div>
     <div class="form-group">
         <label for="cost" class="col-sm-2 control-label">cost</label>
         <div class="col-sm-10">
-            <input type="number" step="0.01" class="form-control" name="cost" id="cost" placeholder="cost" onchange="calcPPL();">
+			<input type="number" step="0.01" class="form-control" name="cost" id="cost" placeholder="cost" value="{{fuel.cost}}" onchange="calcPPL();">
         </div>
     </div>
     <div class="form-group">
         <label for="ppl" class="col-sm-2 control-label">ppl</label>
         <div class="col-sm-10">
-            <input type="number" step="0.001" class="form-control" name="ppl" id="ppl" placeholder="ppl">
+			<input type="number" step="0.001" class="form-control" name="ppl" id="ppl" placeholder="ppl" value="{{fuel.ppl}}">
         </div>
     </div>
     <div class="form-group">
         <label for="notes" class="col-sm-2 control-label">notes</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="notes" id="notes" placeholder="notes">
+			<input type="text" class="form-control" name="notes" id="notes" placeholder="notes" value="{{fuel.notes}}">
         </div>
     </div>
     <div class="form-group">
@@ -62,16 +63,6 @@
         </div>
     </div>
 </form>
-<!--
-Purchase date : {{fuel.date}}<br/>
-Litres: {{fuel.litres}}<br/>
-Price/litre: {{fuel.ppl dp=3}}<br/>
-Trip: {{fuel.trip}}<br/>
-Odometer: {{fuel.odo}}<br/>
-Cost: {{fuel.cost}}<br/>
-Fuel type: {{fuel.type}}<br/>
-MPG: {{fuel.mpg}}<br/>
-Notes: {{fuel.notes}}<br/>
--->
+
 Back to <a href="/vehicle/{{vehicle.id}}">{{vehicle.title}}</a>
 <br/>
