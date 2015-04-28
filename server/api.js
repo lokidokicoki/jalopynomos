@@ -396,6 +396,24 @@ function updateVehicle(data){
 	return vehicle;
 }
 
+function removeVehicle(id){
+	'use strict';
+
+	var vehicle = vehicles[id], i = 0, len = 0;
+
+	// remove fuel recs for this vehicle
+	for (i = 0, len = vehicle.fuelIDs.length; i < len; i++){
+		delete fillUps[''+vehicle.fuelIDs[i]];
+	}
+	for (i = 0, len = vehicle.serviceIDs.length; i < len; i++){
+		delete services[''+vehicle.serviceIDs[i]];
+	}
+
+	vehicle = null;
+	delete vehicles[id];
+	save();
+}
+
 function updateFillUp(vehicle, data){
 	'use strict';
 	var fillUp = fillUps[data.id];
@@ -471,5 +489,6 @@ module.exports = {
 	addFillUp:addFillUp,
 	updateFillUp:updateFillUp,
 	addVehicle:addVehicle,
-	updateVehicle:updateVehicle
+	updateVehicle:updateVehicle,
+	removeVehicle:removeVehicle
 };

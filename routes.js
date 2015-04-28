@@ -46,6 +46,11 @@ module.exports = function(app, api) {
         });
     });
 
+    app.get('/vehicle/:id/remove', function(req, res) {
+        api.removeVehicle(req.params.id);
+		res.render('index', {vehicles:api.getVehicleArray()});
+    });
+
 	app.post('/vehicle/:id/update', function(req, res){
 		var vehicle = api.updateVehicle(req.body);
         res.render('vehicle/details', {
