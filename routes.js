@@ -54,13 +54,33 @@ module.exports = function(app, api) {
         });
 	});
 
-	// fillup routes - view/add/save
+	// fillup routes - view/add//edit/save
     app.get('/vehicle/:vid/fuel/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var fuel = api.getFillUp(req.params.id);
         res.render('fuel/details', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel
+        });
+    });
+
+    app.get('/vehicle/:vid/fuel/:id/edit', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+        var fuel = api.getFillUp(req.params.id);
+        res.render('fuel/edit', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            fuel: fuel,
+			fuelTypes:api.getFuelTypes()
+        });
+    });
+
+    app.post('/vehicle/:vid/fuel/:id/update', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+		req.body.date = utils.parseDate(req.body.date);
+		var fillUp = api.updateFillUp(vehicle, req.body);
+        res.render('vehicle/details', {
+            title: vehicle.toString(),
+            vehicle: vehicle
         });
     });
 
