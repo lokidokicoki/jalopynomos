@@ -442,6 +442,17 @@ function removeFillUp(vehicle, id){
 	save();
 }
 
+function removeService(vehicle, id){
+	'use strict';
+
+	var idx = vehicle.serviceIDs.indexOf(parseInt(id));
+	vehicle.serviceIDs.splice(idx, 1);
+	delete services[''+id];
+	vehicle.getServiceRecs();
+
+	save();
+}
+
 function updateFillUp(vehicle, data){
 	'use strict';
 	var fillUp = fillUps[data.id];
@@ -520,5 +531,6 @@ module.exports = {
 	updateVehicle:updateVehicle,
 	removeVehicle:removeVehicle,
 	removeFillUp:removeFillUp,
-	addService:addService
+	addService:addService,
+	removeService:removeService
 };

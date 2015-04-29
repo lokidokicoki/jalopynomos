@@ -126,6 +126,16 @@ module.exports = function(app, api) {
             vehicle: {title:vehicle.toString(), id:vehicle.id}
         });
     });
+
+    app.get('/vehicle/:vid/service/:id/remove', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+       	api.removeService(vehicle, req.params.id);
+        res.render('vehicle/details', {
+            title: vehicle.toString(),
+            vehicle: vehicle
+        });
+    });
+
 	app.post('/vehicle/:vid/service/save', function(req, res){
         var vehicle = api.getVehicle(req.params.vid);
 		req.body.date = utils.parseDate(req.body.date);
