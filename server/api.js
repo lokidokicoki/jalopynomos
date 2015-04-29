@@ -175,10 +175,10 @@ function Service(values) {
 	for (var k in values){
 		this[k] = values[k];
 	}
+
 	if (this.id === null || this.id === undefined){
 		this.id = _.size(services) + 1;
 	}
-
 
 	this.toString = function(){
 		// date | cost | litres | trip | odo | mpg
@@ -189,7 +189,6 @@ function Service(values) {
 		
 		return data;
 	};
-
 }
 
 /**
@@ -311,6 +310,24 @@ function addFillUp(vehicle, data){
 
 	save();
 	return fillUp;
+}
+
+function addService(vehicle, data){
+	'use strict';
+	var service;
+
+	data.odo = parseInt(data.odo);
+	data.cost = parseFloat(data.cost);
+	data.date = parseInt(data.date);
+
+	//TODO: need some validation!
+	service = new Service(data);
+	services[service.id] = service;
+	vehicle.serviceIDs.push(service.id);
+	vehicle.getServiceRecs();
+
+	save();
+	return service;
 }
 
 /**
@@ -502,5 +519,6 @@ module.exports = {
 	addVehicle:addVehicle,
 	updateVehicle:updateVehicle,
 	removeVehicle:removeVehicle,
-	removeFillUp:removeFillUp
+	removeFillUp:removeFillUp,
+	addService:addService
 };

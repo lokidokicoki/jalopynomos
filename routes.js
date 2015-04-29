@@ -120,6 +120,24 @@ module.exports = function(app, api) {
 	});
 
 	// service routes
+    app.get('/vehicle/:vid/service/add', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+        res.render('service/add', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id}
+        });
+    });
+	app.post('/vehicle/:vid/service/save', function(req, res){
+        var vehicle = api.getVehicle(req.params.vid);
+		req.body.date = utils.parseDate(req.body.date);
+		var service = api.addService(vehicle, req.body);
+		res.render('service/details', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            service: service,
+			canAdd:true
+		});
+	});
+
+
     app.get('/vehicle/:vid/service/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var service = api.getService(req.params.id);
