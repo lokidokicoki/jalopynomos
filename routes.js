@@ -136,6 +136,25 @@ module.exports = function(app, api) {
         });
     });
 
+    app.get('/vehicle/:vid/service/:id/edit', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+        var service = api.getService(req.params.id);
+        res.render('service/edit', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            service: service
+        });
+    });
+
+    app.post('/vehicle/:vid/service/:id/update', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+		req.body.date = utils.parseDate(req.body.date);
+		var service = api.updateService(vehicle, req.body);
+        res.render('vehicle/details', {
+            title: vehicle.toString(),
+            vehicle: vehicle
+        });
+    });
+
 	app.post('/vehicle/:vid/service/save', function(req, res){
         var vehicle = api.getVehicle(req.params.vid);
 		req.body.date = utils.parseDate(req.body.date);

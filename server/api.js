@@ -463,6 +463,7 @@ function updateFillUp(vehicle, data){
 	fillUp.ppl = parseFloat(data.ppl);
 	fillUp.cost = parseFloat(data.cost);
 	fillUp.date = parseInt(data.date);
+	fillUp.notes = data.notes;
 
 	//TODO: need some validation!
 	fillUp.calculateMPG();
@@ -473,6 +474,22 @@ function updateFillUp(vehicle, data){
 	return fillUp;
 }
 
+function updateService(vehicle, data){
+	'use strict';
+	var service = services[data.id];
+
+	service.odo = parseInt(data.odo);
+	service.cost = parseFloat(data.cost);
+	service.date = parseInt(data.date);
+	service.item = data.item;
+	service.notes = data.notes;
+
+	//TODO: need some validation!
+	vehicle.getServiceRecs();
+
+	save();
+	return service;
+}
 
 function getFuelTypes(){
 	var fts = [];
@@ -527,6 +544,7 @@ module.exports = {
 	getHistoricFuelPrices:getHistoricFuelPrices,
 	addFillUp:addFillUp,
 	updateFillUp:updateFillUp,
+	updateService:updateService,
 	addVehicle:addVehicle,
 	updateVehicle:updateVehicle,
 	removeVehicle:removeVehicle,
