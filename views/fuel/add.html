@@ -1,7 +1,7 @@
 <h1>{{vehicle.title}} | Add Fill up</h1>
 
 
-<form class="form-horizontal" action="saveFillup" method="POST">
+<form class="form-horizontal" action="save" method="POST">
     <div class="form-group">
         <label for="date" class="col-sm-2 control-label">Date</label>
         <div class="col-sm-10">
@@ -62,16 +62,5 @@
         </div>
     </div>
 </form>
-<!--
-Purchase date : {{fuel.date}}<br/>
-Litres: {{fuel.litres}}<br/>
-Price/litre: {{fuel.ppl dp=3}}<br/>
-Trip: {{fuel.trip}}<br/>
-Odometer: {{fuel.odo}}<br/>
-Cost: {{fuel.cost}}<br/>
-Fuel type: {{fuel.type}}<br/>
-MPG: {{fuel.mpg}}<br/>
-Notes: {{fuel.notes}}<br/>
--->
 Back to <a href="/vehicle/{{vehicle.id}}">{{vehicle.title}}</a>
 <br/>

@@ -14,13 +14,13 @@ module.exports = function(app, api) {
 		res.render('misc/history');
 	});
 
-	app.get('/addVehicle', function(req, res){
+	app.get('/vehicle/add', function(req, res){
 		res.render('vehicle/add', {
 			fuelTypes:api.getFuelTypes()
 		});
 	});
 
-	app.post('/saveVehicle', function(req, res){
+	app.post('/vehicle/save', function(req, res){
 		var vehicle = api.addVehicle(req.body);
 		res.render('index', {
 			vehicles:api.getVehicleArray()
@@ -59,7 +59,28 @@ module.exports = function(app, api) {
         });
 	});
 
-	// fillup routes - view/add//edit/save
+	// fillup routes - add/save/details/remove/edit/update
+    app.get('/vehicle/:vid/fuel/add', function(req, res) {
+        var vehicle = api.getVehicle(req.params.vid);
+		var fillUp = vehicle.fuelRecs[0];
+        res.render('fuel/add', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id, fuelType:vehicle.fuel.type},
+			fuelTypes:api.getFuelTypes(),
+			fillUp:fillUp
+        });
+    });
+
+	app.post('/vehicle/:vid/fuel/save', function(req, res){
+        var vehicle = api.getVehicle(req.params.vid);
+		req.body.date = utils.parseDate(req.body.date);
+		var fuel = api.addFillUp(vehicle, req.body);
+		res.render('fuel/details', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            fuel: fuel,
+			canAdd:true
+		});
+	});
+
     app.get('/vehicle/:vid/fuel/:id', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         var fuel = api.getFillUp(req.params.id);
@@ -98,34 +119,24 @@ module.exports = function(app, api) {
         });
     });
 
-    app.get('/vehicle/:vid/addFillup', function(req, res) {
-        var vehicle = api.getVehicle(req.params.vid);
-		var fillUp = vehicle.fuelRecs[0];
-        res.render('fuel/add', {
-            vehicle: {title:vehicle.toString(), id:vehicle.id, fuelType:vehicle.fuel.type},
-			fuelTypes:api.getFuelTypes(),
-			fillUp:fillUp
-        });
-    });
-
-	app.post('/vehicle/:vid/saveFillup', function(req, res){
-        var vehicle = api.getVehicle(req.params.vid);
-		req.body.date = utils.parseDate(req.body.date);
-		var fuel = api.addFillUp(vehicle, req.body);
-		res.render('fuel/details', {
-            vehicle: {title:vehicle.toString(), id:vehicle.id},
-            fuel: fuel,
-			canAdd:true
-		});
-	});
-
-	// service routes
+	// service routes add/save/remove/edit/update/details
     app.get('/vehicle/:vid/service/add', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         res.render('service/add', {
             vehicle: {title:vehicle.toString(), id:vehicle.id}
         });
     });
+
+	app.post('/vehicle/:vid/service/save', function(req, res){
+        var vehicle = api.getVehicle(req.params.vid);
+		req.body.date = utils.parseDate(req.body.date);
+		var service = api.addService(vehicle, req.body);
+		res.render('service/details', {
+            vehicle: {title:vehicle.toString(), id:vehicle.id},
+            service: service,
+			canAdd:true
+		});
+	});
 
     app.get('/vehicle/:vid/service/:id/remove', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
@@ -154,17 +165,6 @@ module.exports = function(app, api) {
             vehicle: vehicle
         });
     });
-
-	app.post('/vehicle/:vid/service/save', function(req, res){
-        var vehicle = api.getVehicle(req.params.vid);
-		req.body.date = utils.parseDate(req.body.date);
-		var service = api.addService(vehicle, req.body);
-		res.render('service/details', {
-            vehicle: {title:vehicle.toString(), id:vehicle.id},
-            service: service,
-			canAdd:true
-		});
-	});
 
 
     app.get('/vehicle/:vid/service/:id', function(req, res) {

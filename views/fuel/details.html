@@ -11,7 +11,7 @@ MPG: {{formatMPG fuel.mpg}}<br/>
 Notes: {{fuel.notes}}<br/>
 
 <!-- Modal -->
-<div class="modal" id="removeFuelModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal" id="removeFuelModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -30,8 +30,8 @@ Notes: {{fuel.notes}}<br/>
   </div>
 </div>
 {{#if canAdd}}
-	<a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}/addFillup">Add another</a>
+	<a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}/fuel/add">Add another</a>
 {{/if}}
 <a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}/fuel/{{fuel.id}}/edit">Edit</a>
-<button type="button" type="button" class="btn btn-warning" data-toggle="modal" data-target="#removeFuelModal">Remove</button>
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#removeFuelModal">Remove</button>
 <a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}">Back</a>
