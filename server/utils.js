@@ -11,16 +11,19 @@ module.exports = {
     },
 
     formatCost: function(cost, options) {
+        return '£' + this.formatNumber(cost, options);
+    },
+    formatMPG: function(mpg) {
+        return mpg.toFixed(2);
+    },
+	formatNumber: function(val, options){
         options = (options === undefined) ? {
             dp: 2
         } : options.hash;
         options.dp = (options.dp === undefined) ? 2 : options.dp;
 
-        return '£' + cost.toFixed(options.dp);
-    },
-    formatMPG: function(mpg) {
-        return mpg.toFixed(2);
-    },
+        return val.toFixed(options.dp);
+	},
 
     ensureNumber: function(value, _default) {
         value = parseFloat(value);

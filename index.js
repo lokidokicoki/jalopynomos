@@ -26,6 +26,10 @@ hbs.registerHelper('formatMPG', function(mpg) {
     return mpg.toFixed(2);
 });
 
+hbs.registerHelper('formatNumber', function(val, options) {
+    return utils.formatNumber(val, options);
+});
+
 hbs.registerHelper('fuelSummary', function(id) {
     return api.getFillUp(id).toString();
 });

@@ -56,7 +56,15 @@
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <ul class="list-group">
-                <li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
+				<li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
+                <li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
+				<li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.fuelCost}}</li>
+				<li class="list-group-item">Total service cost: {{formatCost vehicle.summary.serviceCost}}</li>
+				<li class="list-group-item">Total mileage: {{formatNumber vehicle.summary.mileage dp=1}}</li>
+				<li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.runningCost}}</li>
+				<li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.totalCost}}</li>
+				<li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.runningCostPerMile dp=3}}</li>
+				<li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.totalCostPerMile dp=3}}</li>
             </ul>
         </div>
     </div>
