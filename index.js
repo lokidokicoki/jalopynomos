@@ -72,8 +72,8 @@ hbs.registerHelper('each_with_sort', function (array, key, opts) {
   return s;
 });
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-app.engine('html', hbs.__express);
+app.set('view engine', 'hbs');
+app.engine('hbs', hbs.__express);
 app.use(partials()); // use partials for layout.html
 // use bodyParser
 app.use(bodyParser.urlencoded({

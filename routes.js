@@ -191,10 +191,10 @@ module.exports = function(app, api) {
     });
 
 	// mpg route
-    app.get('/vehicle/:vid/mpgChart', function(req, res) {
+    app.get('/vehicle/:vid/mpg', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
 		
-        res.render('misc/mpgChart', {
+        res.render('vehicle/mpg', {
 			title:vehicle.toString() + ' MPG' ,
             vehicle: {title:vehicle.toString(), id:vehicle.id}
         });
