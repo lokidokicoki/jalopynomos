@@ -311,6 +311,7 @@ function get() {
         delete obj.getServiceRecs;
         delete obj.getChartData;
         delete obj.toString;
+		delete obj.summary;
     }
 
     var data = {
