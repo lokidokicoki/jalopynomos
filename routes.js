@@ -2,28 +2,30 @@ var utils = require('./server/utils');
 module.exports = function(app, api) {
 	// menu bar routes
 	app.get('/', function (req, res){
-		res.render('index', {vehicles:api.getVehicleArray()});
+		res.render('index', {vehicles:api.getVehicleArray(), title:'Jalopynomos'});
 	});
 	app.get('/about', function(req, res) {
-		res.render('misc/about');
+		res.render('misc/about', {title:'About'});
 	});
 	app.get('/contact', function(req, res) {
-		res.render('misc/contact');
+		res.render('misc/contact', {title:'Contact'});
 	});
 	app.get('/history', function(req, res) {
-		res.render('misc/history');
+		res.render('misc/history', {title:'Historic Fuel Prices'});
 	});
 
 	app.get('/vehicle/add', function(req, res){
 		res.render('vehicle/add', {
-			fuelTypes:api.getFuelTypes()
+			fuelTypes:api.getFuelTypes(),
+			title:'Add Vehicle'
 		});
 	});
 
 	app.post('/vehicle/save', function(req, res){
 		var vehicle = api.addVehicle(req.body);
 		res.render('index', {
-			vehicles:api.getVehicleArray()
+			vehicles:api.getVehicleArray(),
+			title:'Save Vehicle'
 		});
 	});
 
@@ -48,13 +50,16 @@ module.exports = function(app, api) {
 
     app.get('/vehicle/:id/remove', function(req, res) {
        	api.removeVehicle(req.params.id);
-		res.render('index', {vehicles:api.getVehicleArray()});
+		res.render('index', {
+			vehicles:api.getVehicleArray(),
+			title:'Remove Vehicle'
+		});
     });
 
 	app.post('/vehicle/:id/update', function(req, res){
 		var vehicle = api.updateVehicle(req.body);
         res.render('vehicle/details', {
-            title: vehicle.toString(),
+            title: 'Update '+vehicle.toString(),
             vehicle: vehicle
         });
 	});
@@ -66,7 +71,8 @@ module.exports = function(app, api) {
         res.render('fuel/add', {
             vehicle: {title:vehicle.toString(), id:vehicle.id, fuelType:vehicle.fuel.type},
 			fuelTypes:api.getFuelTypes(),
-			fillUp:fillUp
+			fillUp:fillUp,
+			title:'Add Fuel'
         });
     });
 
@@ -77,7 +83,8 @@ module.exports = function(app, api) {
 		res.render('fuel/details', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel,
-			canAdd:true
+			canAdd:true,
+			title:'Save Fuel'
 		});
 	});
 
@@ -86,7 +93,8 @@ module.exports = function(app, api) {
         var fuel = api.getFillUp(req.params.id);
         res.render('fuel/details', {
             vehicle: {title:vehicle.toString(), id:vehicle.id},
-            fuel: fuel
+            fuel: fuel,
+			title:'Fuel Details'
         });
     });
 
@@ -94,7 +102,7 @@ module.exports = function(app, api) {
         var vehicle = api.getVehicle(req.params.vid);
        	api.removeFillUp(vehicle, req.params.id);
         res.render('vehicle/details', {
-            title: vehicle.toString(),
+            title:vehicle.toString(),
             vehicle: vehicle
         });
     });
@@ -103,6 +111,7 @@ module.exports = function(app, api) {
         var vehicle = api.getVehicle(req.params.vid);
         var fuel = api.getFillUp(req.params.id);
         res.render('fuel/edit', {
+            title: 'Edit Fuel',
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             fuel: fuel,
 			fuelTypes:api.getFuelTypes()
@@ -114,7 +123,7 @@ module.exports = function(app, api) {
 		req.body.date = utils.parseDate(req.body.date);
 		var fillUp = api.updateFillUp(vehicle, req.body);
         res.render('vehicle/details', {
-            title: vehicle.toString(),
+            title:vehicle.toString(),
             vehicle: vehicle
         });
     });
@@ -123,7 +132,8 @@ module.exports = function(app, api) {
     app.get('/vehicle/:vid/service/add', function(req, res) {
         var vehicle = api.getVehicle(req.params.vid);
         res.render('service/add', {
-            vehicle: {title:vehicle.toString(), id:vehicle.id}
+			title:'Add Service',
+            vehicle: { title:vehicle.toString(), id:vehicle.id }
         });
     });
 
@@ -132,6 +142,7 @@ module.exports = function(app, api) {
 		req.body.date = utils.parseDate(req.body.date);
 		var service = api.addService(vehicle, req.body);
 		res.render('service/details', {
+			title:'Save Service',
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             service: service,
 			canAdd:true
@@ -151,6 +162,7 @@ module.exports = function(app, api) {
         var vehicle = api.getVehicle(req.params.vid);
         var service = api.getService(req.params.id);
         res.render('service/edit', {
+			title:'Edit Service',
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             service: service
         });
@@ -171,6 +183,7 @@ module.exports = function(app, api) {
         var vehicle = api.getVehicle(req.params.vid);
         var service = api.getService(req.params.id);
         res.render('service/details', {
+			title:'Service Details',
             vehicle: {title:vehicle.toString(), id:vehicle.id},
             service: service
         });
@@ -181,6 +194,7 @@ module.exports = function(app, api) {
         var vehicle = api.getVehicle(req.params.vid);
 		
         res.render('misc/mpgChart', {
+			title:vehicle.toString() + ' MPG' ,
             vehicle: {title:vehicle.toString(), id:vehicle.id}
         });
     });
