@@ -21,6 +21,8 @@ var LITRES_IN_GALLON = 4.54609;
 var GALLONS_IN_LITRE = 0.219969;
 var dataFile = '';
 var _maxVehicleId = 0;
+var DAY_IN_MS = 24 * 60 * 60 * 1000;
+var YEAR_IN_MS = 356 * DAY_IN_MS;
 
 /**
  * @constructor
@@ -134,6 +136,11 @@ function Summary(vehicle) {
         this.runningCost = 0;
         this.totalCostPerMile = 0;
         this.runningCostPerMile = 0;
+		this.milesPerDay = 0;
+		this.milesPerYear = 0;
+		this.predictedMilesPerDay = 0;
+		this.predictedMilesPerYear = 0;
+		this.lastRecordDate = 0;
     };
 
     this.summarise = function() {
@@ -157,6 +164,7 @@ function Summary(vehicle) {
                 this.ppl.min = Math.min(this.ppl.min, rec.ppl);
                 this.ppl.avg += rec.ppl;
 				this.mileage += rec.trip;
+				this.lastRecordDate = Math.max(this.lastRecordDate, rec.date);
             }
 
             this.mpg.avg /= len;
@@ -173,11 +181,20 @@ function Summary(vehicle) {
                 this.serviceCost += rec.cost;
             }
         }
-
+		
 		this.runningCost = this.serviceCost + this.fuelCost;
 		this.runningCostPerMile = this.runningCost / this.mileage;
 		this.totalCostPerMile = this.totalCost / this.mileage;
     };
+
+	this.update = function(now){
+		var a = (this.mileage / (this.lastRecordDate - this.vehicle.purchase.date));
+		var p = (this.mileage / (now - this.vehicle.purchase.date));
+		this.milesPerDay  = a * DAY_IN_MS;
+		this.milesPerYear  = a * YEAR_IN_MS;
+		this.predictedMilesPerDay  = p * DAY_IN_MS;
+		this.predictedMilesPerYear  = p * YEAR_IN_MS;
+	};
 }
 
 /**
@@ -339,7 +356,9 @@ function getVehicleArray() {
 
 function getVehicle(id) {
     'use strict';
-    return vehicles[id];
+    var v = vehicles[id];
+	v.summary.update(Date.now());
+	return v;
 }
 
 function getFillUp(id) {
