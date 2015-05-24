@@ -1,9 +1,11 @@
 <h1>{{title}}</h1>
 
 <div class="btn-group">
-	<a type="button" class="btn btn-primary" href="/vehicle/{{vehicle.id}}/edit">Edit</a>
+	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/edit">Edit</a>
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#removeVehicleModal">Remove</button>
-	<a type="button" class="btn btn-primary" href="/vehicle/{{vehicle.id}}/mpg">MPG</a>
+	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/mpg">MPG</a>
+	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/fuel/add">Add Fuel</a>
+	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/summary/add">Add Summary</a>
 </div>
 
 <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
@@ -17,6 +19,7 @@
         </div>
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <ul class="list-group">
+
                 <li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
                 <li class="list-group-item">Purchase price: {{formatCost vehicle.purchase.price}}</li>
                 <li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
@@ -79,14 +82,34 @@
 					Fuel Records {{vehicle.fuelIDs.length}} 
 				</a>
 			</h4>
-			<a class="btn-primary btn-xs pull-right" role="button" href="/vehicle/{{vehicle.id}}/fuel/add">Add</a>
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-            <ul class="list-group">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Cost</th>
+						<th>Litres</th>
+						<th>Trip</th>
+						<th>MPG</th>
+						<th>Edit?</th>
+					</tr>
+				</thead>
+				<tbody>
 				{{#each vehicle.fuelRecs}}
-				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/fuel/{{this.id}}">{{this.toString}}</a></li>
+				<tr>
+					<td>{{formatDate this.date}}</td>
+					<td>{{formatCost this.cost}}</td>
+					<td>{{this.litres}}</td>
+					<td>{{formatNumber this.trip dp=1}}</td>
+					<td>{{formatNumber this.mpg dp=2}}</td>
+					<td>
+						<a class="btn-primary btn-xs" role="button" href="/vehicle/{{../vehicle.id}}/fuel/{{this.id}}/edit">Edit</a>
+					</td>
+				</tr>
 				{{/each}}
-            </ul>
+			</tbody>
+			</table>
         </div>
     </div>
     <div class="panel panel-default">
@@ -96,14 +119,31 @@
 					Service Records {{vehicle.serviceIDs.length}}
 				</a>
 			</h4>
-			<a class="btn-primary btn-xs pull-right" href="/vehicle/{{vehicle.id}}/service/add">Add</a>
         </div>
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-            <ul class="list-group">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Cost</th>
+						<th>Item</th>
+						<th>Edit?</th>
+					</tr>
+				</thead>
+				<tbody>
 				{{#each vehicle.serviceRecs}}
-				<li class="list-group-item"><a href="/vehicle/{{../vehicle.id}}/service/{{this.id}}">{{this.toString}}</a></li>
+				<tr>
+					<td>{{formatDate this.date}}</td>
+					<td>{{formatCost this.cost}}</td>
+					<td>{{this.odo}}</td>
+					<td>{{this.item}}</td>
+					<td>
+						<a class="btn-primary btn-xs" role="button" href="/vehicle/{{../vehicle.id}}/service/{{this.id}}/edit">Edit</a>
+					</td>
+				</tr>
 				{{/each}}
-            </ul>
+			</tbody>
+		</table>
         </div>
     </div>
 
