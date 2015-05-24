@@ -1,6 +1,6 @@
 {
   "name": "jalopynomos",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Vehicle economy tracker",
   "main": "index.js",
   "scripts": {
