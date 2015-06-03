@@ -26,6 +26,14 @@ hbs.registerHelper('formatMPG', function(mpg) {
     return mpg.toFixed(2);
 });
 
+hbs.registerHelper('formatActive', function(val, isInput) {
+	if(isInput && isInput !== undefined){
+    	return (val) ? 'checked' : '';
+	}else{
+    	return (val) ? 'Active' : 'Sold';
+	}
+});
+
 hbs.registerHelper('formatNumber', function(val, options) {
     return utils.formatNumber(val, options);
 });

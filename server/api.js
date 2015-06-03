@@ -34,6 +34,7 @@ function Vehicle(values) {
     this.make = '';
     this.type = '';
     this.year = 0;
+	this.active = true;
     this.purchase = {
         price: 0,
         date: '',
@@ -210,7 +211,9 @@ function Summary(vehicle) {
 
 	this.update = function(now){
 		var a = (this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date));
-		var p = (this.distance.actual / (now - this.vehicle.purchase.date));
+
+		console.log(this.vehicle.active, now, this.lastRecordDate, this.vehicle.purchase.date)
+		var p = (this.distance.actual / ((this.vehicle.active ? now : this.lastRecordDate) - this.vehicle.purchase.date));
 		this.distance.daily  = a * DAY_IN_MS;
 		this.distance.yearly  = a * YEAR_IN_MS;
 		this.distance.predicted.daily  = p * DAY_IN_MS;
@@ -538,7 +541,9 @@ function updateVehicle(data) {
     vehicle.regNo = data.regNo.toUpperCase();
     vehicle.year = U.ensureNumber(data.year, 0);
     vehicle.odo = U.ensureNumber(data.odo, 0);
+	vehicle.active = data.active ? true : false;
 
+    vehicle.summary.summarise();
     save();
     return vehicle;
 }
