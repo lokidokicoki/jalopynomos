@@ -18,35 +18,52 @@
 			</h4>
         </div>
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <ul class="list-group">
-
-                <li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
-                <li class="list-group-item">Purchase price: {{formatCost vehicle.purchase.price}}</li>
-                <li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
-                <li class="list-group-item">Fuel capacity: {{vehicle.fuel.capacity}}</li>
-                <li class="list-group-item">Oil type: {{vehicle.oil.type}}</li>
-                <li class="list-group-item">Oil capacity: {{vehicle.oil.capacity}}</li>
-                <li class="list-group-item">Tyres:
-                    <table class="table">
-                        <tr>
-                            <th>Position</th>
-                            <th>Pressure</th>
-                            <th>Size</th>
-                        </tr>
-                        <tr>
-                            <td>Front</td>
-                            <td>{{vehicle.tyres.front.capacity}}</td>
-                            <td>{{vehicle.tyres.front.type}}</td>
-                        </tr>
-                        <tr>
-                            <td>Rear</td>
-                            <td>{{vehicle.tyres.rear.capacity}}</td>
-                            <td>{{vehicle.tyres.rear.type}}</td>
-                        </tr>
-                    </table>
-                </li>
-
-            </ul>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-4">
+						<ul class="list-group">
+							<li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
+							<li class="list-group-item">Purchase price: {{formatCost vehicle.purchase.price}}</li>
+						</ul>
+					</div>
+					<div class="col-sm-4">
+						<ul class="list-group">
+							<li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
+							<li class="list-group-item">Fuel capacity: {{vehicle.fuel.capacity}}</li>
+						</ul>
+					</div>
+					<div class="col-sm-4">
+						<ul class="list-group">
+							<li class="list-group-item">Oil type: {{vehicle.oil.type}}</li>
+							<li class="list-group-item">Oil capacity: {{vehicle.oil.capacity}}</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="row">
+            		<ul class="list-group">
+						<li class="list-group-item">Tyres:
+							<table class="table">
+								<tr>
+									<th>Position</th>
+									<th>Pressure</th>
+									<th>Size</th>
+								</tr>
+								<tr>
+									<td>Front</td>
+									<td>{{vehicle.tyres.front.capacity}}</td>
+									<td>{{vehicle.tyres.front.type}}</td>
+								</tr>
+								<tr>
+									<td>Rear</td>
+									<td>{{vehicle.tyres.rear.capacity}}</td>
+									<td>{{vehicle.tyres.rear.type}}</td>
+								</tr>
+							</table>
+						</li>
+					</ul>
+				</div>
+			</div>
         </div>
     </div>
     <div class="panel panel-default">
@@ -58,21 +75,35 @@
 			</h4>
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <ul class="list-group">
-				<li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
-                <li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
-				<li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.fuelCost}}</li>
-				<li class="list-group-item">Total service cost: {{formatCost vehicle.summary.serviceCost}}</li>
-				<li class="list-group-item">Total mileage: {{formatNumber vehicle.summary.mileage dp=1}}</li>
-				<li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.runningCost}}</li>
-				<li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.totalCost}}</li>
-				<li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.runningCostPerMile dp=3}}</li>
-				<li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.totalCostPerMile dp=3}}</li>
-				<li class="list-group-item">Mileage per day: {{formatNumber vehicle.summary.milesPerDay dp=1}}</li>
-				<li class="list-group-item">Mileage per year: {{formatNumber vehicle.summary.milesPerYear dp=1}}</li>
-				<li class="list-group-item">Predicted Mileage per day: {{formatNumber vehicle.summary.predictedMilesPerDay dp=1}}</li>
-				<li class="list-group-item">Predicted Mileage per year: {{formatNumber vehicle.summary.predictedMilesPerYear dp=1}}</li>
-            </ul>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-4">
+						<ul class="list-group">
+							<li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
+							<li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
+							<li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.costs.fuel}}</li>
+							<li class="list-group-item">Total service cost: {{formatCost vehicle.summary.costs.service}}</li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<ul class="list-group">
+							<li class="list-group-item">Total mileage: {{formatNumber vehicle.summary.distance.total dp=1}}</li>
+							<li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.costs.running}}</li>
+							<li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.costs.total}}</li>
+							<li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.costs.distance.running dp=3}}</li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<ul class="list-group">
+							<li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.costs.distance.total dp=3}}</li>
+							<li class="list-group-item">Mileage per day: {{formatNumber vehicle.summary.distance.daily dp=1}}</li>
+							<li class="list-group-item">Mileage per year: {{formatNumber vehicle.summary.distance.yearly dp=1}}</li>
+							<li class="list-group-item">Predicted Mileage per day: {{formatNumber vehicle.summary.distance.predicted.daily dp=1}}</li>
+							<li class="list-group-item">Predicted Mileage per year: {{formatNumber vehicle.summary.distance.predicted.yearly dp=1}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
         </div>
     </div>
     <div class="panel panel-default">
