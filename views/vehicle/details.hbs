@@ -87,7 +87,8 @@
 					</div>
 					<div class="col-md-4">
 						<ul class="list-group">
-							<li class="list-group-item">Total mileage: {{formatNumber vehicle.summary.distance.total dp=1}}</li>
+							<li class="list-group-item">Total mileage (recorded): {{formatNumber vehicle.summary.distance.total dp=1}}</li>
+							<li class="list-group-item">Total mileage (calculated): {{formatNumber vehicle.summary.distance.actual dp=1}}</li>
 							<li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.costs.running}}</li>
 							<li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.costs.total}}</li>
 							<li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.costs.distance.running dp=3}}</li>

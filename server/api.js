@@ -145,6 +145,7 @@ function Summary(vehicle) {
 			}
 		};
 		this.distance = {
+			actual:0,
 			total:0,
 			daily:0,
 			yearly:0,
@@ -159,6 +160,8 @@ function Summary(vehicle) {
     this.summarise = function() {
         this.reset();
         this.costs.total = this.vehicle.purchase.price;
+		var min = Number.MAX_VALUE;
+		var max = 0;
 
         var recs = this.vehicle.fuelRecs,
             len = 0,
@@ -178,11 +181,16 @@ function Summary(vehicle) {
                 this.ppl.avg += rec.ppl;
 				this.distance.total += rec.trip;
 				this.lastRecordDate = Math.max(this.lastRecordDate, rec.date);
+				min = Math.min(rec.odo, min);
+				max = Math.max(rec.odo, max);
             }
-
             this.mpg.avg /= len;
             this.ppl.avg /= len;
         }
+
+		min = Math.min(recs[0].odo, min);
+		max += recs[recs.length -1].trip;
+		this.distance.actual = max - min;
 
         recs = this.vehicle.serviceRecs;
         if (recs && recs !== undefined) {
@@ -196,13 +204,13 @@ function Summary(vehicle) {
         }
 		
 		this.costs.running = this.costs.service + this.costs.fuel;
-		this.costs.distance.running = this.costs.running / this.distance.total;
-		this.costs.distance.total = this.costs.total / this.distance.total;
+		this.costs.distance.running = this.costs.running / this.distance.actual;
+		this.costs.distance.total = this.costs.total / this.distance.actual;
     };
 
 	this.update = function(now){
-		var a = (this.distance.total / (this.lastRecordDate - this.vehicle.purchase.date));
-		var p = (this.distance.total / (now - this.vehicle.purchase.date));
+		var a = (this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date));
+		var p = (this.distance.actual / (now - this.vehicle.purchase.date));
 		this.distance.daily  = a * DAY_IN_MS;
 		this.distance.yearly  = a * YEAR_IN_MS;
 		this.distance.predicted.daily  = p * DAY_IN_MS;
