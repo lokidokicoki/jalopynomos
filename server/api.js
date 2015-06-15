@@ -212,7 +212,7 @@ function Summary(vehicle) {
 	this.update = function(now){
 		var a = (this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date));
 
-		console.log(this.vehicle.active, now, this.lastRecordDate, this.vehicle.purchase.date)
+		console.log(this.vehicle.active, now, this.lastRecordDate, this.vehicle.purchase.date);
 		var p = (this.distance.actual / ((this.vehicle.active ? now : this.lastRecordDate) - this.vehicle.purchase.date));
 		this.distance.daily  = a * DAY_IN_MS;
 		this.distance.yearly  = a * YEAR_IN_MS;
