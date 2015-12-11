@@ -1,7 +1,6 @@
 var express = require('express');
 var partials = require('express-partials');
 var bodyParser = require('body-parser');
-var fs = require('fs');
 var path = require('path');
 var api = require('./server/api');
 var utils = require('./server/utils');
@@ -12,53 +11,67 @@ var oneDay = 86400000;
 api.load('data/records.json');
 
 hbs.registerHelper('getFuelType', function(type) {
-    return api.getFuelType(type);
+  'use strict';
+  return api.getFuelType(type);
 });
 hbs.registerHelper('formatDate', function(dateString, isInput) {
-    return utils.formatDate(dateString, isInput);
+  'use strict';
+  return utils.formatDate(dateString, isInput);
 });
 
 hbs.registerHelper('formatCost', function(cost, options) {
-    return utils.formatCost(cost, options);
+  'use strict';
+  return utils.formatCost(cost, options);
 });
 
 hbs.registerHelper('formatMPG', function(mpg) {
-    return mpg.toFixed(2);
+  'use strict';
+  return mpg.toFixed(2);
 });
 
 hbs.registerHelper('formatActive', function(val, isInput) {
-	if(isInput && isInput !== undefined){
-    	return (val) ? 'checked' : '';
-	}else{
-    	return (val) ? 'Active' : 'Sold';
-	}
+  'use strict';
+  if (isInput && isInput !== undefined) {
+    return (val) ? 'checked' : '';
+  } else {
+    return (val) ? 'Active' : 'Sold';
+  }
 });
 
 hbs.registerHelper('formatNumber', function(val, options) {
-    return utils.formatNumber(val, options);
+  'use strict';
+  return utils.formatNumber(val, options);
 });
 
 hbs.registerHelper('fuelSummary', function(id) {
-    return api.getFillUp(id).toString();
+  'use strict';
+  return api.getFillUp(id).toString();
 });
 
 hbs.registerHelper('serviceSummary', function(id) {
-    return api.getService(id).toString();
+  'use strict';
+  return api.getService(id).toString();
 });
 
 hbs.registerHelper('log', function(obj) {
-    console.log(obj);
+  'use strict';
+  console.log(obj);
 });
 
 hbs.registerHelper('ifeq', function(a, b, options) {
-    if (a == b) {
-        return options.fn(this);
-    }
-    return options.inverse(this);
+  'use strict';
+  if (a === b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
 });
 
-hbs.registerHelper('each_with_sort', function (array, key, opts) {
-    var e, i, len, s;
+hbs.registerHelper('each_with_sort', function(array, key, opts) {
+  'use strict';
+  var e;
+  var i = 0;
+  var len;
+  var s;
   array = array.sort(function(a, b) {
     a = a[key];
     b = b[key];
@@ -73,7 +86,7 @@ hbs.registerHelper('each_with_sort', function (array, key, opts) {
     }
   });
   s = '';
-  for (i = 0, len = array.length; i < len; i++) {
+  for (len = array.length; i < len; i++) {
     e = array[i];
     s += opts.fn(e);
   }
@@ -85,19 +98,19 @@ app.engine('hbs', hbs.__express);
 app.use(partials()); // use partials for layout.html
 // use bodyParser
 app.use(bodyParser.urlencoded({
-    extended: false
+  extended: false
 }));
 
 // parse application/json
 app.use(bodyParser.json());
 
 app.use(express.static('public', {
-    maxAge: oneDay
+  maxAge: oneDay
 }));
 
-
 var server = app.listen('51000', function() {
-    var port = server.address().port;
-    console.log('express @ %s', port);
+  'use strict';
+  var port = server.address().port;
+  console.log('express @ %s', port);
 });
 require('./routes')(app, api);

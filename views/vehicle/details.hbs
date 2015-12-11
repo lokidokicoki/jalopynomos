@@ -1,203 +1,204 @@
 <h1>{{title}} - {{formatActive vehicle.active false}}</h1>
 
 <div class="btn-group">
-	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/edit">Edit</a>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#removeVehicleModal">Remove</button>
-	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/mpg">MPG</a>
-	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/fuel/add">Add Fuel</a>
-	<a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/service/add">Add Service</a>
+  <a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/edit">Edit</a>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#removeVehicleModal">Remove</button>
+  <a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/mpg">MPG</a>
+  <a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/fuel/add">Add Fuel</a>
+  <a class="btn btn-primary" href="/vehicle/{{vehicle.id}}/service/add">Add Service</a>
 </div>
 
 <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" id="headingOne">
-            <h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+  <div class="panel panel-default">
+    <div class="panel-heading" id="headingOne">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 					Details
 				</a>
-			</h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-4">
-						<ul class="list-group">
-							<li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
-							<li class="list-group-item">Purchase price: {{formatCost vehicle.purchase.price}}</li>
-						</ul>
-					</div>
-					<div class="col-sm-4">
-						<ul class="list-group">
-							<li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
-							<li class="list-group-item">Fuel capacity: {{vehicle.fuel.capacity}}</li>
-						</ul>
-					</div>
-					<div class="col-sm-4">
-						<ul class="list-group">
-							<li class="list-group-item">Oil type: {{vehicle.oil.type}}</li>
-							<li class="list-group-item">Oil capacity: {{vehicle.oil.capacity}}</li>
-						</ul>
-					</div>
-				</div>
-				
-				<div class="row">
-            		<ul class="list-group">
-						<li class="list-group-item">Tyres:
-							<table class="table">
-								<tr>
-									<th>Position</th>
-									<th>Pressure</th>
-									<th>Size</th>
-								</tr>
-								<tr>
-									<td>Front</td>
-									<td>{{vehicle.tyres.front.capacity}}</td>
-									<td>{{vehicle.tyres.front.type}}</td>
-								</tr>
-								<tr>
-									<td>Rear</td>
-									<td>{{vehicle.tyres.rear.capacity}}</td>
-									<td>{{vehicle.tyres.rear.type}}</td>
-								</tr>
-							</table>
-						</li>
-					</ul>
-				</div>
-			</div>
-        </div>
+      </h4>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" id="headingTwo">
-            <h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-4">
+            <ul class="list-group">
+              <li class="list-group-item">Purchase date: {{formatDate vehicle.purchase.date}}</li>
+              <li class="list-group-item">Purchase price: {{formatCost vehicle.purchase.price}}</li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <ul class="list-group">
+              <li class="list-group-item">Fuel type: {{getFuelType vehicle.fuel.type}}</li>
+              <li class="list-group-item">Fuel capacity: {{vehicle.fuel.capacity}}</li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <ul class="list-group">
+              <li class="list-group-item">Oil type: {{vehicle.oil.type}}</li>
+              <li class="list-group-item">Oil capacity: {{vehicle.oil.capacity}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <ul class="list-group">
+            <li class="list-group-item">Tyres:
+              <table class="table">
+                <tr>
+                  <th>Position</th>
+                  <th>Pressure</th>
+                  <th>Size</th>
+                </tr>
+                <tr>
+                  <td>Front</td>
+                  <td>{{vehicle.tyres.front.capacity}}</td>
+                  <td>{{vehicle.tyres.front.type}}</td>
+                </tr>
+                <tr>
+                  <td>Rear</td>
+                  <td>{{vehicle.tyres.rear.capacity}}</td>
+                  <td>{{vehicle.tyres.rear.type}}</td>
+                </tr>
+              </table>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" id="headingTwo">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 					Summary
 				</a>
-			</h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-4">
-						<ul class="list-group">
-							<li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
-							<li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
-							<li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.costs.fuel}}</li>
-							<li class="list-group-item">Total service cost: {{formatCost vehicle.summary.costs.service}}</li>
-						</ul>
-					</div>
-					<div class="col-md-4">
-						<ul class="list-group">
-							<li class="list-group-item">Total mileage (recorded): {{formatNumber vehicle.summary.distance.total dp=1}}</li>
-							<li class="list-group-item">Total mileage (calculated): {{formatNumber vehicle.summary.distance.actual dp=1}}</li>
-							<li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.costs.running}}</li>
-							<li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.costs.total}}</li>
-							<li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.costs.distance.running dp=3}}</li>
-						</ul>
-					</div>
-					<div class="col-md-4">
-						<ul class="list-group">
-							<li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.costs.distance.total dp=3}}</li>
-							<li class="list-group-item">Mileage per day: {{formatNumber vehicle.summary.distance.daily dp=1}}</li>
-							<li class="list-group-item">Mileage per year: {{formatNumber vehicle.summary.distance.yearly dp=1}}</li>
-							<li class="list-group-item">Predicted Mileage per day: {{formatNumber vehicle.summary.distance.predicted.daily dp=1}}</li>
-							<li class="list-group-item">Predicted Mileage per year: {{formatNumber vehicle.summary.distance.predicted.yearly dp=1}}</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-        </div>
+      </h4>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix" id="headingThree">
-            <h4 class="panel-title pull-left">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-					Fuel Records {{vehicle.fuelIDs.length}} 
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="list-group">
+              <li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
+              <li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
+              <li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.costs.fuel}}</li>
+              <li class="list-group-item">Total service cost: {{formatCost vehicle.summary.costs.service}}</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-group">
+              <li class="list-group-item">Total mileage (recorded): {{formatNumber vehicle.summary.distance.total dp=1}}</li>
+              <li class="list-group-item">Total mileage (calculated): {{formatNumber vehicle.summary.distance.actual dp=1}}</li>
+              <li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.costs.running}}</li>
+              <li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.costs.total}}</li>
+              <li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.costs.distance.running dp=3}}</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-group">
+              <li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.costs.distance.total dp=3}}</li>
+              <li class="list-group-item">Mileage per day: {{formatNumber vehicle.summary.distance.daily dp=1}}</li>
+              <li class="list-group-item">Mileage per year: {{formatNumber vehicle.summary.distance.yearly dp=1}}</li>
+              <li class="list-group-item">Predicted Mileage per day: {{formatNumber vehicle.summary.distance.predicted.daily dp=1}}</li>
+              <li class="list-group-item">Predicted Mileage per year: {{formatNumber vehicle.summary.distance.predicted.yearly dp=1}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix" id="headingThree">
+      <h4 class="panel-title pull-left">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+					Fuel Records {{vehicle.fuelIDs.length}}
 				</a>
-			</h4>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Cost</th>
-						<th>Litres</th>
-						<th>Trip</th>
-						<th>MPG</th>
-						<th>Edit?</th>
-					</tr>
-				</thead>
-				<tbody>
-				{{#each vehicle.fuelRecs}}
-				<tr>
-					<td>{{formatDate this.date}}</td>
-					<td>{{formatCost this.cost}}</td>
-					<td>{{this.litres}}</td>
-					<td>{{formatNumber this.trip dp=1}}</td>
-					<td>{{formatNumber this.mpg dp=2}}</td>
-					<td>
-						<a class="btn-primary btn-xs" role="button" href="/vehicle/{{../vehicle.id}}/fuel/{{this.id}}/edit">Edit</a>
-					</td>
-				</tr>
-				{{/each}}
-			</tbody>
-			</table>
-        </div>
+      </h4>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix" id="headingFour">
-            <h4 class="panel-title pull-left">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Cost</th>
+            <th>Litres</th>
+            <th>Trip</th>
+            <th>MPG</th>
+            <th>Edit?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each vehicle.fuelRecs}}
+            <tr>
+              <td>{{formatDate this.date}}</td>
+              <td>{{formatCost this.cost}}</td>
+              <td>{{this.litres}}</td>
+              <td>{{formatNumber this.trip dp=1}}</td>
+              <td>{{formatNumber this.mpg dp=2}}</td>
+              <td>
+                <a class="btn-primary btn-xs" role="button" href="/vehicle/{{../vehicle.id}}/fuel/{{this.id}}/edit">Edit</a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix" id="headingFour">
+      <h4 class="panel-title pull-left">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
 					Service Records {{vehicle.serviceIDs.length}}
 				</a>
-			</h4>
-        </div>
-        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Cost</th>
-						<th>Odometer</th>
-						<th>Item</th>
-						<th>Edit?</th>
-					</tr>
-				</thead>
-				<tbody>
-				{{#each vehicle.serviceRecs}}
-				<tr>
-					<td>{{formatDate this.date}}</td>
-					<td>{{formatCost this.cost}}</td>
-					<td>{{this.odo}}</td>
-					<td>{{this.item}}</td>
-					<td>
-						<a class="btn-primary btn-xs" role="button" href="/vehicle/{{../vehicle.id}}/service/{{this.id}}/edit">Edit</a>
-					</td>
-				</tr>
-				{{/each}}
-			</tbody>
-		</table>
-        </div>
+      </h4>
     </div>
+    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Cost</th>
+            <th>Odometer</th>
+            <th>Item</th>
+            <th>Edit?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each vehicle.serviceRecs}}
+            <tr>
+              <td>{{formatDate this.date}}</td>
+              <td>{{formatCost this.cost}}</td>
+              <td>{{this.odo}}</td>
+              <td>{{this.item}}</td>
+              <td>
+                <a class="btn-primary btn-xs" role="button" href="/vehicle/{{../vehicle.id}}/service/{{this.id}}/edit">Edit</a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<!-- Modal -->
-<div class="modal" id="removeVehicleModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="modalLabel">Remove Vehicle?</h4>
-      </div>
-      <div class="modal-body">
-		  Do you want to remove this vehicle [{{vehicle.regNo}}]?<br/>
-		  All data associated with this vehicle will be removed.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-		<a type="button" class="btn btn-warning" href="/vehicle/{{vehicle.id}}/remove">Remove</a>
+  <!-- Modal -->
+  <div class="modal" id="removeVehicleModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="modalLabel">Remove Vehicle?</h4>
+        </div>
+        <div class="modal-body">
+          Do you want to remove this vehicle [{{vehicle.regNo}}]?
+          <br/> All data associated with this vehicle will be removed.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <a type="button" class="btn btn-warning" href="/vehicle/{{vehicle.id}}/remove">Remove</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-

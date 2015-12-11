@@ -1,9 +1,10 @@
 <h1>Vehicles</h1>
 
 {{#each vehicles}}
-<p>
-<a href="/vehicle/{{id}}">{{make}} {{type}} {{regNo}}</a><br/>
-</p>
+  <p>
+    <a href="/vehicle/{{id}}">{{make}} {{type}} {{regNo}}</a>
+    <br/>
+  </p>
 {{/each}}
 
 <a class="btn-primary btn" role="button" href="/vehicle/add">Add Vehicle</a>

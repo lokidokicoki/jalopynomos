@@ -1,36 +1,39 @@
 <h1>{{vehicle.title}} | Fill up {{fuel.id}}</h1>
 
-Purchase date : {{formatDate fuel.date}}<br/>
-Litres: {{fuel.litres}}<br/>
-Price/litre: {{formatCost fuel.ppl dp=3}}<br/>
-Trip: {{fuel.trip}}<br/>
-Odometer: {{fuel.odo}}<br/>
-Cost: {{formatCost fuel.cost}}<br/>
-Fuel type: {{fuel.type}}<br/>
-MPG: {{formatMPG fuel.mpg}}<br/>
-Notes: {{fuel.notes}}<br/>
+Purchase date : {{formatDate fuel.date}}
+<br/> Litres: {{fuel.litres}}
+<br/> Price/litre: {{formatCost fuel.ppl dp=3}}
+<br/> Trip: {{fuel.trip}}
+<br/> Odometer: {{fuel.odo}}
+<br/> Cost: {{formatCost fuel.cost}}
+<br/> Fuel type: {{fuel.type}}
+<br/> MPG: {{formatMPG fuel.mpg}}
+<br/> Notes: {{fuel.notes}}
+<br/>
 
 <!-- Modal -->
 <div class="modal" id="removeFuelModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <h4 class="modal-title" id="modalLabel">Remove Vehicle?</h4>
       </div>
       <div class="modal-body">
-		  Do you want to remove this fill up [{{fuel.id}}]?<br/>
-		  All data associated with this vehicle will be removed.
+        Do you want to remove this fill up [{{fuel.id}}]?
+        <br/> All data associated with this vehicle will be removed.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-		<a type="button" class="btn btn-warning" href="/vehicle/{{vehicle.id}}/fuel/{{fuel.id}}/remove">Remove</a>
+        <a type="button" class="btn btn-warning" href="/vehicle/{{vehicle.id}}/fuel/{{fuel.id}}/remove">Remove</a>
       </div>
     </div>
   </div>
 </div>
 {{#if canAdd}}
-	<a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}/fuel/add">Add another</a>
+  <a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}/fuel/add">Add another</a>
 {{/if}}
 <a class="btn-primary btn" role="button" href="/vehicle/{{vehicle.id}}/fuel/{{fuel.id}}/edit">Edit</a>
 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#removeFuelModal">Remove</button>

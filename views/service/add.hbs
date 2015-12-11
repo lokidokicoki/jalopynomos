@@ -2,41 +2,41 @@
 
 
 <form class="form-horizontal" action="save" method="POST">
-    <div class="form-group">
-        <label for="date" class="col-sm-2 control-label">Date</label>
-        <div class="col-sm-10">
-            <input type="date" class="form-control" name="date" id="date" placeholder="Email">
-        </div>
+  <div class="form-group">
+    <label for="date" class="col-sm-2 control-label">Date</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" name="date" id="date" placeholder="Email">
     </div>
-    <div class="form-group">
-        <label for="odo" class="col-sm-2 control-label">odometer</label>
-        <div class="col-sm-10">
-			<input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="odo" class="col-sm-2 control-label">odometer</label>
+    <div class="col-sm-10">
+      <input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer">
     </div>
-    <div class="form-group">
-        <label for="notes" class="col-sm-2 control-label">item</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" name="item" id="item" placeholder="item">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="notes" class="col-sm-2 control-label">item</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="item" id="item" placeholder="item">
     </div>
-    <div class="form-group">
-        <label for="cost" class="col-sm-2 control-label">cost</label>
-        <div class="col-sm-10">
-            <input type="number" step="0.01" class="form-control" name="cost" id="cost" placeholder="cost">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="cost" class="col-sm-2 control-label">cost</label>
+    <div class="col-sm-10">
+      <input type="number" step="0.01" class="form-control" name="cost" id="cost" placeholder="cost">
     </div>
-    <div class="form-group">
-        <label for="notes" class="col-sm-2 control-label">notes</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" name="notes" id="notes" placeholder="notes">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="notes" class="col-sm-2 control-label">notes</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="notes" id="notes" placeholder="notes">
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Save</button>
-			<a class="btn btn-warning" href="/vehicle/{{vehicle.id}}">Cancel</a>
-        </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-warning" href="/vehicle/{{vehicle.id}}">Cancel</a>
     </div>
+  </div>
 </form>
 <br/>

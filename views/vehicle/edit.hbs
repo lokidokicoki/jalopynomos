@@ -1,122 +1,122 @@
 <h1>Edit Vehicle</h1>
 
 <form class="form-horizontal" action="update" method="POST">
-	<input type="hidden" name="id" id="id" value="{{vehicle.id}}">
-    <div class="form-group">
-        <label for="make" class="col-sm-3 control-label">Make</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control" required name="make" id="make" placeholder="Ford" value="{{vehicle.make}}">
-        </div>
+  <input type="hidden" name="id" id="id" value="{{vehicle.id}}">
+  <div class="form-group">
+    <label for="make" class="col-sm-3 control-label">Make</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" required name="make" id="make" placeholder="Ford" value="{{vehicle.make}}">
     </div>
-    <div class="form-group">
-        <label for="type" class="col-sm-3 control-label">Model</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control" required name="type" id="type" placeholder="Capri" value="{{vehicle.type}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="type" class="col-sm-3 control-label">Model</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" required name="type" id="type" placeholder="Capri" value="{{vehicle.type}}">
     </div>
-    <div class="form-group">
-        <label for="regNo" class="col-sm-3 control-label">Registration</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control text-uppercase" required name="regNo" id="regNo" placeholder="ULH495X" value={{vehicle.regNo}}>
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="regNo" class="col-sm-3 control-label">Registration</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control text-uppercase" required name="regNo" id="regNo" placeholder="ULH495X" value="{{vehicle.regNo}}">
     </div>
-    <div class="form-group">
-        <label for="year" class="col-sm-3 control-label">Year</label>
-        <div class="col-sm-9">
-			<input type="number" step="1" class="form-control" required name="year" id="year" placeholder="1981" value={{vehicle.year}}>
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="year" class="col-sm-3 control-label">Year</label>
+    <div class="col-sm-9">
+      <input type="number" step="1" class="form-control" required name="year" id="year" placeholder="1981" value="{{vehicle.year}}">
     </div>
+  </div>
 
-    <div class="form-group">
-        <label for="purchaseDate" class="col-sm-3 control-label">Purchase date</label>
-        <div class="col-sm-9">
-			<input type="date" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="date" value="{{formatDate vehicle.purchase.date true}}">
-        </div>
+  <div class="form-group">
+    <label for="purchaseDate" class="col-sm-3 control-label">Purchase date</label>
+    <div class="col-sm-9">
+      <input type="date" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="date" value="{{formatDate vehicle.purchase.date true}}">
     </div>
-    <div class="form-group">
-        <label for="purchasePrice" class="col-sm-3 control-label">Purchase price</label>
-        <div class="col-sm-9">
-			<input type="number" step="1" class="form-control" name="purchasePrice" id="purchasePrice" placeholder="price" value="{{vehicle.purchase.price}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="purchasePrice" class="col-sm-3 control-label">Purchase price</label>
+    <div class="col-sm-9">
+      <input type="number" step="1" class="form-control" name="purchasePrice" id="purchasePrice" placeholder="price" value="{{vehicle.purchase.price}}">
     </div>
-    <div class="form-group">
-        <label for="litres" class="col-sm-3 control-label">Fuel type</label>
-        <div class="col-sm-9">
-            <select name="fuelType" class="form-control">
-				{{#each fuelTypes}}
-				{{#ifeq ../vehicle.fuel.type this.[0]}}
-                <option selected value="{{this.[0]}}">{{this.[1]}}</option>
-				{{else}}
-                <option value="{{this.[0]}}">{{this.[1]}}</option>
-				{{/ifeq}}
-                {{/each}}
-            </select>
-        </div>
-	</div>
-    <div class="form-group">
-        <label for="fuelCapacity" class="col-sm-3 control-label">Fuel capacity</label>
-        <div class="col-sm-9">
-			<input type="number" step="1" class="form-control" name="fuelCapacity" id="fuelCapacity" placeholder="litres" value="{{vehicle.fuel.capacity}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="litres" class="col-sm-3 control-label">Fuel type</label>
+    <div class="col-sm-9">
+      <select name="fuelType" class="form-control">
+        {{#each fuelTypes}}
+          {{#ifeq ../vehicle.fuel.type this.[0]}}
+            <option selected value="{{this.[0]}}">{{this.[1]}}</option>
+            {{else}}
+              <option value="{{this.[0]}}">{{this.[1]}}</option>
+          {{/ifeq}}
+        {{/each}}
+      </select>
     </div>
-    <div class="form-group">
-        <label for="oilCapacity" class="col-sm-3 control-label">Oil capacity</label>
-        <div class="col-sm-9">
-			<input type="number" step="0.1" class="form-control" name="oilCapacity" id="oilCapacity" placeholder="litres" value="{{vehicle.oil.capacity}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="fuelCapacity" class="col-sm-3 control-label">Fuel capacity</label>
+    <div class="col-sm-9">
+      <input type="number" step="1" class="form-control" name="fuelCapacity" id="fuelCapacity" placeholder="litres" value="{{vehicle.fuel.capacity}}">
     </div>
-    <div class="form-group">
-        <label for="oilType" class="col-sm-3 control-label">Oil type</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control" name="oilType" id="oilType" placeholder="i.e 10w40" value="{{vehicle.oil.type}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="oilCapacity" class="col-sm-3 control-label">Oil capacity</label>
+    <div class="col-sm-9">
+      <input type="number" step="0.1" class="form-control" name="oilCapacity" id="oilCapacity" placeholder="litres" value="{{vehicle.oil.capacity}}">
     </div>
-    <div class="form-group">
-        <label for="tyreFrontType" class="col-sm-3 control-label">Front tyre size</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control text-uppercase" name="tyreFrontType" id="tyreFrontType" placeholder="i.e. 195/55 R15" value="{{vehicle.tyres.front.type}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="oilType" class="col-sm-3 control-label">Oil type</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="oilType" id="oilType" placeholder="i.e 10w40" value="{{vehicle.oil.type}}">
     </div>
-    <div class="form-group">
-        <label for="tyreFrontCapacity" class="col-sm-3 control-label">Front Tyre capacity</label>
-        <div class="col-sm-9">
-			<input type="number" step="1" class="form-control" name="tyreFrontCapacity" id="tyreFrontCapacity" placeholder="p.s.i" value="{{vehicle.tyres.front.capacity}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="tyreFrontType" class="col-sm-3 control-label">Front tyre size</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control text-uppercase" name="tyreFrontType" id="tyreFrontType" placeholder="i.e. 195/55 R15" value="{{vehicle.tyres.front.type}}">
     </div>
-    <div class="form-group">
-        <label for="tyreRearType" class="col-sm-3 control-label">Rear tyre size</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control text-uppercase" name="tyreRearType" id="tyreRearType" placeholder="i.e. 195/55 R15" value="{{vehicle.tyres.rear.type}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="tyreFrontCapacity" class="col-sm-3 control-label">Front Tyre capacity</label>
+    <div class="col-sm-9">
+      <input type="number" step="1" class="form-control" name="tyreFrontCapacity" id="tyreFrontCapacity" placeholder="p.s.i" value="{{vehicle.tyres.front.capacity}}">
     </div>
-    <div class="form-group">
-        <label for="tyreRearCapacity" class="col-sm-3 control-label">Rear Tyre capacity</label>
-        <div class="col-sm-9">
-			<input type="number" step="1" class="form-control" name="tyreRearCapacity" id="tyreRearCapacity" placeholder="p.s.i" value="{{vehicle.tyres.rear.capacity}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="tyreRearType" class="col-sm-3 control-label">Rear tyre size</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control text-uppercase" name="tyreRearType" id="tyreRearType" placeholder="i.e. 195/55 R15" value="{{vehicle.tyres.rear.type}}">
     </div>
-    <div class="form-group">
-        <label for="odo" class="col-sm-3 control-label">odometer</label>
-        <div class="col-sm-9">
-			<input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer" value="{{vehicle.odo}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="tyreRearCapacity" class="col-sm-3 control-label">Rear Tyre capacity</label>
+    <div class="col-sm-9">
+      <input type="number" step="1" class="form-control" name="tyreRearCapacity" id="tyreRearCapacity" placeholder="p.s.i" value="{{vehicle.tyres.rear.capacity}}">
     </div>
-    <div class="form-group">
-        <label for="notes" class="col-sm-3 control-label">notes</label>
-        <div class="col-sm-9">
-			<input type="text" class="form-control" name="notes" id="notes" placeholder="notes" value="{{vehicle.notes}}">
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="odo" class="col-sm-3 control-label">odometer</label>
+    <div class="col-sm-9">
+      <input type="number" step="1" class="form-control" name="odo" id="odo" placeholder="odometer" value="{{vehicle.odo}}">
     </div>
-    <div class="form-group">
-        <label for="notes" class="col-sm-3 control-label">active</label>
-        <div class="col-sm-9">
-			<input type="checkbox" class="form-control" name="active" id="active" {{formatActive vehicle.active true}}>
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="notes" class="col-sm-3 control-label">notes</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="notes" id="notes" placeholder="notes" value="{{vehicle.notes}}">
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Update</button>
-			<a class="btn btn-warning" href="/">Cancel</a>
-        </div>
+  </div>
+  <div class="form-group">
+    <label for="notes" class="col-sm-3 control-label">active</label>
+    <div class="col-sm-9">
+      <input type="checkbox" class="form-control" name="active" id="active" {{formatActive vehicle.active true}}>
     </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Update</button>
+      <a class="btn btn-warning" href="/">Cancel</a>
+    </div>
+  </div>
 </form>
