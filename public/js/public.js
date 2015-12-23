@@ -1,4 +1,7 @@
+/* global Highcharts */
+
 $(function() {
+  'use strict';
   $('#saveFillup').on('click', function(e) {
     console.log('get form data');
     $.ajax({
@@ -18,6 +21,7 @@ $(function() {
 });
 
 function buildChart(vehicleID) {
+  'use strict';
   $.ajax({
     url: '/mpg',
     method: 'POST',
@@ -36,20 +40,20 @@ function buildChart(vehicleID) {
 }
 
 function doMpgChart(vehicle, data) {
-
+  'use strict';
   var xaxis = [];
   var yaxis = [];
-  var i = 0,
-    len = 0,
-    mpg = null;
+  var i = 0;
+  var len = 0;
+  var mpg = null;
 
-  for (i = 0, len = data.mpg.length; i < len; i++) {
+  for (len = data.mpg.length; i < len; i++) {
     mpg = data.mpg[i];
     xaxis.push(mpg.date);
     yaxis.push(mpg.mpg);
   }
 
-  var chart_linear = new Highcharts.Chart({
+  var chartLinear = new Highcharts.Chart({
     chart: {
       zoomType: 'x',
       type: 'spline',
@@ -83,41 +87,26 @@ function doMpgChart(vehicle, data) {
       borderWidth: 0
     },
     series: [{
+      id: 'mpg',
       name: vehicle.title,
       data: yaxis
     }, {
       name: 'Rolling average',
       data: data.avg
+    }, {
+      name: 'Linear Trendline',
+      linkedTo: 'mpg',
+      showInLegend: true,
+      enableMouseTracking: false,
+      type: 'trendline',
+      algorithm: 'linear'
     }]
   });
-
-  /* add regression line dynamically */
-  chart_linear.addSeries({
-    type: 'line',
-    marker: {
-      enabled: false
-    },
-    /* function returns data for trend-line */
-    data: (function() {
-      return fitOneDimensionalData(yaxis);
-    })()
-  });
-
-  function fitOneDimensionalData(source_data) {
-    var trend_source_data = [];
-    for (var i = source_data.length; i-- > 0;) {
-      trend_source_data[i] = [i, source_data[i]];
-    }
-    var regression_data = fitData(trend_source_data).data;
-    var trend_line_data = [];
-    for (i = regression_data.length; i-- > 0;) {
-      trend_line_data[i] = regression_data[i][1];
-    }
-    return trend_line_data;
-  }
 }
 
+/* exported buildPPLChart */
 function buildPPLChart() {
+  'use strict';
   $.ajax({
     url: '/ppl',
     method: 'POST',
@@ -133,29 +122,31 @@ function buildPPLChart() {
 }
 
 function newPplSeries(name, data) {
+  'use strict';
+  var i = 0;
+  var len = 0;
+
   var series = {
     name: name,
     data: []
   };
 
-  for (var i = 0, len = data.length; i < len; i++) {
+  for (len = data.length; i < len; i++) {
     series.data.push([data[i].date, data[i].ppl]);
   }
   return series;
 }
 
 function doPplChart(data) {
-  var xaxis = [];
+  'use strict';
   var ySeries = [];
-  var i = 0,
-    len = 0,
-    mpg = null;
+  var i = 0;
 
   for (i in data.data) {
     ySeries.push(newPplSeries(i, data.data[i]));
   }
 
-  var chart_linear = new Highcharts.Chart({
+  var chartLinear = new Highcharts.Chart({
     chart: {
       zoomType: 'x',
       type: 'spline',
@@ -196,10 +187,12 @@ function doPplChart(data) {
 }
 
 function calcTrip(oldOdo, newOdo) {
+  'use strict';
   $('#trip').val(parseInt(newOdo) - oldOdo);
 }
 
 function calcPPL() {
+  'use strict';
   var ppl = parseFloat($('#cost').val()) / parseFloat($('#litres').val());
   $('#ppl').val(ppl.toFixed(3));
 }
