@@ -13,11 +13,52 @@
     <div class="panel-heading" id="headingOne">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					Details
+					Summary
 				</a>
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="list-group">
+              <li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
+              <li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
+              <li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.costs.fuel}}</li>
+              <li class="list-group-item">Total service cost: {{formatCost vehicle.summary.costs.service}}</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-group">
+              <li class="list-group-item">Total mileage (recorded): {{formatNumber vehicle.summary.distance.total dp=1}}</li>
+              <li class="list-group-item">Total mileage (calculated): {{formatNumber vehicle.summary.distance.actual dp=1}}</li>
+              <li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.costs.running}}</li>
+              <li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.costs.total}}</li>
+              <li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.costs.distance.running dp=3}}</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-group">
+              <li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.costs.distance.total dp=3}}</li>
+              <li class="list-group-item">Mileage per day: {{formatNumber vehicle.summary.distance.daily dp=1}}</li>
+              <li class="list-group-item">Mileage per year: {{formatNumber vehicle.summary.distance.yearly dp=1}}</li>
+              <li class="list-group-item">Predicted Mileage per day: {{formatNumber vehicle.summary.distance.predicted.daily dp=1}}</li>
+              <li class="list-group-item">Predicted Mileage per year: {{formatNumber vehicle.summary.distance.predicted.yearly dp=1}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" id="headingTwo">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					Detail
+				</a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-4">
@@ -62,47 +103,6 @@
               </table>
             </li>
           </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" id="headingTwo">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-					Summary
-				</a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-4">
-            <ul class="list-group">
-              <li class="list-group-item">Fuel economy [min/max/avg]: {{formatMPG vehicle.summary.mpg.min}} | {{formatMPG vehicle.summary.mpg.max}} | {{formatMPG vehicle.summary.mpg.avg}}</li>
-              <li class="list-group-item">Price per litre [min/max/avg]: {{formatCost vehicle.summary.ppl.min dp=3}} | {{formatCost vehicle.summary.ppl.max dp=3}} | {{formatCost vehicle.summary.ppl.avg dp=3}}</li>
-              <li class="list-group-item">Total fuel cost: {{formatCost vehicle.summary.costs.fuel}}</li>
-              <li class="list-group-item">Total service cost: {{formatCost vehicle.summary.costs.service}}</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul class="list-group">
-              <li class="list-group-item">Total mileage (recorded): {{formatNumber vehicle.summary.distance.total dp=1}}</li>
-              <li class="list-group-item">Total mileage (calculated): {{formatNumber vehicle.summary.distance.actual dp=1}}</li>
-              <li class="list-group-item">Running cost (fuel+service): {{formatCost vehicle.summary.costs.running}}</li>
-              <li class="list-group-item">Total cost (fuel+service+purchase): {{formatCost vehicle.summary.costs.total}}</li>
-              <li class="list-group-item">Running cost/mile (fuel+service)/mileage: {{formatCost vehicle.summary.costs.distance.running dp=3}}</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul class="list-group">
-              <li class="list-group-item">Total cost/mile (total cost)/mileage: {{formatCost vehicle.summary.costs.distance.total dp=3}}</li>
-              <li class="list-group-item">Mileage per day: {{formatNumber vehicle.summary.distance.daily dp=1}}</li>
-              <li class="list-group-item">Mileage per year: {{formatNumber vehicle.summary.distance.yearly dp=1}}</li>
-              <li class="list-group-item">Predicted Mileage per day: {{formatNumber vehicle.summary.distance.predicted.daily dp=1}}</li>
-              <li class="list-group-item">Predicted Mileage per year: {{formatNumber vehicle.summary.distance.predicted.yearly dp=1}}</li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
