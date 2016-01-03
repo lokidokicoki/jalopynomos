@@ -1,8 +1,8 @@
-/* global Highcharts */
+/* global Highcharts, $ */
 
 $(function() {
   'use strict';
-  $('#saveFillup').on('click', function(e) {
+  $('#saveFillup').on('click', function() {
     console.log('get form data');
     $.ajax({
       url: '/saveFillup',
@@ -20,25 +20,13 @@ $(function() {
   });
 });
 
-function buildChart(vehicleID) {
-  'use strict';
-  $.ajax({
-    url: '/mpg',
-    method: 'POST',
-    //async: false,
-    dataType: 'json',
-    data: {
-      vid: vehicleID
-    },
-    success: function(res) {
-      doMpgChart(res.vehicle, res.data);
-    },
-    error: function(e) {
-      return console.error(e);
-    }
-  });
-}
 
+/**
+ * Create chart for vehicle
+ * @param  {object} vehicle of interest
+ * @param  {object} data   chart data
+ * @return {object} chart
+ */
 function doMpgChart(vehicle, data) {
   'use strict';
   var xaxis = [];
@@ -46,6 +34,7 @@ function doMpgChart(vehicle, data) {
   var i = 0;
   var len = 0;
   var mpg = null;
+  var chart = null;
 
   for (len = data.mpg.length; i < len; i++) {
     mpg = data.mpg[i];
@@ -53,7 +42,7 @@ function doMpgChart(vehicle, data) {
     yaxis.push(mpg.mpg);
   }
 
-  var chartLinear = new Highcharts.Chart({
+  chart = new Highcharts.Chart({
     chart: {
       zoomType: 'x',
       type: 'spline',
@@ -102,18 +91,27 @@ function doMpgChart(vehicle, data) {
       algorithm: 'linear'
     }]
   });
+
+  return chart;
 }
 
-/* exported buildPPLChart */
-function buildPPLChart() {
+/**
+ * Build chart
+ * @exports buildChart
+ * @param  {string} vehicleID vehicle of interest
+ */
+function buildChart(vehicleID) {
   'use strict';
   $.ajax({
-    url: '/ppl',
+    url: '/mpg',
     method: 'POST',
     //async: false,
     dataType: 'json',
+    data: {
+      vid: vehicleID
+    },
     success: function(res) {
-      doPplChart(res.data);
+      doMpgChart(res.vehicle, res.data);
     },
     error: function(e) {
       return console.error(e);
@@ -121,6 +119,12 @@ function buildPPLChart() {
   });
 }
 
+/**
+ * Generate price per litre series
+ * @param  {toString} name series name
+ * @param  {array} data fuel records
+ * @return {object} chart series
+ */
 function newPplSeries(name, data) {
   'use strict';
   var i = 0;
@@ -137,16 +141,22 @@ function newPplSeries(name, data) {
   return series;
 }
 
+/**
+ * Create new HighChart for price per litre
+ * @param  {object} data chart data
+ * @return {object} chart
+ */
 function doPplChart(data) {
   'use strict';
   var ySeries = [];
   var i = 0;
+  var chart = null;
 
   for (i in data.data) {
     ySeries.push(newPplSeries(i, data.data[i]));
   }
 
-  var chartLinear = new Highcharts.Chart({
+  chart = new Highcharts.Chart({
     chart: {
       zoomType: 'x',
       type: 'spline',
@@ -157,7 +167,7 @@ function doPplChart(data) {
       x: -20 //center
     },
     xAxis: {
-      type: 'datetime',
+      type: 'datetime'
     },
     yAxis: {
       title: {
@@ -184,13 +194,42 @@ function doPplChart(data) {
     },
     series: ySeries
   });
+
+  return chart;
 }
 
+/**
+ * Get chart data for price per litre
+ */
+function buildPPLChart() {
+  'use strict';
+  $.ajax({
+    url: '/ppl',
+    method: 'POST',
+    //async: false,
+    dataType: 'json',
+    success: function(res) {
+      doPplChart(res.data);
+    },
+    error: function(e) {
+      console.error(e);
+    }
+  });
+}
+
+/**
+ * Calculate trip value and display
+ * @param  {int} oldOdo previous value
+ * @param  {int} newOdo new value
+ */
 function calcTrip(oldOdo, newOdo) {
   'use strict';
   $('#trip').val(parseInt(newOdo) - oldOdo);
 }
 
+/**
+ * Calculate price per litre and display
+ */
 function calcPPL() {
   'use strict';
   var ppl = parseFloat($('#cost').val()) / parseFloat($('#litres').val());

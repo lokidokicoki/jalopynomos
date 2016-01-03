@@ -29,7 +29,7 @@ module.exports = function(app, api) {
   });
 
   app.post('/vehicle/save', function(req, res) {
-    var vehicle = api.addVehicle(req.body);
+    api.addVehicle(req.body);
     res.render('index', {
       vehicles: api.getVehicleArray(),
       title: 'Save Vehicle'
@@ -87,9 +87,10 @@ module.exports = function(app, api) {
   });
 
   app.post('/vehicle/:vid/fuel/save', function(req, res) {
+    var fuel;
     var vehicle = api.getVehicle(req.params.vid);
     req.body.date = utils.parseDate(req.body.date);
-    var fuel = api.addFillUp(vehicle, req.body);
+    fuel = api.addFillUp(vehicle, req.body);
     res.render('fuel/details', {
       vehicle: {
         title: vehicle.toString(),
@@ -140,7 +141,7 @@ module.exports = function(app, api) {
   app.post('/vehicle/:vid/fuel/:id/update', function(req, res) {
     var vehicle = api.getVehicle(req.params.vid);
     req.body.date = utils.parseDate(req.body.date);
-    var fillUp = api.updateFillUp(vehicle, req.body);
+    api.updateFillUp(vehicle, req.body);
     res.render('vehicle/details', {
       title: vehicle.toString(),
       vehicle: vehicle
@@ -160,9 +161,10 @@ module.exports = function(app, api) {
   });
 
   app.post('/vehicle/:vid/service/save', function(req, res) {
+    var service;
     var vehicle = api.getVehicle(req.params.vid);
     req.body.date = utils.parseDate(req.body.date);
-    var service = api.addService(vehicle, req.body);
+    service = api.addService(vehicle, req.body);
     res.render('service/details', {
       title: 'Save Service',
       vehicle: {
@@ -199,7 +201,7 @@ module.exports = function(app, api) {
   app.post('/vehicle/:vid/service/:id/update', function(req, res) {
     var vehicle = api.getVehicle(req.params.vid);
     req.body.date = utils.parseDate(req.body.date);
-    var service = api.updateService(vehicle, req.body);
+    api.updateService(vehicle, req.body);
     res.render('vehicle/details', {
       title: vehicle.toString(),
       vehicle: vehicle
