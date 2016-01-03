@@ -7,7 +7,7 @@ module.exports = {
     return moment(dateString, 'YYYY-MM-DD').valueOf();
   },
 
-  formatDate: function(dateString, isInput) {
+  formatDate: function(dateString) {
     'use strict';
     return moment(dateString).format('YYYY-MM-DD');
   },

@@ -18,104 +18,16 @@ var fuelTypes = {
   'S': 'Super unleaded'
 };
 var LITRES_IN_GALLON = 4.54609;
-var GALLONS_IN_LITRE = 0.219969;
+//var GALLONS_IN_LITRE = 0.219969;
 var dataFile = '';
 var _maxVehicleId = 0;
-var DAY_IN_MS = 24 * 60 * 60 * 1000;
-var YEAR_IN_MS = 356 * DAY_IN_MS;
+var DAY_IN_MS = 86400000; //24 * 60 * 60 * 1000;
+var YEAR_IN_MS = 31536000000; //356 * DAY_IN_MS;
 
 /**
- * @constructor
+ * Create new summary record
+ * @param {object} vehicle new record details
  */
-function Vehicle(values) {
-  'use strict';
-  this.id = null;
-  this.regNo = '';
-  this.make = '';
-  this.type = '';
-  this.year = 0;
-  this.active = true;
-  this.purchase = {
-    price: 0,
-    date: '',
-  };
-  this.fuel = {
-    capacity: 0,
-    type: ''
-  };
-  this.oil = {
-    capacity: 0,
-    type: ''
-  };
-  this.tyres = {
-    front: {
-      capacity: 0,
-      type: ''
-    },
-    rear: {
-      capacity: 0,
-      type: ''
-    }
-  };
-  this.notes = '';
-  this.fuelIDs = [];
-  this.serviceIDs = [];
-  this.fuelRecs = [];
-  this.serviceRecs = [];
-  this.avgRecs = [];
-  this.summary = new Summary(this);
-
-  for (var k in values) {
-    this[k] = values[k];
-  }
-
-  this.toString = function() {
-    return this.make + ' ' + this.type + ' ' + this.regNo;
-  };
-
-  this.getFuelRecs = function() {
-    var i, len;
-    this.fuelRecs.length = 0;
-    this.avgRecs.length = 0;
-    for (i = 0, len = this.fuelIDs.length; i < len; i++) {
-      this.fuelRecs.push(getFillUp(this.fuelIDs[i]));
-    }
-
-    U.sortRecs(this.fuelRecs, 'date', false);
-
-    var tmpg = 0;
-    for (i = 0, len = this.fuelRecs.length; i < len; i++) {
-      tmpg += this.fuelRecs[i].mpg;
-      this.avgRecs.push(parseFloat((tmpg / (i + 1)).toFixed(2)));
-    }
-    return this.fuelRecs;
-
-  };
-
-  this.getServiceRecs = function() {
-    this.serviceRecs.length = 0;
-    for (var i = 0, len = this.serviceIDs.length; i < len; i++) {
-      this.serviceRecs.push(getService(this.serviceIDs[i]));
-    }
-
-    U.sortRecs(this.serviceRecs, 'date', false);
-  };
-
-  this.getChartData = function(type) {
-    var data = [],
-      rec;
-    for (var i = 0, len = this.fuelRecs.length; i < len; i++) {
-      rec = this.fuelRecs[i];
-      data.push({
-        mpg: rec.mpg,
-        date: rec.date
-      });
-    }
-
-    return data;
-  };
-}
-
 function Summary(vehicle) {
   'use strict';
   this.vehicle = vehicle;
@@ -160,15 +72,17 @@ function Summary(vehicle) {
   };
 
   this.summarise = function() {
-    this.reset();
-    this.costs.total = this.vehicle.purchase.price;
     var min = Number.MAX_VALUE;
     var max = 0;
 
-    var recs = this.vehicle.fuelRecs,
-      len = 0,
-      i = 0,
-      rec = null;
+    var recs = this.vehicle.fuelRecs;
+    var len = 0;
+    var i = 0;
+    var rec = null;
+
+    this.reset();
+    this.costs.total = this.vehicle.purchase.price;
+
     if (recs && recs !== undefined) {
       len = recs.length;
       for (; i < len; i++) {
@@ -212,9 +126,8 @@ function Summary(vehicle) {
 
   this.update = function(now) {
     var a = (this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date));
-
-    console.log(this.vehicle.active, now, this.lastRecordDate, this.vehicle.purchase.date);
     var p = (this.distance.actual / ((this.vehicle.active ? now : this.lastRecordDate) - this.vehicle.purchase.date));
+
     this.distance.daily = a * DAY_IN_MS;
     this.distance.yearly = a * YEAR_IN_MS;
     this.distance.predicted.daily = p * DAY_IN_MS;
@@ -223,10 +136,112 @@ function Summary(vehicle) {
 }
 
 /**
+ * @param {object} values new vehicle values
+ * @constructor
+ */
+function Vehicle(values) {
+  'use strict';
+  var key;
+  this.id = null;
+  this.regNo = '';
+  this.make = '';
+  this.type = '';
+  this.year = 0;
+  this.active = true;
+  this.purchase = {
+    price: 0,
+    date: ''
+  };
+  this.fuel = {
+    capacity: 0,
+    type: ''
+  };
+  this.oil = {
+    capacity: 0,
+    type: ''
+  };
+  this.tyres = {
+    front: {
+      capacity: 0,
+      type: ''
+    },
+    rear: {
+      capacity: 0,
+      type: ''
+    }
+  };
+  this.notes = '';
+  this.fuelIDs = [];
+  this.serviceIDs = [];
+  this.fuelRecs = [];
+  this.serviceRecs = [];
+  this.avgRecs = [];
+  this.summary = new Summary(this);
+
+  for (key in values) {
+    this[key] = values[key];
+  }
+
+  this.toString = function() {
+    return this.make + ' ' + this.type + ' ' + this.regNo;
+  };
+
+  this.getFuelRecs = function() {
+    var i = 0;
+    var len;
+    var tmpg = 0;
+
+    this.fuelRecs.length = 0;
+    this.avgRecs.length = 0;
+    for (i = 0, len = this.fuelIDs.length; i < len; i++) {
+      this.fuelRecs.push(getFillUp(this.fuelIDs[i]));
+    }
+
+    U.sortRecs(this.fuelRecs, 'date', false);
+
+    for (i = 0, len = this.fuelRecs.length; i < len; i++) {
+      tmpg += this.fuelRecs[i].mpg;
+      this.avgRecs.push(parseFloat((tmpg / (i + 1)).toFixed(2)));
+    }
+    return this.fuelRecs;
+
+  };
+
+  this.getServiceRecs = function() {
+    var i = 0;
+    var len = 0;
+    this.serviceRecs.length = 0;
+    for (len = this.serviceIDs.length; i < len; i++) {
+      this.serviceRecs.push(getService(this.serviceIDs[i]));
+    }
+
+    U.sortRecs(this.serviceRecs, 'date', false);
+  };
+
+  this.getChartData = function() {
+    var data = [];
+    var rec;
+    var i = 0;
+    var len = 0;
+    for (len = this.fuelRecs.length; i < len; i++) {
+      rec = this.fuelRecs[i];
+      data.push({
+        mpg: rec.mpg,
+        date: rec.date
+      });
+    }
+
+    return data;
+  };
+}
+
+/**
+ * @param {object} values new fuel record values
  * @constructor
  */
 function Fuel(values) {
   'use strict';
+  var key;
   this.id = null;
   this.date = '';
   this.litres = 0;
@@ -238,8 +253,8 @@ function Fuel(values) {
   this.notes = '';
   this.type = 'U';
 
-  for (var k in values) {
-    this[k] = values[k];
+  for (key in values) {
+    this[key] = values[key];
   }
 
   if (this.id === null || this.id === undefined) {
@@ -262,15 +277,17 @@ function Fuel(values) {
   };
 
   this.calculatePPL = function() {
-    this.ppl = parseFloat((this.cost / this.litres).toFixed(3));
+    this.ppl = parseFloat((this.cost / this.litres).toFixed(3));//eslint-disable-line no-magic-numbers
   };
 }
 
 /**
+ * @param {object} values new service record values
  * @constructor
  */
 function Service(values) {
   'use strict';
+  var key;
   this.id = null;
   this.date = '';
   this.cost = 0;
@@ -278,8 +295,8 @@ function Service(values) {
   this.item = '';
   this.notes = '';
 
-  for (var k in values) {
-    this[k] = values[k];
+  for (key in values) {
+    this[key] = values[key];
   }
 
   if (this.id === null || this.id === undefined) {
@@ -299,11 +316,14 @@ function Service(values) {
 
 /**
  * Load data from object in collections.
+ * @param {string} fileName name of file to load
  */
 function load(fileName) {
   'use strict';
 
-  var data, k, len, record;
+  var data;
+  var k;
+  var record;
   dataFile = path.join(__dirname + '/../' + fileName);
   console.log(dataFile);
   data = fs.readJSONSync(dataFile);
@@ -329,23 +349,25 @@ function load(fileName) {
 
 }
 
-function save() {
-  var data = get();
-
-  fs.writeJSONSync(dataFile, data);
-}
-
 /**
  * Massage collections into portable format.
+ * @returns {{}} data collection
  */
 function get() {
   'use strict';
 
   var v = _.cloneDeep(vehicles);
+  var k;
+  var obj;
+  var data = {
+    vehicles: null,
+    fillUps: fillUps,
+    services: services
+  };
 
   // clean out calculated stuff.
-  for (var k in v) {
-    var obj = v[k];
+  for (k in v) {
+    obj = v[k];
     delete obj.fuelRecs;
     delete obj.serviceRecs;
     delete obj.avgRecs;
@@ -356,29 +378,49 @@ function get() {
     delete obj.summary;
   }
 
-  var data = {
-    vehicles: v,
-    fillUps: fillUps,
-    services: services
-  };
+  data.vehicles = v;
 
   return data;
 }
 
+/**
+ * Write data to file
+ */
+function save() {
+  'use strict';
+  var data = get();
+
+  fs.writeJSONSync(dataFile, data);
+}
+
+/**
+ * Get vehicle collection
+ * @return {object} vehicles
+ */
 function getVehicles() {
   'use strict';
   return vehicles;
 }
 
+/**
+ * Get vehicle collection as an arracy
+ * @return {[{}]} array of vehicle records
+ */
 function getVehicleArray() {
   'use strict';
   var a = [];
-  for (var k in vehicles) {
+  var k;
+  for (k in vehicles) {
     a.push(vehicles[k]);
   }
   return a;
 }
 
+/**
+ * Get vehicle by id
+ * @param  {integer} id unique id of record
+ * @return {object}    vehicle
+ */
 function getVehicle(id) {
   'use strict';
   var v = vehicles[id];
@@ -386,22 +428,42 @@ function getVehicle(id) {
   return v;
 }
 
+/**
+ * Get fuel record by id
+ * @param  {integer} id of record
+ * @return {object}    fuel record
+ */
 function getFillUp(id) {
   'use strict';
-
   return fillUps[id];
 }
 
+/**
+ * Get service by id
+ * @param  {integer} id of record
+ * @return {object}    service record
+ */
 function getService(id) {
   'use strict';
   return services[id];
 }
 
+/**
+ * Get fuel by type
+ * @param  {string} type fuel type code, i.e. `U`
+ * @return {string} long fuel name
+ */
 function getFuelType(type) {
   'use strict';
   return fuelTypes[type];
 }
 
+/**
+ * Add fuel record for vehicle
+ * @param {object} vehicle target to add record to
+ * @param {object} data    fuel record
+ * @return {object} new fuel record
+ */
 function addFillUp(vehicle, data) {
   'use strict';
   var fillUp;
@@ -426,6 +488,12 @@ function addFillUp(vehicle, data) {
   return fillUp;
 }
 
+/**
+ * Add service record for vehicle
+ * @param {object} vehicle target to add record to
+ * @param {object} data    service record
+ * @return {object} new service record
+ */
 function addService(vehicle, data) {
   'use strict';
   var service;
@@ -509,6 +577,11 @@ function addVehicle(data) {
   return vehicle;
 }
 
+/**
+ * Update vehicle record with new data
+ * @param  {object} data new info
+ * @return {object}      modified vehicle
+ */
 function updateVehicle(data) {
   'use strict';
   var vehicle = vehicles[data.id];
@@ -548,12 +621,18 @@ function updateVehicle(data) {
   return vehicle;
 }
 
+/**
+ * Remove vehicle from collection.
+ *
+ * Calls `save`, so this is permenant.
+ * @param  {integer} id of vehicle
+ */
 function removeVehicle(id) {
   'use strict';
 
-  var vehicle = vehicles[id],
-    i = 0,
-    len = 0;
+  var vehicle = vehicles[id];
+  var i = 0;
+  var len = 0;
 
   // remove fuel recs for this vehicle
   for (i = 0, len = vehicle.fuelIDs.length; i < len; i++) {
@@ -568,6 +647,11 @@ function removeVehicle(id) {
   save();
 }
 
+/**
+ * Remove fuel record from vehicle
+ * @param  {object} vehicle target
+ * @param  {int} id      of fuel record to remove
+ */
 function removeFillUp(vehicle, id) {
   'use strict';
 
@@ -580,6 +664,11 @@ function removeFillUp(vehicle, id) {
   save();
 }
 
+/**
+ * Remove service record form vehicle
+ * @param  {object} vehicle target vehicle
+ * @param  {int} id      of service record
+ */
 function removeService(vehicle, id) {
   'use strict';
 
@@ -592,6 +681,12 @@ function removeService(vehicle, id) {
   save();
 }
 
+/**
+ * Update fuel record details
+ * @param  {object} vehicle target vehicle
+ * @param  {object} data    new fuel data
+ * @return {object}         modified fuel record
+ */
 function updateFillUp(vehicle, data) {
   'use strict';
   var fillUp = fillUps[data.id];
@@ -614,6 +709,12 @@ function updateFillUp(vehicle, data) {
   return fillUp;
 }
 
+/**
+ * Update service record details
+ * @param  {object} vehicle target vehicle
+ * @param  {object} data    new service data
+ * @return {object}         modified service record
+ */
 function updateService(vehicle, data) {
   'use strict';
   var service = services[data.id];
@@ -632,22 +733,32 @@ function updateService(vehicle, data) {
   return service;
 }
 
+/**
+ * Get fuel types from dictionary
+ * @return {array}
+ */
 function getFuelTypes() {
+  'use strict';
   var fts = [];
-  for (var k in fuelTypes) {
+  var k;
+  for (k in fuelTypes) {
     fts.push([k, fuelTypes[k]]);
   }
   return fts;
 }
 
+/**
+ * Get historic fuel prices
+ * @return {object} use this to build a chart
+ */
 function getHistoricFuelPrices() {
   'use strict';
-  var data = {},
-    i = 0,
-    len = 0,
-    rec, min = 9007199254740992,
-    max = 0,
-    dates = [];
+  var data = {};
+  var i = 0;
+  var rec;
+  var min = 9007199254740992;
+  var max = 0;
+  var dates = [];
 
   for (i in fillUps) {
     rec = fillUps[i];
