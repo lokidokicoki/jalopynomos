@@ -83,7 +83,7 @@ function Summary(vehicle) {
     this.reset();
     this.costs.total = this.vehicle.purchase.price;
 
-    if (recs && recs !== undefined) {
+    if (recs && recs !== undefined && recs.length > 0) {
       len = recs.length;
       for (; i < len; i++) {
         rec = recs[i];
@@ -102,11 +102,11 @@ function Summary(vehicle) {
       }
       this.mpg.avg /= len;
       this.ppl.avg /= len;
-    }
 
-    min = Math.min(recs[0].odo, min);
-    max += recs[recs.length - 1].trip;
-    this.distance.actual = max - min;
+      min = Math.min(recs[0].odo, min);
+      max += recs[recs.length - 1].trip;
+      this.distance.actual = max - min;
+    }
 
     recs = this.vehicle.serviceRecs;
     if (recs && recs !== undefined) {
@@ -125,8 +125,8 @@ function Summary(vehicle) {
   };
 
   this.update = function(now) {
-    var a = (this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date));
-    var p = (this.distance.actual / ((this.vehicle.active ? now : this.lastRecordDate) - this.vehicle.purchase.date));
+    var a = this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date);
+    var p = this.distance.actual / ((this.vehicle.active ? now : this.lastRecordDate) - this.vehicle.purchase.date);
 
     this.distance.daily = a * DAY_IN_MS;
     this.distance.yearly = a * YEAR_IN_MS;
@@ -277,7 +277,7 @@ function Fuel(values) {
   };
 
   this.calculatePPL = function() {
-    this.ppl = parseFloat((this.cost / this.litres).toFixed(3));//eslint-disable-line no-magic-numbers
+    this.ppl = parseFloat((this.cost / this.litres).toFixed(3)); //eslint-disable-line no-magic-numbers
   };
 }
 
