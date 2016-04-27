@@ -13,9 +13,9 @@ var vehicles = {};
 var fillUps = {};
 var services = {};
 var fuelTypes = {
-  'U': 'Unleaded',
-  'D': 'Diesel',
-  'S': 'Super unleaded'
+  U: 'Unleaded',
+  D: 'Diesel',
+  S: 'Super unleaded'
 };
 var LITRES_IN_GALLON = 4.54609;
 //var GALLONS_IN_LITRE = 0.219969;
@@ -141,7 +141,6 @@ function Summary(vehicle) {
  */
 function Vehicle(values) {
   'use strict';
-  var key;
   this.id = null;
   this.regNo = '';
   this.make = '';
@@ -178,8 +177,11 @@ function Vehicle(values) {
   this.avgRecs = [];
   this.summary = new Summary(this);
 
-  for (key in values) {
-    this[key] = values[key];
+  // copy constructor
+  for (let key in values) {
+    if (values.hasOwnProperty(key)) {
+      this[key] = values[key];
+    }
   }
 
   this.toString = function() {
@@ -204,7 +206,6 @@ function Vehicle(values) {
       this.avgRecs.push(parseFloat((tmpg / (i + 1)).toFixed(2)));
     }
     return this.fuelRecs;
-
   };
 
   this.getServiceRecs = function() {
@@ -241,7 +242,6 @@ function Vehicle(values) {
  */
 function Fuel(values) {
   'use strict';
-  var key;
   this.id = null;
   this.date = '';
   this.litres = 0;
@@ -253,8 +253,11 @@ function Fuel(values) {
   this.notes = '';
   this.type = 'U';
 
-  for (key in values) {
-    this[key] = values[key];
+  // copy constructor
+  for (let key in values) {
+    if (values.hasOwnProperty(key)) {
+      this[key] = values[key];
+    }
   }
 
   if (this.id === null || this.id === undefined) {
@@ -277,7 +280,7 @@ function Fuel(values) {
   };
 
   this.calculatePPL = function() {
-    this.ppl = parseFloat((this.cost / this.litres).toFixed(3)); //eslint-disable-line no-magic-numbers
+    this.ppl = parseFloat((this.cost / this.litres).toFixed(3));
   };
 }
 
@@ -287,7 +290,6 @@ function Fuel(values) {
  */
 function Service(values) {
   'use strict';
-  var key;
   this.id = null;
   this.date = '';
   this.cost = 0;
@@ -295,8 +297,11 @@ function Service(values) {
   this.item = '';
   this.notes = '';
 
-  for (key in values) {
-    this[key] = values[key];
+  // copy constructor
+  for (let key in values) {
+    if (values.hasOwnProperty(key)) {
+      this[key] = values[key];
+    }
   }
 
   if (this.id === null || this.id === undefined) {
@@ -322,31 +327,37 @@ function load(fileName) {
   'use strict';
 
   var data;
-  var k;
   var record;
-  dataFile = path.join(__dirname + '/../' + fileName);
-  console.log(dataFile);
+  dataFile = path.join(__dirname, '/../', fileName);
+  console.log('Load this file:', dataFile);
   data = fs.readJSONSync(dataFile);
-  for (k in data.fillUps) {
-    record = new Fuel(data.fillUps[k]);
-    fillUps[record.id] = record;
-  }
 
-  for (k in data.services) {
-    record = new Service(data.services[k]);
-    services[record.id] = record;
-  }
-  for (k in data.vehicles) {
-    record = new Vehicle(data.vehicles[k]);
-    record.getFuelRecs();
-    record.getServiceRecs();
-    record.summary.summarise();
-    vehicles[record.id] = record;
-    if (record.id > _maxVehicleId) {
-      _maxVehicleId = record.id;
+  for (let k in data.fillUps) {
+    if (data.fillUps.hasOwnProperty(k)) {
+      record = new Fuel(data.fillUps[k]);
+      fillUps[record.id] = record;
     }
   }
 
+  for (let k in data.services) {
+    if (data.services.hasOwnProperty(k)) {
+      record = new Service(data.services[k]);
+      services[record.id] = record;
+    }
+  }
+
+  for (let k in data.vehicles) {
+    if (data.vehicles.hasOwnProperty(k)) {
+      record = new Vehicle(data.vehicles[k]);
+      record.getFuelRecs();
+      record.getServiceRecs();
+      record.summary.summarise();
+      vehicles[record.id] = record;
+      if (record.id > _maxVehicleId) {
+        _maxVehicleId = record.id;
+      }
+    }
+  }
 }
 
 /**
@@ -357,7 +368,6 @@ function get() {
   'use strict';
 
   var v = _.cloneDeep(vehicles);
-  var k;
   var obj;
   var data = {
     vehicles: null,
@@ -366,16 +376,18 @@ function get() {
   };
 
   // clean out calculated stuff.
-  for (k in v) {
-    obj = v[k];
-    delete obj.fuelRecs;
-    delete obj.serviceRecs;
-    delete obj.avgRecs;
-    delete obj.getFuelRecs;
-    delete obj.getServiceRecs;
-    delete obj.getChartData;
-    delete obj.toString;
-    delete obj.summary;
+  for (let k in v) {
+    if (v.hasOwnProperty(k)) {
+      obj = v[k];
+      delete obj.fuelRecs;
+      delete obj.serviceRecs;
+      delete obj.avgRecs;
+      delete obj.getFuelRecs;
+      delete obj.getServiceRecs;
+      delete obj.getChartData;
+      delete obj.toString;
+      delete obj.summary;
+    }
   }
 
   data.vehicles = v;
@@ -404,7 +416,7 @@ function getVehicles() {
 
 /**
  * Get vehicle collection as an arracy
- * @return {[{}]} array of vehicle records
+ * @return {array.<Vehicle>} array of vehicle records
  */
 function getVehicleArray() {
   'use strict';
@@ -636,10 +648,10 @@ function removeVehicle(id) {
 
   // remove fuel recs for this vehicle
   for (i = 0, len = vehicle.fuelIDs.length; i < len; i++) {
-    delete fillUps['' + vehicle.fuelIDs[i]];
+    delete fillUps[String(vehicle.fuelIDs[i])];
   }
   for (i = 0, len = vehicle.serviceIDs.length; i < len; i++) {
-    delete services['' + vehicle.serviceIDs[i]];
+    delete services[String(vehicle.serviceIDs[i])];
   }
 
   vehicle = null;
@@ -657,7 +669,7 @@ function removeFillUp(vehicle, id) {
 
   var idx = vehicle.fuelIDs.indexOf(parseInt(id));
   vehicle.fuelIDs.splice(idx, 1);
-  delete fillUps['' + id];
+  delete fillUps[String(id)];
   vehicle.getFuelRecs();
   vehicle.summary.summarise();
 
@@ -674,7 +686,7 @@ function removeService(vehicle, id) {
 
   var idx = vehicle.serviceIDs.indexOf(parseInt(id));
   vehicle.serviceIDs.splice(idx, 1);
-  delete services['' + id];
+  delete services[String(id)];
   vehicle.getServiceRecs();
   vehicle.summary.summarise();
 
