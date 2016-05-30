@@ -255,9 +255,7 @@ function Fuel(values) {
 
   // copy constructor
   for (let key in values) {
-    if (values.hasOwnProperty(key)) {
-      this[key] = values[key];
-    }
+    this[key] = values[key];
   }
 
   if (this.id === null || this.id === undefined) {
@@ -299,9 +297,7 @@ function Service(values) {
 
   // copy constructor
   for (let key in values) {
-    if (values.hasOwnProperty(key)) {
-      this[key] = values[key];
-    }
+    this[key] = values[key];
   }
 
   if (this.id === null || this.id === undefined) {
