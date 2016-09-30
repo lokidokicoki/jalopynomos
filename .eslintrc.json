@@ -1,0 +1,18 @@
+{
+  "extends": "google",
+  "env":{
+    "node":true,
+    "jquery":true
+  },
+  "rules": {
+    "max-len": 0,
+    "complexity": [2, 10],
+    "radix": [2, "as-needed"],
+    "valid-jsdoc": [2, {
+      "requireReturn": false,
+      "requireReturnDescription": false
+    }],
+    "no-inline-comments": 0,
+    "spaced-comment": 0 
+  }
+}
