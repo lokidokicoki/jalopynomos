@@ -1,69 +1,67 @@
-var moment = require('moment');
-var _ = require('lodash');
+'use strict';
+import moment from 'moment';
+import _ from 'lodash';
 
-module.exports = {
-  parseDate: function(dateString) {
-    'use strict';
-    return moment(dateString, 'YYYY-MM-DD').valueOf();
-  },
+const DAY_IN_MS = 86400000; //24 * 60 * 60 * 1000;
+const YEAR_IN_MS = 31536000000; //356 * DAY_IN_MS;
+const LITRES_IN_GALLON = 4.54609;
 
-  formatDate: function(dateString) {
-    'use strict';
-    return moment(dateString).format('YYYY-MM-DD');
-  },
+function parseDate(dateString) {
+  return moment(dateString, `YYYY-MM-DD`).valueOf();
+}
 
-  formatCost: function(cost, options) {
-    'use strict';
-    return '£' + this.formatNumber(cost, options);
-  },
-  formatMPG: function(mpg) {
-    'use strict';
-    return mpg.toFixed(2);
-  },
-  formatNumber: function(val, options) {
-    'use strict';
-    options = (options === undefined) ? {
-      dp: 2
-    } : options.hash;
-    options.dp = (options.dp === undefined) ? 2 : options.dp;
+function formatDate(dateString) {
+  return moment(dateString).format(`YYYY-MM-DD`);
+}
 
-    return val.toFixed(options.dp);
-  },
+function formatCost(cost, options) {
+  return `£` + formatNumber(cost, options);
+}
+function formatMPG(mpg) {
+  return mpg.toFixed(2);
+}
+function formatNumber(val, options) {
+  options = (options === undefined) ? {
+    dp: 2
+  } : options.hash;
+  options.dp = (options.dp === undefined) ? 2 : options.dp;
 
-  ensureNumber: function(value, _default) {
-    'use strict';
-    value = parseFloat(value);
-    return _.isNumber(value) ? value : _default;
-  },
+  return val.toFixed(options.dp);
+}
 
-  sortRecs: function(objects, key, order) {
-    'use strict';
-    order = (order === undefined) ? true : order;
-    objects.sort(function(a, b) {
-      a = a[key];
-      b = b[key];
-      if (order) {
-        if (a > b) {
-          return 1;
-        }
-        if (a === b) {
-          return 0;
-        }
-        if (a < b) {
-          return -1;
-        }
-      } else {
-        if (a < b) {
-          return 1;
-        }
-        if (a === b) {
-          return 0;
-        }
-        if (a > b) {
-          return -1;
-        }
+function ensureNumber(value, _default) {
+  value = parseFloat(value);
+  return _.isNumber(value) ? value : _default;
+}
+
+function sortRecs(objects, key, order) {
+  order = (order === undefined) ? true : order;
+  objects.sort(function(a, b) {
+    a = a[key];
+    b = b[key];
+    if (order) {
+      if (a > b) {
+        return 1;
       }
-    });
-    return objects;
-  }
-};
+      if (a === b) {
+        return 0;
+      }
+      if (a < b) {
+        return -1;
+      }
+    } else {
+      if (a < b) {
+        return 1;
+      }
+      if (a === b) {
+        return 0;
+      }
+      if (a > b) {
+        return -1;
+      }
+    }
+  });
+  return objects;
+}
+
+export {parseDate, formatDate, formatCost, formatMPG, formatNumber, ensureNumber, sortRecs, LITRES_IN_GALLON, DAY_IN_MS, YEAR_IN_MS};
