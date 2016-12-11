@@ -1,5 +1,5 @@
 var utils = require('./server/utils');
-var pkg = require('./package.json');
+var pkg = require('../package.json');
 module.exports = function(app, api) {
   'use strict';
   // menu bar routes
@@ -236,7 +236,8 @@ module.exports = function(app, api) {
 
   app.post('/mpg', function(req, res) {
     var vehicle = api.getVehicle(req.body.vid);
-    var data = vehicle.getChartData().reverse();
+    var data = vehicle.chartData().reverse();
+    console.log(data);
     var i = 0;
     var len;
     for (len = data.length; i < len; i++) {

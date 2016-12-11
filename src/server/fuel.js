@@ -1,10 +1,11 @@
 'use strict';
 import * as U from './utils';
+import * as api from './api';
 /**
  * @param {object} values new fuel record values
  * @constructor
  */
-export class Fuel {
+class Fuel {
   constructor(values) {
     this.id = null;
     this.date = ``;
@@ -23,11 +24,11 @@ export class Fuel {
     }
 
     if (this.id === null || this.id === undefined) {
-      this.id = _.size(fillUps) + 1;
+      this.id = _.size(api.getFillUps()) + 1;
     }
   }
 
-  get toString() {
+  toString() {
     // date | cost | litres | trip | odo | mpg
     let data = U.formatDate(this.date) + ` | ` +
     U.formatCost(this.cost) + ` | ` +
@@ -46,3 +47,5 @@ export class Fuel {
     this.ppl = parseFloat((this.cost / this.litres).toFixed(3));
   }
 }
+
+export { Fuel as default };

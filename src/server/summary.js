@@ -4,7 +4,7 @@ import * as U from './utils';
  * Create new summary record
  * @param {object} vehicle new record details
  */
-export class Summary {
+class Summary {
   constructor(vehicle) {
     this.vehicle = vehicle;
 
@@ -111,3 +111,5 @@ export class Summary {
     this.distance.predicted.yearly = p * U.YEAR_IN_MS;
   }
 }
+
+export { Summary as default };

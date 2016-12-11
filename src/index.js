@@ -8,7 +8,7 @@ var app = express();
 var hbs = require('hbs');
 var oneDay = 86400000;
 
-api.load('data/records.json');
+api.load('../data/records.json');
 
 hbs.registerHelper('getFuelType', function(type) {
   'use strict';
@@ -92,7 +92,7 @@ hbs.registerHelper('each_with_sort', function(array, key, opts) {
   }
   return s;
 });
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs.__express);
 app.use(partials()); // use partials for layout.html

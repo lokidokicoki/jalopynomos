@@ -1,6 +1,8 @@
 'use strict';
 
+import _ from 'lodash';
 import * as utils from './utils';
+import * as api from './api';
 /**
  * @param {object} values new service record values
  * @constructor
@@ -20,11 +22,11 @@ class Service {
     }
 
     if (this.id === null || this.id === undefined) {
-      this.id = _.size(services) + 1;
+      this.id = _.size(api.getServices()) + 1;
     }
   }
 
-  get toString() {
+  toString() {
     // date | cost | litres | trip | odo | mpg
     let data = utils.formatDate(this.date) + ` | ` +
     utils.formatCost(this.cost) + ` | ` +
@@ -34,3 +36,5 @@ class Service {
     return data;
   }
 }
+
+export { Service as default };

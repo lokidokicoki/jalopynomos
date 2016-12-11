@@ -54,8 +54,8 @@ function load(fileName) {
   for (let k in data.vehicles) {
     if (data.vehicles.hasOwnProperty(k)) {
       record = new Vehicle(data.vehicles[k]);
-      record.fuelRecs;
-      record.serviceRecs;
+      record.fuelRecords();
+      record.serviceRecords();
       record.summary.summarise();
       vehicles[record.id] = record;
       if (record.id > _maxVehicleId) {
@@ -85,9 +85,9 @@ function get() {
       delete obj.fuelRecs;
       delete obj.serviceRecs;
       delete obj.avgRecs;
-      delete obj.getFuelRecs;
-      delete obj.getServiceRecs;
-      delete obj.getChartData;
+      delete obj.fuelRecords;
+      delete obj.serviceRecords;
+      delete obj.chartData;
       delete obj.toString;
       delete obj.summary;
     }
@@ -113,6 +113,22 @@ function save() {
  */
 function getVehicles() {
   return vehicles;
+}
+
+/**
+ * Get service collection
+ * @return {object} services
+ */
+function getServices() {
+  return services;
+}
+
+/**
+ * Get fillups collection
+ * @return {object} fillups
+ */
+function getFillUps() {
+  return fillUps;
 }
 
 /**
@@ -188,7 +204,7 @@ function addFillUp(vehicle, data) {
   fillUp.calculatePPL();
   fillUps[fillUp.id] = fillUp;
   vehicle.fuelIDs.push(fillUp.id);
-  vehicle.getFuelRecs();
+  vehicle.fuelRecords();
   vehicle.summary.summarise();
 
   save();
@@ -212,7 +228,7 @@ function addService(vehicle, data) {
   service = new Service(data);
   services[service.id] = service;
   vehicle.serviceIDs.push(service.id);
-  vehicle.getServiceRecs();
+  vehicle.fuelRecords();
   vehicle.summary.summarise();
 
   save();
@@ -358,7 +374,7 @@ function removeFillUp(vehicle, id) {
   let idx = vehicle.fuelIDs.indexOf(parseInt(id));
   vehicle.fuelIDs.splice(idx, 1);
   delete fillUps[String(id)];
-  vehicle.getFuelRecs();
+  vehicle.fuelRecords();
   vehicle.summary.summarise();
 
   save();
@@ -373,7 +389,7 @@ function removeService(vehicle, id) {
   let idx = vehicle.serviceIDs.indexOf(parseInt(id));
   vehicle.serviceIDs.splice(idx, 1);
   delete services[String(id)];
-  vehicle.getServiceRecs();
+  vehicle.serviceRecords();
   vehicle.summary.summarise();
 
   save();
@@ -399,7 +415,7 @@ function updateFillUp(vehicle, data) {
   //TODO: need some validation!
   fillUp.calculateMPG();
   fillUp.calculatePPL();
-  vehicle.getFuelRecs();
+  vehicle.fuelRecords();
   vehicle.summary.summarise();
 
   save();
@@ -422,7 +438,7 @@ function updateService(vehicle, data) {
   service.notes = data.notes;
 
   //TODO: need some validation!
-  vehicle.getServiceRecs();
+  vehicle.serviceRecords();
   vehicle.summary.summarise();
 
   save();
@@ -486,28 +502,4 @@ function getHistoricFuelPrices() {
   };
 }
 
-module.exports = {
-  Vehicle: Vehicle,
-  Fuel: Fuel,
-  Service: Service,
-  load: load,
-  save: save,
-  get: get,
-  getVehicles: getVehicles,
-  getVehicleArray: getVehicleArray,
-  getVehicle: getVehicle,
-  getFillUp: getFillUp,
-  getService: getService,
-  getFuelType: getFuelType,
-  getFuelTypes: getFuelTypes,
-  getHistoricFuelPrices: getHistoricFuelPrices,
-  addFillUp: addFillUp,
-  updateFillUp: updateFillUp,
-  updateService: updateService,
-  addVehicle: addVehicle,
-  updateVehicle: updateVehicle,
-  removeVehicle: removeVehicle,
-  removeFillUp: removeFillUp,
-  addService: addService,
-  removeService: removeService
-};
+export { load, save, get, getVehicles, getServices, getVehicleArray, getVehicle, getFillUp, getService, getFuelType, getFuelTypes, getHistoricFuelPrices, addFillUp, updateFillUp, updateService, addVehicle, updateVehicle, removeVehicle, removeFillUp, addService, removeService };
