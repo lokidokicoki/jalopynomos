@@ -1,18 +1,23 @@
 {
+  "parserOptions":{
+    "sourceType": "module"
+  },
   "extends": "google",
-  "env":{
-    "node":true,
-    "jquery":true
+  "env": {
+    "node": true,
+    "es6": true
   },
   "rules": {
-    "max-len": 0,
+    "max-len": ["warn", 250, 2],
     "complexity": [2, 10],
+    "spaced-comment": 0,
     "radix": [2, "as-needed"],
     "valid-jsdoc": [2, {
       "requireReturn": false,
       "requireReturnDescription": false
     }],
-    "no-inline-comments": 0,
-    "spaced-comment": 0 
+    "quotes": [2, "backtick"],
+    "arrow-parens": ["error", "as-needed"],
+    "comma-dangle": ["error", "never"]
   }
 }
