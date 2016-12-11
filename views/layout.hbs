@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{{title}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link href="/bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <!-- Bootstrap theme -->
-    <link href="/bower/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/css/main.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Le styles -->
+  <link href="/bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <style>
+    body {
+      padding-top: 60px;
+      /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+
+  </style>
+  <!-- Bootstrap theme -->
+  <link href="/bower/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/main.css" rel="stylesheet">
 
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Jalopynomos</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/history">History</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+        <a class="navbar-brand" href="/">Jalopynomos</a>
       </div>
-    </nav>
-    <script src="/bower/jquery/dist/jquery.min.js"></script>
-    <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/bower/highcharts/lib/highcharts.js"></script>
-    <script src="/bower/technical-indicators/technical-indicators.src.js"></script>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/history">History</a></li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </nav>
+  <script src="/bower/jquery/dist/jquery.min.js"></script>
+  <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/bower/highcharts/lib/highcharts.js"></script>
+  <script src="/bower/technical-indicators/technical-indicators.src.js"></script>
 
-    <script src="/js/public.js"></script>
-    <div class="container">
+  <script src="/js/public.js"></script>
+  <div class="container">
 
-    	{{{body}}}
+    {{{body}}}
 
-    </div> <!-- /container -->
+  </div>
+  <!-- /container -->
+</body>
 
-
-  </body>
 </html>
