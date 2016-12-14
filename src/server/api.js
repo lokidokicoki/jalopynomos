@@ -502,4 +502,4 @@ function getHistoricFuelPrices() {
   };
 }
 
-export { load, save, get, getVehicles, getServices, getVehicleArray, getVehicle, getFillUp, getService, getFuelType, getFuelTypes, getHistoricFuelPrices, addFillUp, updateFillUp, updateService, addVehicle, updateVehicle, removeVehicle, removeFillUp, addService, removeService };
+export { load, save, get, getVehicles, getServices, getVehicleArray, getVehicle, getFillUps, getFillUp, getService, getFuelType, getFuelTypes, getHistoricFuelPrices, addFillUp, updateFillUp, updateService, addVehicle, updateVehicle, removeVehicle, removeFillUp, addService, removeService };
