@@ -1,0 +1,20 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "plugins": [],
+  "templates": {
+    "cleverLinks": true,
+    "theme": "yeti",
+    "systemName": "Jalopynomos",
+    "includeDate": true
+  },
+  "opts": {
+    "destination": "./docs/",
+    "private": true
+  },
+  "source": {
+    "exclude": ["src/public"]
+  }
+}
