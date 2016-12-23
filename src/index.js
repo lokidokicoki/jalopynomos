@@ -1,12 +1,12 @@
-var express = require('express');
-var partials = require('express-partials');
+var express    = require('express');
+var partials   = require('express-partials');
 var bodyParser = require('body-parser');
-var path = require('path');
-var api = require('./server/api');
-var utils = require('./server/utils');
-var app = express();
-var hbs = require('hbs');
-var oneDay = 86400000;
+var path       = require('path');
+var api        = require('./server/api');
+var utils      = require('./server/utils');
+var app        = express();
+var hbs        = require('hbs');
+var oneDay     = 86400000;
 
 api.load('../data/records.json');
 
@@ -92,7 +92,7 @@ hbs.registerHelper('each_with_sort', function(array, key, opts) {
   }
   return s;
 });
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs.__express);
 app.use(partials()); // use partials for layout.html
