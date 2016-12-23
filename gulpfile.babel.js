@@ -2,30 +2,31 @@
 
 import gulp from 'gulp';
 import babel from 'gulp-babel';
-import runSequence from 'run-sequence';
 import del from 'del';
 
 const config = {
-  src: 'src/**/*.js',
-  dest: 'build'
+  src: `src/**/*.js`,
+  dist: `dist`
 };
 
-gulp.task(`babel`, function() {
+gulp.task(`babel`, () => {
   return gulp.src(config.src)
     .pipe(babel())
-    .pipe(gulp.dest(config.dest));
+    .pipe(gulp.dest(config.dist));
 });
 
 gulp.task(`clean`, () => {
   return del(config.dist);
 });
 
-gulp.task(`build`, cb => {
-  runSequence(`clean`, `babel`, cb);
+gulp.task(`build`, gulp.series(`clean`, `babel`));
+
+gulp.task(`watch:js`, () => {
+  gulp.watch(config.src, gulp.series(`babel`));
 });
 
-gulp.task(`watch`, [`build`], () => {
-  gulp.watch(config.src, [`babel`]);
-});
+gulp.task(`watch`, gulp.parallel(
+  `watch:js`
+));
 
-gulp.task(`default`, [`watch`]);
+gulp.task(`default`, gulp.series(`build`, `watch`));
