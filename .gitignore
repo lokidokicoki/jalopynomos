@@ -1,6 +1,6 @@
 data/
 node_modules/
 npm-debug.log
-public/bower/
 dist/
 docs/
+src/plugins
