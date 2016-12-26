@@ -1,0 +1,41 @@
+[
+  {
+    "module": "bootstrap",
+    "name": null,
+    "js": [
+      "./dist/js/bootstrap.min.js"
+    ],
+    "css": [
+      "dist/css/bootstrap.css",
+      "dist/css/bootstrap-theme.min.css"
+    ],
+    "priority": 50
+  },
+  {
+    "module": "highcharts",
+    "name": null,
+    "js": [
+      "highcharts.js"
+    ],
+    "css": null,
+    "priority": 50
+  },
+  {
+    "module": "jquery",
+    "name": null,
+    "js": [
+      "dist/jquery.js"
+    ],
+    "css": null,
+    "priority": 0
+  },
+  {
+    "module": "technical-indicators",
+    "name": null,
+    "js": [
+      "technical-indicators.src.js"
+    ],
+    "css": null,
+    "priority": 50
+  }
+]
