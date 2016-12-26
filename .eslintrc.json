@@ -2,7 +2,13 @@
   "parserOptions":{
     "sourceType": "module"
   },
-  "extends": "google",
+  "extends": [
+    "google",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ],
   "env": {
     "node": true,
     "es6": true
