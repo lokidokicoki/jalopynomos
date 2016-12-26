@@ -3,7 +3,7 @@
     "allowUnknownTags": true,
     "dictionaries": ["jsdoc"]
   },
-  "plugins": [],
+  "plugins": ["node_modules/jsdoc-babel"],
   "templates": {
     "cleverLinks": true,
     "theme": "yeti",
