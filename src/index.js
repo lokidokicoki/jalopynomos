@@ -104,9 +104,7 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(express.static('public', {
-  maxAge: oneDay
-}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 var server = app.listen('51000', function() {
   'use strict';
