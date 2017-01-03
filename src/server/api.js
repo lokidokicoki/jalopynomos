@@ -71,7 +71,7 @@ function load(fileName: string) {
  * Massage collections into portable format.
  * @returns {{}} data collection
  */
-function get() {
+function get(): Object {
   let v = _.cloneDeep(vehicles);
   let obj;
   let data = {

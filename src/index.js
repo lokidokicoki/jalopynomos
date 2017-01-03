@@ -14,9 +14,9 @@ hbs.registerHelper('getFuelType', function(type) {
   'use strict';
   return api.getFuelType(type);
 });
-hbs.registerHelper('formatDate', function(dateString, isInput) {
+hbs.registerHelper('formatDate', function(dateString) {
   'use strict';
-  return utils.formatDate(dateString, isInput);
+  return utils.formatDate(dateString);
 });
 
 hbs.registerHelper('formatCost', function(cost, options) {

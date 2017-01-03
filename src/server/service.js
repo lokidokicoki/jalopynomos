@@ -10,7 +10,7 @@ import * as api from './api';
  */
 class Service {
   id: number;
-  date: string;
+  date: number;
   cost: number;
   odo: number;
   item: string;
@@ -22,7 +22,7 @@ class Service {
    */
   constructor(values: Object) {
     this.id    = -1;
-    this.date  = ``;
+    this.date  = 0;
     this.cost  = 0;
     this.odo   = 0;
     this.item  = ``;

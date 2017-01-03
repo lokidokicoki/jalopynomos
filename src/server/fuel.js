@@ -6,10 +6,11 @@ import * as api from './api';
 /**
  * Holder for fuel records
  * @class Fuel
+   * @constructor
  */
 class Fuel {
   id: number;
-  date: string;
+  date: number;
   litres: number;
   ppl: number;
   trip: number;
@@ -21,11 +22,10 @@ class Fuel {
 
   /**
    * @param {object} values new fuel record values
-   * @constructor
    */
   constructor(values: Object) {
     this.id     = -1;
-    this.date   = ``;
+    this.date   = 0;
     this.litres = 0;
     this.ppl    = 0;
     this.trip   = 0;
@@ -36,7 +36,7 @@ class Fuel {
     this.type   = `U`;
 
     // copy constructor
-    _.forEach(values, (item, key) => {
+    _.forEach(values, (item: any, key: string) => {
       this[key] = values[key];
     });
 
@@ -49,7 +49,7 @@ class Fuel {
    * Get record as string
    * @return {string}
    */
-  toString() {
+  toString(): string {
     // date | cost | litres | trip | odo | mpg
     let data = U.formatDate(this.date) + ` | ` +
     U.formatCost(this.cost) + ` | ` +
