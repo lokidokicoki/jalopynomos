@@ -1,14 +1,12 @@
 'use strict';
 /* @flow */
 import _ from 'lodash';
-import * as U from './utils';
+import * as utils from './utils';
 import * as api from './api';
 /**
  * Holder for fuel records
- * @class Fuel
-   * @constructor
  */
-class Fuel {
+export class Fuel {
   id: number;
   date: number;
   litres: number;
@@ -22,6 +20,7 @@ class Fuel {
 
   /**
    * @param {object} values new fuel record values
+   * @constructor
    */
   constructor(values: Object) {
     this.id     = -1;
@@ -51,11 +50,11 @@ class Fuel {
    */
   toString(): string {
     // date | cost | litres | trip | odo | mpg
-    let data = U.formatDate(this.date) + ` | ` +
-    U.formatCost(this.cost) + ` | ` +
+    let data = utils.formatDate(this.date) + ` | ` +
+    utils.formatCost(this.cost) + ` | ` +
     this.litres + ` | ` +
     this.trip + ` | ` +
-    U.formatMPG(this.mpg);
+    utils.formatMPG(this.mpg);
 
     return data;
   }
@@ -64,7 +63,7 @@ class Fuel {
    * Calculate MPG for this record
    */
   calculateMPG() {
-    this.mpg = this.trip / (this.litres / U.LITRES_IN_GALLON);
+    this.mpg = this.trip / (this.litres / utils.LITRES_IN_GALLON);
   }
 
   /**
@@ -74,5 +73,3 @@ class Fuel {
     this.ppl = parseFloat((this.cost / this.litres).toFixed(3));
   }
 }
-
-export {Fuel as default};

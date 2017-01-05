@@ -6,9 +6,8 @@ import * as api from './api';
 
 /**
  * Service record holder
- * @class Sevice
  */
-class Service {
+export class Service {
   id: number;
   date: number;
   cost: number;
@@ -52,5 +51,3 @@ class Service {
     return data;
   }
 }
-
-export {Service as default};

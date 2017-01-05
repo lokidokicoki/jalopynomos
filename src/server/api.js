@@ -12,9 +12,9 @@ import * as U from './utils';
 import fs from 'fs-extra';
 import path from 'path';
 
-import Vehicle from './vehicle';
-import Fuel from './fuel';
-import Service from './service';
+import {Vehicle} from './vehicle';
+import {Fuel} from './fuel';
+import {Service} from './service';
 
 let vehicles  = {};
 let fillUps   = {};

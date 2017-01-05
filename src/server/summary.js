@@ -1,13 +1,12 @@
 'use strict';
 
 import * as U from './utils';
-import Vehicle from './vehicle';
+import {Vehicle} from './vehicle';
 /**
  * Summary Holder
- * @class
  * @flow
  */
-class Summary {
+export class Summary {
   vehicle: Vehicle;
   mpg: Object;
   ppl: Object;
@@ -137,5 +136,3 @@ class Summary {
     this.distance.predicted.yearly = p * U.YEAR_IN_MS;
   }
 }
-
-export {Summary as default};

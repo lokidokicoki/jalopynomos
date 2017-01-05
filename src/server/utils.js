@@ -31,7 +31,7 @@ function formatDate(dateString: string) {
  * Format number as cost string
  * @method formatCost
  * @param {number} cost value to format
- * @param {Object} options formatting options
+ * @param {Object=} options formatting options
  * @return {string} formatted cost
  */
 function formatCost(cost: number, options: Object) {
@@ -52,7 +52,7 @@ function formatMPG(mpg: number) {
  * Format number to set number of decimal places
  * @method formatNumber
  * @param {number} val value to format
- * @param {Object} options number of dp
+ * @param {Object=} options number of dp
  * @return {string}
  */
 function formatNumber(val: number, options: Object) {
