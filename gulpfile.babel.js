@@ -3,14 +3,14 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import del from 'del';
-import jsdoc from 'gulp-jsdoc3';
+import esdoc from 'gulp-esdoc';
 import fs from 'fs-extra';
 import _ from 'lodash';
 import path from 'path';
 import inject from 'gulp-inject';
 
 import pkg from './package.json';
-import jsdocConfig from './jsdoc.json';
+import esdocConfig from './esdoc.json';
 
 const config = {
   src: [`src/**/*.js`, `!src/plugins/**/*`, `!src/public/**/*`],
@@ -127,11 +127,13 @@ gulp.task(`babel`, () => {
 });
 
 // =============================================================================
-// jsdoc generation
+// doc generation
 gulp.task(`docs`, () => {
-  return gulp.src([`README.md`, `./src/**/*.js`, `!src/plugins/**/*`, `!src/public/**/*`], {
+  // NB: we bin off source here as it is passed through form gulp.src
+  esdocConfig.source = null;
+  return gulp.src([`./src`], {
     read: false
-  }).pipe(jsdoc(jsdocConfig));
+  }).pipe(esdoc(esdocConfig));
 });
 
 gulp.task(`views`, () => {
