@@ -32,7 +32,7 @@ export class Service {
       this[key] = values[key];
     });
 
-    if (this.id === null || this.id === undefined) {
+    if (this.id === null || this.id === undefined || this.id === -1) {
       this.id = _.size(api.getServices()) + 1;
     }
   }
