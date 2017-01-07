@@ -32,7 +32,7 @@
     "esformatter-jquery-chain": "^1.1.0",
     "esformatter-literal-notation": "^1.0.1",
     "esformatter-quote-props": "^2.0.0",
-    "eslint": "^3.12.2",
+    "eslint": "^3.13.0",
     "eslint-config-google": "^0.7.1",
     "eslint-plugin-flowtype": "^2.29.2",
     "gulp": "github:gulpjs/gulp#4.0",
