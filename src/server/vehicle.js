@@ -1,5 +1,5 @@
 'use strict';
-/* @flow */
+
 import * as api from './api';
 import * as utils from './utils';
 import {Fuel} from './fuel';

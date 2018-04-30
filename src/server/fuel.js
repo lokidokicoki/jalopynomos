@@ -1,5 +1,5 @@
 'use strict';
-/* @flow */
+
 import _ from 'lodash';
 import * as utils from './utils';
 import * as api from './api';
