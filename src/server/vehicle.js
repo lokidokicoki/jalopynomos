@@ -1,6 +1,7 @@
 'use strict';
 
 import * as api from './api';
+import _ from 'lodash';
 import * as utils from './utils';
 import {Fuel} from './fuel';
 import {Service} from './service';
@@ -72,11 +73,9 @@ export class Vehicle {
     console.log(`ctor`, values);
 
     // copy constructor
-    for (let key in values) {
-      if (values.hasOwnProperty(key)) {
-        this[key] = values[key];
-      }
-    }
+    _.forEach(values, (item, key) => {
+      this[key] = values[key];
+    });
   }
 
   /**
