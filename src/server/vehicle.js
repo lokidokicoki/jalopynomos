@@ -10,35 +10,35 @@ import {Summary} from './summary';
  * Vehicle record holder
  */
 export class Vehicle {
-  id: number;
-  regNo: string;
-  make: string;
-  type: string;
-  year: number;
-  active: boolean;
-  purchase: Object;
-  fuel: Object;
-  oil: Object;
-  tyres: Object;
-  notes: string;
-  fuelIDs: number[];
-  serviceIDs: number[];
-  fuelRecs: Fuel[];
-  serviceRecs: Service[];
-  avgRecs: number[];
-  summary: Summary;
+  id;
+  regNo;
+  make;
+  type;
+  year;
+  active;
+  purchase;
+  fuel;
+  oil;
+  tyres;
+  notes;
+  fuelIDs;
+  serviceIDs;
+  fuelRecs;
+  serviceRecs;
+  avgRecs;
+  summary;
 
   /**
    * @param {object} values new vehicle values
    * @constructor
    */
-  constructor(values: Object) {
-    this.id       = -1;
-    this.regNo    = ``;
-    this.make     = ``;
-    this.type     = ``;
-    this.year     = 0;
-    this.active   = true;
+  constructor(values) {
+    this.id = -1;
+    this.regNo = ``;
+    this.make = ``;
+    this.type = ``;
+    this.year = 0;
+    this.active = true;
     this.purchase = {
       price: 0,
       date: ``
@@ -61,13 +61,13 @@ export class Vehicle {
         type: ``
       }
     };
-    this.notes       = ``;
-    this.fuelIDs     = [];
-    this.serviceIDs  = [];
-    this.fuelRecs    = [];
+    this.notes = ``;
+    this.fuelIDs = [];
+    this.serviceIDs = [];
+    this.fuelRecs = [];
     this.serviceRecs = [];
-    this.avgRecs     = [];
-    this.summary     = new Summary(this);
+    this.avgRecs = [];
+    this.summary = new Summary(this);
 
     console.log(`ctor`, values);
 
@@ -83,7 +83,7 @@ export class Vehicle {
    * Get stringified record
    * @return {string}
    */
-  toString(): string {
+  toString() {
     return this.make + ` ` + this.type + ` ` + this.regNo;
   }
 
@@ -91,13 +91,13 @@ export class Vehicle {
    * Populate fuel and avg mpg record containers
    * @return {Array.<Fuel>}
    */
-  fuelRecords(): Fuel[] {
+  fuelRecords() {
     let i = 0;
     let len;
     let tmpg = 0;
 
     this.fuelRecs.length = 0;
-    this.avgRecs.length  = 0;
+    this.avgRecs.length = 0;
     for (i = 0, len = this.fuelIDs.length; i < len; i++) {
       this.fuelRecs.push(api.getFillUp(this.fuelIDs[i]));
     }
@@ -115,7 +115,7 @@ export class Vehicle {
    * Popukate service record container
    */
   serviceRecords() {
-    let i   = 0;
+    let i = 0;
     let len = 0;
     this.serviceRecs.length = 0;
     for (len = this.serviceIDs.length; i < len; i++) {
@@ -132,7 +132,7 @@ export class Vehicle {
   chartData() {
     let data = [];
     let rec;
-    let i   = 0;
+    let i = 0;
     let len = 0;
     for (len = this.fuelRecs.length; i < len; i++) {
       rec = this.fuelRecs[i];

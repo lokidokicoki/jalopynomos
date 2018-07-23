@@ -3,8 +3,8 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-const DAY_IN_MS        = 86400000; //24 * 60 * 60 * 1000;
-const YEAR_IN_MS       = 31536000000; //356 * DAY_IN_MS;
+const DAY_IN_MS = 86400000; //24 * 60 * 60 * 1000;
+const YEAR_IN_MS = 31536000000; //356 * DAY_IN_MS;
 const LITRES_IN_GALLON = 4.54609;
 
 /**
@@ -13,7 +13,7 @@ const LITRES_IN_GALLON = 4.54609;
  * @param {string} dateString timestamp
  * @return {number} parsed date
  */
-function parseDate(dateString: string) {
+function parseDate(dateString) {
   return moment(dateString, `YYYY-MM-DD`).valueOf();
 }
 
@@ -23,7 +23,7 @@ function parseDate(dateString: string) {
  * @param {string} dateString date to format
  * @return {string}
  */
-function formatDate(dateString: string) {
+function formatDate(dateString) {
   return moment(dateString).format(`YYYY-MM-DD`);
 }
 
@@ -34,7 +34,7 @@ function formatDate(dateString: string) {
  * @param {Object=} options formatting options
  * @return {string} formatted cost
  */
-function formatCost(cost: number, options: Object) {
+function formatCost(cost, options) {
   return `£` + formatNumber(cost, options);
 }
 
@@ -44,7 +44,7 @@ function formatCost(cost: number, options: Object) {
  * @param {number} mpg value to format
  * @return {string} value in decimal notation
  */
-function formatMPG(mpg: number) {
+function formatMPG(mpg) {
   return mpg.toFixed(2);
 }
 
@@ -55,7 +55,7 @@ function formatMPG(mpg: number) {
  * @param {Object=} options number of dp
  * @return {string}
  */
-function formatNumber(val: number, options: Object) {
+function formatNumber(val, options) {
   options = (options === undefined) ? {
     dp: 2
   } : options.hash;
@@ -71,7 +71,7 @@ function formatNumber(val: number, options: Object) {
  * @param {number} _default default value
  * @return {number} value or default
  */
-function ensureNumber(value: any, _default: number) {
+function ensureNumber(value, _default) {
   value = parseFloat(value);
   return _.isNumber(value) ? value : _default;
 }
@@ -84,9 +84,9 @@ function ensureNumber(value: any, _default: number) {
  * @param {boolean} order true for ascending
  * @return {Array.<*>} sorted array
  */
-function sortRecs(objects: Array<*>, key: string, order: boolean) {
+function sortRecs(objects: Array<*>, key, order) {
   order = (order === undefined) ? true : order;
-  objects.sort(function(a, b) {
+  objects.sort(function (a, b) {
     a = a[key];
     b = b[key];
     if (order) {
@@ -114,4 +114,4 @@ function sortRecs(objects: Array<*>, key: string, order: boolean) {
   return objects;
 }
 
-export {parseDate, formatDate, formatCost, formatMPG, formatNumber, ensureNumber, sortRecs, LITRES_IN_GALLON, DAY_IN_MS, YEAR_IN_MS};
+export { parseDate, formatDate, formatCost, formatMPG, formatNumber, ensureNumber, sortRecs, LITRES_IN_GALLON, DAY_IN_MS, YEAR_IN_MS };

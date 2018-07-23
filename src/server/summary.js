@@ -7,19 +7,19 @@ import {Vehicle} from './vehicle';
  * @flow
  */
 export class Summary {
-  vehicle: Vehicle;
-  mpg: Object;
-  ppl: Object;
-  range: Object;
-  costs: Object;
-  distance: Object;
-  lastRecordDate: number;
+  vehicle;
+  mpg;
+  ppl;
+  range;
+  costs;
+  distance;
+  lastRecordDate;
 
   /**
    * Create new summary record
    * @param {object} vehicle new record details
    */
-  constructor(vehicle: Vehicle) {
+  constructor(vehicle) {
     this.vehicle = vehicle;
     this.reset();
   }
@@ -74,9 +74,9 @@ export class Summary {
     let max = 0;
 
     let recs = this.vehicle.fuelRecs;
-    let len  = 0;
-    let i    = 0;
-    let rec  = null;
+    let len = 0;
+    let i = 0;
+    let rec = null;
 
     this.reset();
     this.costs.total = this.vehicle.purchase.price;
@@ -95,8 +95,8 @@ export class Summary {
         this.ppl.avg += rec.ppl;
         this.distance.total += rec.trip;
         this.lastRecordDate = Math.max(this.lastRecordDate, rec.date);
-        min                 = Math.min(rec.odo, min);
-        max                 = Math.max(rec.odo, max);
+        min = Math.min(rec.odo, min);
+        max = Math.max(rec.odo, max);
       }
       this.mpg.avg /= len;
       this.ppl.avg /= len;
@@ -109,7 +109,7 @@ export class Summary {
     recs = this.vehicle.serviceRecs;
     if (recs && recs !== undefined) {
       len = recs.length;
-      i   = 0;
+      i = 0;
       for (; i < len; i++) {
         rec = recs[i];
         this.costs.total += rec.cost;
@@ -117,22 +117,22 @@ export class Summary {
       }
     }
 
-    this.costs.running          = this.costs.service + this.costs.fuel;
+    this.costs.running = this.costs.service + this.costs.fuel;
     this.costs.distance.running = this.costs.running / this.distance.actual;
-    this.costs.distance.total   = this.costs.total / this.distance.actual;
+    this.costs.distance.total = this.costs.total / this.distance.actual;
   }
 
   /**
    * Update record with new timestamp
    * @param {number} now new date§
    */
-  update(now: number) {
+  update(now) {
     let a = this.distance.actual / (this.lastRecordDate - this.vehicle.purchase.date);
     let p = this.distance.actual / ((this.vehicle.active ? now : this.lastRecordDate) - this.vehicle.purchase.date);
 
-    this.distance.daily            = a * U.DAY_IN_MS;
-    this.distance.yearly           = a * U.YEAR_IN_MS;
-    this.distance.predicted.daily  = p * U.DAY_IN_MS;
+    this.distance.daily = a * U.DAY_IN_MS;
+    this.distance.yearly = a * U.YEAR_IN_MS;
+    this.distance.predicted.daily = p * U.DAY_IN_MS;
     this.distance.predicted.yearly = p * U.YEAR_IN_MS;
   }
 }

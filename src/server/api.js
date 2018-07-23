@@ -16,23 +16,23 @@ import {Vehicle} from './vehicle';
 import {Fuel} from './fuel';
 import {Service} from './service';
 
-let vehicles  = {};
-let fillUps   = {};
-let services  = {};
+let vehicles = {};
+let fillUps = {};
+let services = {};
 let fuelTypes = {
   U: `Unleaded`,
   D: `Diesel`,
   S: `Super unleaded`
 };
 //let GALLONS_IN_LITRE = 0.219969;
-let dataFile      = ``;
+let dataFile = ``;
 let _maxVehicleId = 0;
 
 /**
  * Load data from object in collections.
  * @param {string} fileName name of file to load
  */
-function load(fileName: string) {
+function load(fileName) {
   let data;
   let record;
   dataFile = path.join(__dirname, `/../`, fileName);
@@ -41,14 +41,14 @@ function load(fileName: string) {
 
   for (let k in data.fillUps) {
     if (data.fillUps.hasOwnProperty(k)) {
-      record             = new Fuel(data.fillUps[k]);
+      record = new Fuel(data.fillUps[k]);
       fillUps[record.id] = record;
     }
   }
 
   for (let k in data.services) {
     if (data.services.hasOwnProperty(k)) {
-      record              = new Service(data.services[k]);
+      record = new Service(data.services[k]);
       services[record.id] = record;
     }
   }
@@ -71,7 +71,7 @@ function load(fileName: string) {
  * Massage collections into portable format.
  * @returns {{}} data collection
  */
-function get(): Object {
+function get() {
   let v = _.cloneDeep(vehicles);
   let obj;
   let data = {
@@ -151,7 +151,7 @@ function getVehicleArray() {
  * @param  {integer} id unique id of record
  * @return {object}    vehicle
  */
-function getVehicle(id: number) {
+function getVehicle(id) {
   let v = vehicles[id];
   v.summary.update(Date.now());
   return v;
@@ -162,7 +162,7 @@ function getVehicle(id: number) {
  * @param  {integer} id of record
  * @return {object}    fuel record
  */
-function getFillUp(id: number) {
+function getFillUp(id) {
   return fillUps[id];
 }
 
@@ -171,7 +171,7 @@ function getFillUp(id: number) {
  * @param  {integer} id of record
  * @return {object}    service record
  */
-function getService(id: number) {
+function getService(id) {
   return services[id];
 }
 
@@ -180,7 +180,7 @@ function getService(id: number) {
  * @param  {string} type fuel type code, i.e. `U`
  * @return {string} long fuel name
  */
-function getFuelType(type: string) {
+function getFuelType(type) {
   return fuelTypes[type];
 }
 
@@ -190,15 +190,15 @@ function getFuelType(type: string) {
  * @param {object} data    fuel record
  * @return {object} new fuel record
  */
-function addFillUp(vehicle: Vehicle, data: Fuel) {
+function addFillUp(vehicle, data) {
   let fillUp;
 
-  data.odo    = parseInt(data.odo);
+  data.odo = parseInt(data.odo);
   data.litres = parseFloat(data.litres);
-  data.trip   = parseFloat(data.trip);
-  data.ppl    = parseFloat(data.ppl);
-  data.cost   = parseFloat(data.cost);
-  data.date   = parseInt(data.date);
+  data.trip = parseFloat(data.trip);
+  data.ppl = parseFloat(data.ppl);
+  data.cost = parseFloat(data.cost);
+  data.date = parseInt(data.date);
 
   //TODO: need some validation!
   fillUp = new Fuel(data);
@@ -219,15 +219,15 @@ function addFillUp(vehicle: Vehicle, data: Fuel) {
  * @param {object} data    service record
  * @return {object} new service record
  */
-function addService(vehicle: Vehicle, data: Service) {
+function addService(vehicle, data) {
   let service;
 
-  data.odo  = parseInt(data.odo);
+  data.odo = parseInt(data.odo);
   data.cost = parseFloat(data.cost);
   data.date = parseInt(data.date);
 
   //TODO: need some validation!
-  service              = new Service(data);
+  service = new Service(data);
   services[service.id] = service;
   vehicle.serviceIDs.push(service.id);
   vehicle.fuelRecords();
@@ -244,7 +244,7 @@ function addService(vehicle: Vehicle, data: Service) {
  * @param {object} data form data for new vehicle
  * @return {Vehicle} new vehicle record
  */
-function addVehicle(data: Object) {
+function addVehicle(data) {
   let vehicle = {};
 
   //console.log(data);
@@ -287,8 +287,8 @@ function addVehicle(data: Object) {
   delete data.tyreRearCapacity;
 
   data.regNo = data.regNo.toUpperCase();
-  data.year  = U.ensureNumber(data.year, 0);
-  data.odo   = U.ensureNumber(data.odo, 0);
+  data.year = U.ensureNumber(data.year, 0);
+  data.odo = U.ensureNumber(data.odo, 0);
 
   data.id = ++_maxVehicleId;
 
@@ -305,7 +305,7 @@ function addVehicle(data: Object) {
  * @param  {object} data new info
  * @return {object}      modified vehicle
  */
-function updateVehicle(data: Vehicle) {
+function updateVehicle(data) {
   let vehicle = vehicles[data.id];
 
   // massage incoming data to match expected, then create 'new' Vehicle.
@@ -333,9 +333,9 @@ function updateVehicle(data: Vehicle) {
     }
   };
 
-  vehicle.regNo  = data.regNo.toUpperCase();
-  vehicle.year   = U.ensureNumber(data.year, 0);
-  vehicle.odo    = U.ensureNumber(data.odo, 0);
+  vehicle.regNo = data.regNo.toUpperCase();
+  vehicle.year = U.ensureNumber(data.year, 0);
+  vehicle.odo = U.ensureNumber(data.odo, 0);
   vehicle.active = data.active ? true : false;
 
   vehicle.summary.summarise();
@@ -349,10 +349,10 @@ function updateVehicle(data: Vehicle) {
  * Calls `save`, so this is permenant.
  * @param  {integer} id of vehicle
  */
-function removeVehicle(id: number) {
+function removeVehicle(id) {
   let vehicle = vehicles[id];
-  let i       = 0;
-  let len     = 0;
+  let i = 0;
+  let len = 0;
 
   // remove fuel recs for this vehicle
   for (i = 0, len = vehicle.fuelIDs.length; i < len; i++) {
@@ -372,7 +372,7 @@ function removeVehicle(id: number) {
  * @param  {object} vehicle target
  * @param  {int} id      of fuel record to remove
  */
-function removeFillUp(vehicle: Vehicle, id: number) {
+function removeFillUp(vehicle, id) {
   let idx = vehicle.fuelIDs.indexOf(parseInt(id));
   vehicle.fuelIDs.splice(idx, 1);
   delete fillUps[String(id)];
@@ -387,7 +387,7 @@ function removeFillUp(vehicle: Vehicle, id: number) {
  * @param  {object} vehicle target vehicle
  * @param  {int} id      of service record
  */
-function removeService(vehicle: Vehicle, id: number) {
+function removeService(vehicle, id) {
   let idx = vehicle.serviceIDs.indexOf(parseInt(id));
   vehicle.serviceIDs.splice(idx, 1);
   delete services[String(id)];
@@ -403,16 +403,16 @@ function removeService(vehicle: Vehicle, id: number) {
  * @param  {object} data    new fuel data
  * @return {object}         modified fuel record
  */
-function updateFillUp(vehicle: Vehicle, data: Fuel) {
+function updateFillUp(vehicle, data) {
   let fillUp = fillUps[data.id];
 
-  fillUp.odo    = parseInt(data.odo);
+  fillUp.odo = parseInt(data.odo);
   fillUp.litres = parseFloat(data.litres);
-  fillUp.trip   = parseFloat(data.trip);
-  fillUp.ppl    = parseFloat(data.ppl);
-  fillUp.cost   = parseFloat(data.cost);
-  fillUp.date   = parseInt(data.date);
-  fillUp.notes  = data.notes;
+  fillUp.trip = parseFloat(data.trip);
+  fillUp.ppl = parseFloat(data.ppl);
+  fillUp.cost = parseFloat(data.cost);
+  fillUp.date = parseInt(data.date);
+  fillUp.notes = data.notes;
 
   //TODO: need some validation!
   fillUp.calculateMPG();
@@ -430,13 +430,13 @@ function updateFillUp(vehicle: Vehicle, data: Fuel) {
  * @param  {object} data    new service data
  * @return {object}         modified service record
  */
-function updateService(vehicle: Vehicle, data: Service) {
+function updateService(vehicle, data) {
   let service = services[data.id];
 
-  service.odo   = parseInt(data.odo);
-  service.cost  = parseFloat(data.cost);
-  service.date  = parseInt(data.date);
-  service.item  = data.item;
+  service.odo = parseInt(data.odo);
+  service.cost = parseFloat(data.cost);
+  service.date = parseInt(data.date);
+  service.item = data.item;
   service.notes = data.notes;
 
   //TODO: need some validation!
@@ -466,10 +466,10 @@ function getFuelTypes() {
  */
 function getHistoricFuelPrices() {
   let data = {};
-  let i    = 0;
+  let i = 0;
   let rec;
-  let min   = 9007199254740992;
-  let max   = 0;
+  let min = 9007199254740992;
+  let max = 0;
   let dates = [];
 
   for (i in fillUps) {

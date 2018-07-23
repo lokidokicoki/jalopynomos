@@ -7,35 +7,35 @@ import * as api from './api';
  * Holder for fuel records
  */
 export class Fuel {
-  id: number;
-  date: number;
-  litres: number;
-  ppl: number;
-  trip: number;
-  odo: number;
-  cost: number;
-  mpg: number;
-  notes: string;
-  type: string;
+  id;
+  date;
+  litres;
+  ppl;
+  trip;
+  odo;
+  cost;
+  mpg;
+  notes;
+  type;
 
   /**
    * @param {object} values new fuel record values
    * @constructor
    */
-  constructor(values: Object) {
-    this.id     = -1;
-    this.date   = 0;
+  constructor(values) {
+    this.id = -1;
+    this.date = 0;
     this.litres = 0;
-    this.ppl    = 0;
-    this.trip   = 0;
-    this.odo    = 0;
-    this.cost   = 0;
-    this.mpg    = 0;
-    this.notes  = ``;
-    this.type   = `U`;
+    this.ppl = 0;
+    this.trip = 0;
+    this.odo = 0;
+    this.cost = 0;
+    this.mpg = 0;
+    this.notes = ``;
+    this.type = `U`;
 
     // copy constructor
-    _.forEach(values, (item: any, key: string) => {
+    _.forEach(values, (item, key) => {
       this[key] = values[key];
     });
 
@@ -48,13 +48,13 @@ export class Fuel {
    * Get record as string
    * @return {string}
    */
-  toString(): string {
+  toString() {
     // date | cost | litres | trip | odo | mpg
     let data = utils.formatDate(this.date) + ` | ` +
-    utils.formatCost(this.cost) + ` | ` +
-    this.litres + ` | ` +
-    this.trip + ` | ` +
-    utils.formatMPG(this.mpg);
+      utils.formatCost(this.cost) + ` | ` +
+      this.litres + ` | ` +
+      this.trip + ` | ` +
+      utils.formatMPG(this.mpg);
 
     return data;
   }
